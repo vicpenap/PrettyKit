@@ -1,0 +1,1064 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>PrettyGridTableViewCell Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.0.5 (build 752)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">PrettyKit </a></h1>
+				<a id="developerHome" href="../index.html">Víctor Pena Placer</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">PrettyGridTableViewCell Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/actionBlock">&nbsp;&nbsp;&nbsp;&nbsp;actionBlock</option>
+	
+	<option value="//api/name/detailTexts">&nbsp;&nbsp;&nbsp;&nbsp;detailTexts</option>
+	
+	<option value="//api/name/elementSelectionStyle">&nbsp;&nbsp;&nbsp;&nbsp;elementSelectionStyle</option>
+	
+	<option value="//api/name/numberOfElements">&nbsp;&nbsp;&nbsp;&nbsp;numberOfElements</option>
+	
+	<option value="//api/name/shadowOnlyOnSelected">&nbsp;&nbsp;&nbsp;&nbsp;shadowOnlyOnSelected</option>
+	
+	<option value="//api/name/textAlignment">&nbsp;&nbsp;&nbsp;&nbsp;textAlignment</option>
+	
+	<option value="//api/name/texts">&nbsp;&nbsp;&nbsp;&nbsp;texts</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/deselectAnimated:">&nbsp;&nbsp;&nbsp;&nbsp;- deselectAnimated:</option>
+	
+	<option value="//api/name/deselectAnimated:completion:">&nbsp;&nbsp;&nbsp;&nbsp;- deselectAnimated:completion:</option>
+	
+	<option value="//api/name/detailTextAtIndex:">&nbsp;&nbsp;&nbsp;&nbsp;- detailTextAtIndex:</option>
+	
+	<option value="//api/name/prepareForTableView:indexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- prepareForTableView:indexPath:</option>
+	
+	<option value="//api/name/selectIndex:">&nbsp;&nbsp;&nbsp;&nbsp;- selectIndex:</option>
+	
+	<option value="//api/name/setDetailText:atIndex:">&nbsp;&nbsp;&nbsp;&nbsp;- setDetailText:atIndex:</option>
+	
+	<option value="//api/name/setText:atIndex:">&nbsp;&nbsp;&nbsp;&nbsp;- setText:atIndex:</option>
+	
+	<option value="//api/name/textAtIndex:">&nbsp;&nbsp;&nbsp;&nbsp;- textAtIndex:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Basic information">Basic information</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Managing the labels">Managing the labels</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Managing selection">Managing selection</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/actionBlock">actionBlock</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/detailTexts">detailTexts</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/elementSelectionStyle">elementSelectionStyle</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/numberOfElements">numberOfElements</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shadowOnlyOnSelected">shadowOnlyOnSelected</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/textAlignment">textAlignment</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/texts">texts</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deselectAnimated:">deselectAnimated:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deselectAnimated:completion:">deselectAnimated:completion:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/detailTextAtIndex:">detailTextAtIndex:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/prepareForTableView:indexPath:">prepareForTableView:indexPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/selectIndex:">selectIndex:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setDetailText:atIndex:">setDetailText:atIndex:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setText:atIndex:">setText:atIndex:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/textAtIndex:">textAtIndex:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="PrettyGridTableViewCell Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">PrettyGridTableViewCell Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/PrettyCustomViewTableViewCell.html">PrettyCustomViewTableViewCell</a> : <a href="../Classes/PrettyTableViewCell.html">PrettyTableViewCell</a> : UITableViewCell</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">PrettyGridTableViewCell.h<br />PrettyGridTableViewCell.m</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p><a href="PrettyGridTableViewCell.html"><code>PrettyGridTableViewCell</code></a> is a <code>PrettyCustomTableViewCell</code> customization
+that creates and manages several elements inside the same cell, displayed as a
+grid.</p>
+
+<p>First of all, change <a href="#//api/name/numberOfElements">numberOfElements</a> property to match your needs. Then, call
+<a href="#//api/name/setText:atIndex:">setText:atIndex:</a> for each element. You can also set detail <a href="#//api/name/texts">texts</a> with
+<a href="#//api/name/setDetailText:atIndex:">setDetailText:atIndex:</a>.</p>
+
+<p>Finally, to receive a notification when an element is selected, change the
+<a href="#//api/name/actionBlock">actionBlock</a> property.</p>
+
+<h3>Customization</h3>
+
+<h4>Labels</h4>
+
+<p>It currently presents a text label and a detailText label. All displayed
+information, except the text alignment, is obtained from the properties
+textLabel and detailTextLabel, inherited from <code>UITableViewCell</code> class. Text
+Alignment should be customized through the <a href="#//api/name/textAlignment"><code>textAlignment</code></a> property.</p>
+
+<p>Take into account that <code>textLabel</code> and <code>detailTextLabel</code> may change dpending on the
+cell&rsquo;s style. For example, if the cell&rsquo;s style is <code>UITableViewCellStyleSubtitle</code>,
+<code>detailTextLabel.textColor</code> would be gray, but if the style is <code>UITableViewCellStyleValue1</code>,
+the color would be blue.</p>
+
+<p>You can change the <a href="#//api/name/texts">texts</a> or detail <a href="#//api/name/texts">texts</a> of a given index through <a href="#//api/name/setText:atIndex:">setText:atIndex:</a>,
+<a href="#//api/name/textAtIndex:">textAtIndex:</a>, setDetailText:AtIndex:, <a href="#//api/name/detailTextAtIndex:">detailTextAtIndex:</a>.</p>
+
+<h4>Selection</h4>
+
+<p>You can enable or disable selection highlighting. set <a href="#//api/name/elementSelectionStyle">elementSelectionStyle</a> to
+<code>UITableViewCellSelectionStyleNone</code> to disable highlighting, or any other
+value to enable it. Use <code>selectionGradientStartColor</code> and <code>selectionGradientEndColor</code>
+properties from <a href="../Classes/PrettyTableViewCell.html"><code>PrettyTableViewCell</code></a> to change the gradient appearance.</p>
+
+<p>You can manually select a given index through <a href="#//api/name/selectIndex:">selectIndex:</a>. You can
+manually deselect the currently selected index through <a href="#//api/name/deselectAnimated:">deselectAnimated:</a>.</p>
+
+<p>You can get notified when an element is selected by setting the <a href="#//api/name/actionBlock"><code>actionBlock</code></a>
+property to your needs.</p>
+
+<h3>Performance</h3>
+
+<p>This cell is entirely drawn with CoreGraphics, so you will have a nice scrolling
+performance.</p>
+
+<h3>Example</h3>
+
+<p><img src="../docs/Screenshots/grid.png" alt="" /></p>
+
+<pre><code>[gridCell setText:@"One" atIndex:0];
+[gridCell setDetailText:@"Detail Text" atIndex:0];
+[gridCell setText:@"Two" atIndex:1];            
+[gridCell setDetailText:@"Detail Text" atIndex:1];
+[gridCell setText:@"Three" atIndex:2];
+[gridCell setDetailText:@"Detail Text" atIndex:2];            
+</code></pre>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Basic information" name="task_Basic information"></a>
+						<h3 class="subsubtitle task-title">Basic information</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/numberOfElements">&nbsp;&nbsp;numberOfElements</a></code>
+		<span class="tooltip"><p>Specifies the number of elements in the grid.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Managing the labels" name="task_Managing the labels"></a>
+						<h3 class="subsubtitle task-title">Managing the labels</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/textAlignment">&nbsp;&nbsp;textAlignment</a></code>
+		<span class="tooltip"><p>Specifies the text alignment used in the grids.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/texts">&nbsp;&nbsp;texts</a></code>
+		<span class="tooltip"><p>Returns an array with all the <a href="#//api/name/texts">texts</a> in the grid.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/detailTexts">&nbsp;&nbsp;detailTexts</a></code>
+		<span class="tooltip"><p>Returns an array with all the detail <a href="#//api/name/texts">texts</a> in the grid.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/shadowOnlyOnSelected">&nbsp;&nbsp;shadowOnlyOnSelected</a></code>
+		<span class="tooltip"><p>Specifies if the shadow should be shown only on the selected element.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setText:atIndex:">&ndash;&nbsp;setText:atIndex:</a></code>
+		<span class="tooltip"><p>Inserts a text in the given index.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/textAtIndex:">&ndash;&nbsp;textAtIndex:</a></code>
+		<span class="tooltip"><p>Returns the text in the given index.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setDetailText:atIndex:">&ndash;&nbsp;setDetailText:atIndex:</a></code>
+		<span class="tooltip"><p>Inserts a detail text in the given index.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/detailTextAtIndex:">&ndash;&nbsp;detailTextAtIndex:</a></code>
+		<span class="tooltip"><p>Returns the detail text in the given index.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Managing selection" name="task_Managing selection"></a>
+						<h3 class="subsubtitle task-title">Managing selection</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/selectIndex:">&ndash;&nbsp;selectIndex:</a></code>
+		<span class="tooltip"><p>Selects the element in the given index, drawing (if necessary) a blue
+gradient in the background.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deselectAnimated:">&ndash;&nbsp;deselectAnimated:</a></code>
+		<span class="tooltip"><p>Deselects the currently selected element.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deselectAnimated:completion:">&ndash;&nbsp;deselectAnimated:completion:</a></code>
+		<span class="tooltip"><p>Deselects the currently selected element and performs the given block
+when the animation is completed.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/elementSelectionStyle">&nbsp;&nbsp;elementSelectionStyle</a></code>
+		<span class="tooltip"><p>Specifies the selection style used in the grids.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/actionBlock">&nbsp;&nbsp;actionBlock</a></code>
+		<span class="tooltip"><p>Speficies the action to be performed when an element is selected.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						
+						<h3 class="subsubtitle task-title">Other Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/prepareForTableView:indexPath:">&ndash;&nbsp;prepareForTableView:indexPath:</a></code>
+		<span class="tooltip"><p>Tells the cell how it should draw the background shape.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/actionBlock" title="actionBlock"></a>
+	<h3 class="subsubtitle method-title">actionBlock</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Speficies the action to be performed when an element is selected.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) void ( ^ ) ( NSIndexPath *indexPath , int selectedIndex ) actionBlock</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>It can be nil.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/detailTexts" title="detailTexts"></a>
+	<h3 class="subsubtitle method-title">detailTexts</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an array with all the detail <a href="#//api/name/texts">texts</a> in the grid.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSArray *detailTexts</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/elementSelectionStyle" title="elementSelectionStyle"></a>
+	<h3 class="subsubtitle method-title">elementSelectionStyle</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Specifies the selection style used in the grids.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) UITableViewCellSelectionStyle elementSelectionStyle</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/numberOfElements" title="numberOfElements"></a>
+	<h3 class="subsubtitle method-title">numberOfElements</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Specifies the number of elements in the grid.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) int numberOfElements</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Each time this property is modified, all set up <a href="#//api/name/texts">texts</a> and <a href="#//api/name/detailTexts">detailTexts</a> are
+erased.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/shadowOnlyOnSelected" title="shadowOnlyOnSelected"></a>
+	<h3 class="subsubtitle method-title">shadowOnlyOnSelected</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Specifies if the shadow should be shown only on the selected element.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL shadowOnlyOnSelected</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>By default it is set to NO.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/textAlignment" title="textAlignment"></a>
+	<h3 class="subsubtitle method-title">textAlignment</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Specifies the text alignment used in the grids.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) UITextAlignment textAlignment</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/texts" title="texts"></a>
+	<h3 class="subsubtitle method-title">texts</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an array with all the <a href="#//api/name/texts">texts</a> in the grid.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSArray *texts</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/deselectAnimated:" title="deselectAnimated:"></a>
+	<h3 class="subsubtitle method-title">deselectAnimated:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Deselects the currently selected element.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)deselectAnimated:(BOOL)<em>animated</em></code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>@params
+&ndash; animated: Specifies if the deselection should be animated or not.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deselectAnimated:completion:" title="deselectAnimated:completion:"></a>
+	<h3 class="subsubtitle method-title">deselectAnimated:completion:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Deselects the currently selected element and performs the given block
+when the animation is completed.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)deselectAnimated:(BOOL)<em>animated</em> completion:(void ( ^ ) ( void ))<em>block</em></code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>@params
+&ndash; animated: Specifies if the deselection should be animated or not.
+&ndash; block: the completion block. This block will be performed <strong>only</strong> if
+animated is YES.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/detailTextAtIndex:" title="detailTextAtIndex:"></a>
+	<h3 class="subsubtitle method-title">detailTextAtIndex:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the detail text in the given index.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSString *)detailTextAtIndex:(int)<em>index</em></code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/prepareForTableView:indexPath:" title="prepareForTableView:indexPath:"></a>
+	<h3 class="subsubtitle method-title">prepareForTableView:indexPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Tells the cell how it should draw the background shape.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)prepareForTableView:(UITableView *)<em>tableView</em> indexPath:(NSIndexPath *)<em>indexPath</em></code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This call is mandatory. Include it in your tableView dataSource&rsquo;s
+<code>tableView:cellForRowAtIndexPath:</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/selectIndex:" title="selectIndex:"></a>
+	<h3 class="subsubtitle method-title">selectIndex:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Selects the element in the given index, drawing (if necessary) a blue
+gradient in the background.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)selectIndex:(int)<em>index</em></code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setDetailText:atIndex:" title="setDetailText:atIndex:"></a>
+	<h3 class="subsubtitle method-title">setDetailText:atIndex:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Inserts a detail text in the given index.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)setDetailText:(NSString *)<em>detailText</em> atIndex:(int)<em>index</em></code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setText:atIndex:" title="setText:atIndex:"></a>
+	<h3 class="subsubtitle method-title">setText:atIndex:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Inserts a text in the given index.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)setText:(NSString *)<em>text</em> atIndex:(int)<em>index</em></code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/textAtIndex:" title="textAtIndex:"></a>
+	<h3 class="subsubtitle method-title">textAtIndex:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the text in the given index.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSString *)textAtIndex:(int)<em>index</em></code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyGridTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2012 Víctor Pena Placer. All rights reserved. (Last updated: 2012-04-11)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 752)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+		</script>
+	</body>
+</html>
