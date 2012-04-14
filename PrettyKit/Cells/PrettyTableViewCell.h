@@ -229,13 +229,13 @@ typedef enum {
 
 /** Returns a new gradient with the configured selection gradient colors. 
  
- You should release it after using it.
+ You don't have to release it after using it.
  */
 - (CGGradientRef) createSelectionGradient;
 
 /** Returns a new gradient with the configured normal gradient colors. 
  
- You should release it after using it.
+ You don't have to release it after using it.
  */
 - (CGGradientRef) createNormalGradient;
 
