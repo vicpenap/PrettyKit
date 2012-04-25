@@ -89,7 +89,34 @@ trying to reduce them as much as possible.
 
 This framework is currently under active development. It is compatible 
 with iOS 4.0 or higher.
- 
+
+## F.A.Q.
+
+**Q. I'm stuck with this error: [UINavigationBar setTopLineColor:]: unrecognized selector sent to instance 0x6c5dd50**
+
+A. Make sure the navigation bar is an instance of PrettyNavigationBar. There are two possibilities:
+
+- Interface Builder
+
+If you're building your interface with Interface Builder, select the navigationBar, go to the Identity inspector and change the class to `PrettyNavigationBar`.
+
+- Programmatically
+
+If you're creating the NavigationController programmatically, create a subclass of `UINavigationController`, override `initWithRootViewController` (or the constructors you want), and add this line:
+		
+	[self setValue:[[[PrettyNavigationBar alloc] init] autorelease] forKeyPath:@"navigationBar"];
+
+Take into account that this approach is a bit hackish, so it might be a reason for Apple to reject your app. That shouldn't happen, though.
+
+Also take a look at [this stack overflow thread](http://stackoverflow.com/questions/1869331/set-programmatically-a-custom-subclass-of-uinavigationbar-in-uinavigationcontrol), where other approaches are shown.
+
+**Q. Is there a way to use the same PrettyNavigationBar customization in the entire app?**
+
+A. There is, indeed. You can either create a subclass or a category on PrettyNavigationBar, and override the properties you want to change. 
+
+For example, if you want to have a red navigationBar, you can create a `RedNavigationBar` subclass of `PrettyNavigationBar`, and override the properties `topLineColor`, `gradientStartColor`, `gradientEndColor`, `bottomLineColor` and `tintColor`. Then, wherever you want to use the navigation bar, add an `#import "RedNavigationBar.h"` at the top of the code.
+
+
 ## Contribution
 
 Please, please contribute with this project! Fork it, improve it and make 
