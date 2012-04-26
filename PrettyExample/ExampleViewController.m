@@ -26,6 +26,7 @@
 {
 	ModalViewController *modalView = [[ModalViewController alloc] initWithNibName:@"ModalViewController" bundle:nil];
 	[self presentModalViewController:modalView animated:YES];
+    [modalView release];
 }
 
 #pragma mark - View lifecycle

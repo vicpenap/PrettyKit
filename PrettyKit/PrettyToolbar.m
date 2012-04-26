@@ -3,8 +3,24 @@
 //  PrettyExample
 //
 //  Created by Seth Gholson on 4/25/12.
-//  Copyright (c) 2012 NA. All rights reserved.
-//
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 #import "PrettyToolbar.h"
 #import <QuartzCore/QuartzCore.h>
@@ -16,7 +32,7 @@
 #define default_shadow_opacity 0.5
 #define default_gradient_end_color      [UIColor colorWithHex:0x297CB7]
 #define default_gradient_start_color    [UIColor colorWithHex:0x53A4DE]
-#define default_top_line_color          [UIColor colorWithHex:0x84B7D5]
+#define default_top_line_color          [UIColor colorWithHex:0x4F94C4]
 #define default_bottom_line_color       [UIColor colorWithHex:0x186399]
 #define default_tint_color              [UIColor colorWithHex:0x3D89BF]
 
@@ -79,7 +95,7 @@
 - (void) drawRect:(CGRect)rect {
     [super drawRect:rect];
     
-    [self dropShadowWithOpacity:self.shadowOpacity];
+//    [self dropShadowWithOpacity:self.shadowOpacity];
     [PrettyDrawing drawGradient:rect fromColor:self.gradientStartColor toColor:self.gradientEndColor];
     [self drawTopLine:rect];        
     [self drawBottomLine:rect];
