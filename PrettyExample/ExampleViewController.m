@@ -8,6 +8,7 @@
 
 #import "ExampleViewController.h"
 #import "PrettyKit.h"
+#import "ModalViewController.h"
 
 
 @implementation ExampleViewController
@@ -19,6 +20,12 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+-(void)onComposeClick:(id)sender
+{
+	ModalViewController *modalView = [[ModalViewController alloc] initWithNibName:@"ModalViewController" bundle:nil];
+	[self presentModalViewController:modalView animated:YES];
 }
 
 #pragma mark - View lifecycle
@@ -33,7 +40,11 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationItem.title = @"PrettyKit";
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:nil action:nil] autorelease];
+
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] 
+						  initWithBarButtonSystemItem:UIBarButtonSystemItemCompose 
+											   target:self 
+											   action:@selector(onComposeClick:)] autorelease];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
 }
 
