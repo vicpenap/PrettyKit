@@ -72,4 +72,14 @@
  By default is a blue tone. */
 @property (nonatomic, retain) UIColor *bottomLineColor;
 
+/** Specifies the background color for the rounded corners.
+ 
+ By default is a black tone. */
+@property (nonatomic, retain) UIColor *roundedCornerColor;
+
+/** Specifies the radius for the rounded corners.
+ 
+ By default it is 0.0 which means there is no rounded corners */
+@property (readwrite) CGFloat roundedCornerRadius;
+
 @end
