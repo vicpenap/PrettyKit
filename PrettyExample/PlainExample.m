@@ -44,6 +44,7 @@
     navBar.gradientEndColor = [UIColor colorWithHex:0xAA0000];    
     navBar.bottomLineColor = [UIColor colorWithHex:0x990000];   
     navBar.tintColor = navBar.gradientEndColor;
+    navBar.roundedCornerRadius = 8;
 }
 
 #pragma mark - View lifecycle

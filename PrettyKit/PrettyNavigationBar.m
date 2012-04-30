@@ -49,6 +49,7 @@
     self.gradientEndColor = nil;
     self.topLineColor = nil;
     self.bottomLineColor = nil;
+    self.roundedCornerColor = nil;    
     
     [super dealloc];
 }
