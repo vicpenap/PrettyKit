@@ -36,7 +36,7 @@
 @synthesize shadowOpacity, gradientEndColor, gradientStartColor, topLineColor, bottomLineColor, roundedCornerRadius, roundedCornerColor;
 
 
-#define default_shadow_opacity 0.5
+#define default_shadow_opacity          0.5
 #define default_gradient_end_color      [UIColor colorWithHex:0x297CB7]
 #define default_gradient_start_color    [UIColor colorWithHex:0x53A4DE]
 #define default_top_line_color          [UIColor colorWithHex:0x84B7D5]
