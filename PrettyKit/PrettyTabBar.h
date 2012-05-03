@@ -43,6 +43,16 @@
  */
 @interface PrettyTabBar : UITabBar
 
+/** Specifies the navigation bar upwards shadow's opacity.
+ 
+ By default is `0.5`. */
+@property (nonatomic, assign) float upwardsShadowOpacity;
+
+/** Specifies the navigation bar downwards shadow's opacity.
+ 
+ By default is `0.5`. */
+@property (nonatomic, assign) float downwardsShadowOpacity;
+
 /** Specifies the gradient's start color.
  
  By default is a black tone. */

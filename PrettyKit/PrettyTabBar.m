@@ -30,12 +30,14 @@
 #import "PrettyTabBar.h"
 #import "PrettyDrawing.h"
 
-#define default_gradient_start_color [UIColor colorWithHex:0x444444]
-#define default_gradient_end_color [UIColor colorWithHex:0x060606]
-#define default_separator_line_color [UIColor colorWithHex:0x666666]
+#define default_upwards_shadow_opacity      0.5
+#define default_downwards_shadow_opacity    0.5
+#define default_gradient_start_color        [UIColor colorWithHex:0x444444]
+#define default_gradient_end_color          [UIColor colorWithHex:0x060606]
+#define default_separator_line_color        [UIColor colorWithHex:0x666666]
 
 @implementation PrettyTabBar
-@synthesize gradientStartColor, gradientEndColor, separatorLineColor;
+@synthesize upwardsShadowOpacity, downwardsShadowOpacity, gradientStartColor, gradientEndColor, separatorLineColor;
 
 - (void) dealloc {
     self.gradientStartColor = nil;
@@ -49,6 +51,8 @@
 {
     self.contentMode = UIViewContentModeRedraw;
 
+    self.upwardsShadowOpacity = default_upwards_shadow_opacity;
+    self.downwardsShadowOpacity = default_downwards_shadow_opacity;
     self.gradientStartColor = default_gradient_start_color;
     self.gradientEndColor = default_gradient_end_color;
     self.separatorLineColor = default_separator_line_color;
@@ -83,6 +87,8 @@
 - (void) drawRect:(CGRect)rect {
     [super drawRect:rect];
     
+    [self dropShadowOffset:CGSizeMake(0, -1) withOpacity:self.upwardsShadowOpacity];
+    [self dropShadowOffset:CGSizeMake(0, 0) withOpacity:self.downwardsShadowOpacity];
     [PrettyDrawing drawGradient:rect fromColor:self.gradientStartColor toColor:self.gradientEndColor];
     [PrettyDrawing drawLineAtHeight:0.5 rect:rect color:self.separatorLineColor width:2.5];
 }
