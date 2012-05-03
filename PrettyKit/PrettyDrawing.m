@@ -119,12 +119,18 @@
 
 @implementation UIView (PrettyKit)
 
-- (void) dropShadowWithOpacity:(float)opacity {
+- (void) dropShadowOffset:(CGSize)offset WithOpacity:(float)opacity {
     self.layer.masksToBounds = NO;
-    self.layer.shadowOffset = CGSizeMake(0, 0);
+    self.layer.shadowOffset = offset;
     self.layer.shadowOpacity = opacity;
     self.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.bounds].CGPath;
 }
+
+- (void) dropShadowWithOpacity:(float)opacity {
+    [self dropShadowOffset:CGSizeMake(0, 0) WithOpacity:opacity];
+    
+}
+
 
 @end
 

@@ -79,6 +79,12 @@ typedef enum {
  */
 - (void) dropShadowWithOpacity:(float)opacity;
 
+/** Drops a shadow with the given opacity and offset.
+ 
+ @warning This method uses the UILayer shadow properties.
+ */
+- (void) dropShadowOffset:(CGSize)offset WithOpacity:(float)opacity;
+
 @end
 
 
