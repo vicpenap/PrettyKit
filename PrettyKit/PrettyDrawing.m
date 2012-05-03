@@ -119,7 +119,7 @@
 
 @implementation UIView (PrettyKit)
 
-- (void) dropShadowOffset:(CGSize)offset WithOpacity:(float)opacity {
+- (void) dropShadowOffset:(CGSize)offset withOpacity:(float)opacity {
     self.layer.masksToBounds = NO;
     self.layer.shadowOffset = offset;
     self.layer.shadowOpacity = opacity;
@@ -127,7 +127,7 @@
 }
 
 - (void) dropShadowWithOpacity:(float)opacity {
-    [self dropShadowOffset:CGSizeMake(0, 0) WithOpacity:opacity];
+    [self dropShadowOffset:CGSizeMake(0, 0) withOpacity:opacity];
     
 }
 
