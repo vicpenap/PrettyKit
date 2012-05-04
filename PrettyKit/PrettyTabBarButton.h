@@ -46,7 +46,8 @@
 @property (nonatomic, retain) UIImage *highlightedImage;
 
 @property (nonatomic, retain) UIColor *badgeBorderColor;
-@property (nonatomic, retain) UIColor *badgeColor;
+@property (nonatomic, retain) UIColor *badgeGradientStartColor;
+@property (nonatomic, retain) UIColor *badgeGradientEndColor;
 @property (nonatomic) CGFloat badgeShadowOpacity;
 @property (nonatomic) CGSize badgeShadowOffset;
 @property (nonatomic, retain) UIFont *badgeFont;

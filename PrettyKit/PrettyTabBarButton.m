@@ -28,24 +28,25 @@
 #import "PrettyTabBarButton.h"
 #import "PrettyDrawing.h"
 
-#define default_want_text_shadow          YES
-#define default_text_shadow_offset        CGSizeMake(0,1)
-#define default_text_shadow_opacity       0.5
-#define default_font                      [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
-#define default_text_color                [UIColor colorWithWhite:0.20 alpha:1.0]
-#define default_highlighted_text_color    [UIColor colorWithWhite:0.10 alpha:1.0]
-#define default_badge_font                [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
-#define default_badge_color               [UIColor redColor]
-#define default_badge_border_color        [UIColor whiteColor]
-#define default_badge_shadow_opacity      0.5
-#define default_badge_shadow_offset       CGSizeMake(0,1)
+#define default_want_text_shadow            YES
+#define default_text_shadow_offset          CGSizeMake(0,1)
+#define default_text_shadow_opacity         0.5
+#define default_font                        [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
+#define default_text_color                  [UIColor colorWithWhite:0.20 alpha:1.0]
+#define default_highlighted_text_color      [UIColor colorWithWhite:0.10 alpha:1.0]
+#define default_badge_font                  [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
+#define default_badge_gradient_start_color  [UIColor redColor]
+#define default_badge_gradient_end_color    [UIColor redColor]
+#define default_badge_border_color          [UIColor whiteColor]
+#define default_badge_shadow_opacity        0.5
+#define default_badge_shadow_offset         CGSizeMake(0,1)
 
 @implementation PrettyTabBarButton
 @synthesize title = _title, image = _image, badgeValue = _badgeValue;
 @synthesize selected = _selected;
 @synthesize textColor, font, highlightedTextColor, highlightedImage;
 @synthesize wantTextShadow, textShadowOpacity, textShadowOffset;
-@synthesize badgeBorderColor, badgeColor, badgeFont, badgeShadowOffset, badgeShadowOpacity;
+@synthesize badgeBorderColor, badgeGradientEndColor, badgeGradientStartColor, badgeFont, badgeShadowOffset, badgeShadowOpacity;
 
 -(id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag {
     if ((self = [super init])) {
@@ -91,7 +92,8 @@
     self.highlightedTextColor = nil;
     self.highlightedImage = nil;
     self.badgeBorderColor = nil;
-    self.badgeColor = nil;
+    self.badgeGradientStartColor = nil;
+    self.badgeGradientEndColor = nil;
     self.badgeFont = nil;
     
     [super dealloc];
@@ -110,7 +112,8 @@
     self.textShadowOpacity = default_text_shadow_opacity;
     self.textShadowOffset = default_text_shadow_offset;
     self.badgeBorderColor = default_badge_border_color;
-    self.badgeColor = default_badge_color;
+    self.badgeGradientStartColor = default_badge_gradient_start_color;
+    self.badgeGradientEndColor = default_badge_gradient_end_color;
     self.badgeShadowOffset = default_badge_shadow_offset;
     self.badgeShadowOpacity = default_badge_shadow_opacity;
     self.badgeFont = default_badge_font;
@@ -178,26 +181,26 @@
     
     // draw badge
     if (self.badgeValue) {
-        CGSize badgeTextSize = [self.badgeValue sizeWithFont:self.badgeFont forWidth:(self.frame.size.width * 0.5) lineBreakMode:UILineBreakModeTailTruncation];
+        CGSize badgeTextSize = [self.badgeValue sizeWithFont:self.badgeFont forWidth:(self.frame.size.width * 0.45) lineBreakMode:UILineBreakModeTailTruncation];
         CGFloat badgeWidth = badgeTextSize.width;
         CGFloat badgeHeight = badgeTextSize.height + 4;
         
         if ((badgeHeight - badgeWidth) < 0)
             badgeWidth += badgeHeight * 0.8;
         
-        if (badgeWidth < (badgeHeight * 2))
-            badgeWidth = badgeHeight * 2;
+        if (badgeWidth < (badgeHeight))
+            badgeWidth = badgeHeight;
         
         CGRect badgeFrame = CGRectMake(self.frame.size.width - badgeWidth - 2, 2, badgeWidth, badgeHeight);
                 
         CGMutablePathRef path = CGPathCreateMutable();
-        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeHeight, badgeFrame.origin.y + badgeHeight, badgeHeight, M_PI / 2, M_PI * 3 / 2, NO);
-        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeFrame.size.width - badgeHeight, badgeFrame.origin.y + badgeHeight, badgeHeight, M_PI * 3 / 2, M_PI / 2, NO);
+        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeHeight/2, badgeFrame.origin.y + badgeHeight/2, badgeHeight/2, M_PI / 2, M_PI * 3 / 2, NO);
+        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeFrame.size.width - badgeHeight/2, badgeFrame.origin.y + badgeHeight/2, badgeHeight/2, M_PI * 3 / 2, M_PI / 2, NO);
         
         CGContextSaveGState(context);
         
         CGContextSetShadow(context, self.badgeShadowOffset, self.badgeShadowOpacity);
-        CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
+        CGContextSetFillColorWithColor(context, [self.badgeBorderColor CGColor]);
         CGContextAddPath(context, path);
         CGContextDrawPath(context, kCGPathFill);
         CGPathRelease(path);
@@ -205,9 +208,9 @@
         CGContextRestoreGState(context);
         
         path = CGPathCreateMutable();
-        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeHeight, badgeFrame.origin.y + badgeHeight, badgeHeight - 2, M_PI / 2, M_PI * 3 / 2, NO);
-        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeFrame.size.width - badgeHeight, badgeFrame.origin.y + badgeHeight, badgeHeight - 2, M_PI * 3 / 2, M_PI / 2, NO);
-        CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
+        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeHeight/2, badgeFrame.origin.y + badgeHeight/2, badgeHeight/2 - 2, M_PI / 2, M_PI * 3 / 2, NO);
+        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeFrame.size.width - badgeHeight/2, badgeFrame.origin.y + badgeHeight/2, badgeHeight/2 - 2, M_PI * 3 / 2, M_PI / 2, NO);
+        CGContextSetFillColorWithColor(context, [self.badgeGradientStartColor CGColor]);
         CGContextAddPath(context, path);
         CGContextDrawPath(context, kCGPathFill);
         CGPathRelease(path);
