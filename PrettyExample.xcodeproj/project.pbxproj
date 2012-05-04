@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F8D2269155435E40042B767 /* PrettyTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D2268155435E40042B767 /* PrettyTabBarButton.m */; };
 		572B2E6615348E1B0002228B /* RotableTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 572B2E6515348E1B0002228B /* RotableTabBarController.m */; };
 		572B2E6A153496880002228B /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 572B2E68153496870002228B /* background.png */; };
 		572B2E6B153496880002228B /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 572B2E69153496870002228B /* background@2x.png */; };
@@ -36,6 +37,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F8D2267155435E40042B767 /* PrettyTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrettyTabBarButton.h; sourceTree = "<group>"; };
+		3F8D2268155435E40042B767 /* PrettyTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrettyTabBarButton.m; sourceTree = "<group>"; };
 		572B2E6415348E1B0002228B /* RotableTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotableTabBarController.h; sourceTree = "<group>"; };
 		572B2E6515348E1B0002228B /* RotableTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotableTabBarController.m; sourceTree = "<group>"; };
 		572B2E68153496870002228B /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
@@ -174,6 +177,8 @@
 				578998C01535E02000E06FCA /* PrettyShadowPlainTableview.m */,
 				578998C11535E02000E06FCA /* PrettyTabBar.h */,
 				578998C21535E02000E06FCA /* PrettyTabBar.m */,
+				3F8D2267155435E40042B767 /* PrettyTabBarButton.h */,
+				3F8D2268155435E40042B767 /* PrettyTabBarButton.m */,
 				EDA7DCAF1548EBD1002219BA /* PrettyToolbar.h */,
 				EDA7DCB01548EBD1002219BA /* PrettyToolbar.m */,
 			);
@@ -277,6 +282,7 @@
 				578998CB1535E02000E06FCA /* PrettyTabBar.m in Sources */,
 				EDA7DCB11548EBD1002219BA /* PrettyToolbar.m in Sources */,
 				EDA7DCB61548ED3F002219BA /* ModalViewController.m in Sources */,
+				3F8D2269155435E40042B767 /* PrettyTabBarButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
