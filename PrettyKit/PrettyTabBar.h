@@ -68,4 +68,11 @@
  By default is a black tone. */
 @property (nonatomic, retain) UIColor *separatorLineColor;
 
+/** Specifies that PrettyTabBarButtons should be used instead of the
+    default UITabBarButtons
+ 
+ By default is NO. */
+@property (nonatomic) BOOL prettyTabBarButtons;
+
+
 @end
