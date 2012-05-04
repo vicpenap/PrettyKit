@@ -32,8 +32,8 @@
 #define default_text_shadow_offset          CGSizeMake(0,1)
 #define default_text_shadow_opacity         0.5
 #define default_font                        [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
-#define default_text_color                  [UIColor colorWithWhite:0.20 alpha:1.0]
-#define default_highlighted_text_color      [UIColor colorWithWhite:0.10 alpha:1.0]
+#define default_text_color                  [UIColor colorWithWhite:0.40 alpha:1.0]
+#define default_highlighted_text_color      [UIColor colorWithWhite:0.90 alpha:1.0]
 #define default_badge_font                  [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
 #define default_badge_gradient_start_color  [UIColor redColor]
 #define default_badge_gradient_end_color    [UIColor redColor]
@@ -156,8 +156,17 @@
     if (self.selected) {
         if (self.highlightedImage) {
             
-        } else {            
-            [PrettyDrawing drawGradient:rect fromColor:[UIColor colorWithWhite:0.9 alpha:1.0] toColor:[UIColor colorWithWhite:0.8 alpha:1.0]];
+        } else {
+            
+            // for iOS 4.3
+            CGContextSetFillColorWithColor(context, [[UIColor colorWithWhite:0.75 alpha:1.0] CGColor]);
+            CGContextFillRect(context, CGRectMake(0, 2, self.frame.size.width, self.frame.size.height - 2));
+
+            // works for iOS 5.0 so just layering it on
+            [PrettyDrawing drawGradient:CGRectMake(0, 2, self.frame.size.width, self.frame.size.height - 2) 
+                              fromColor:[UIColor colorWithWhite:0.75 alpha:1.0] 
+                                toColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
+            
         }
     }
     
