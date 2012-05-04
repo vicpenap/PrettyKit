@@ -146,6 +146,15 @@
     [self setSelectedItem:[self.items objectAtIndex:index]];        
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"badgeValue"]) {
+        PrettyTabBarButton *button = (PrettyTabBarButton *)context;
+        button.badgeValue = [change objectForKey:NSKeyValueChangeNewKey];
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];    
+    }
+}
+
 #pragma mark - Display
 
 -(void)layoutSubviews {
@@ -168,34 +177,36 @@
         }
     }
     
-    if (self.prettyTabBarButtons) {
         
-        if (self.prettyTabBarButtons) {
-            [__prettyTabBarButtons removeAllObjects];
+    if (self.prettyTabBarButtons) {
+        [__prettyTabBarButtons removeAllObjects];
 
-            // do stuff
-            PrettyTabBarButton *button = nil;
-            UITabBarItem *item = nil;
+        // do stuff
+        PrettyTabBarButton *button = nil;
+        UITabBarItem *item = nil;
+        
+        CGFloat itemWidth = self.frame.size.width/[self.items count];
+        
+        for (int i=0;i<[self.items count];i++) {
+            item = [self.items objectAtIndex:i];        
+            [item removeObserver:self forKeyPath:@"badgeValue"];
+
+            button = [[PrettyTabBarButton alloc] initWithTitle:item.title image:item.image tag:i];
+            button.frame = CGRectMake(i * itemWidth, 0, itemWidth, self.frame.size.height);
+            button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+            button.badgeValue = item.badgeValue;
+            [item addObserver:self forKeyPath:@"badgeValue" options:NSKeyValueObservingOptionNew context:button];
             
-            CGFloat itemWidth = self.frame.size.width/[self.items count];
+            UITapGestureRecognizer *tappedButton = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_prettyTabButtonTapped:)];
+            tappedButton.numberOfTapsRequired = 1;
+            [button addGestureRecognizer:tappedButton];
+            [tappedButton release];
             
-            for (int i=0;i<[self.items count];i++) {
-                item = [self.items objectAtIndex:i];        
-                button = [[PrettyTabBarButton alloc] initWithTitle:item.title image:item.image tag:i];
-                button.frame = CGRectMake(i * itemWidth, 0, itemWidth, self.frame.size.height);
-                button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-                
-                UITapGestureRecognizer *tappedButton = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_prettyTabButtonTapped:)];
-                tappedButton.numberOfTapsRequired = 1;
-                [button addGestureRecognizer:tappedButton];
-                [tappedButton release];
-                
-                [self addSubview:button];
-                [__prettyTabBarButtons addObject:button];
-                [button release];
-            }
-        } 
-    }     
+            [self addSubview:button];
+            [__prettyTabBarButtons addObject:button];
+            [button release];
+        }
+    } 
     
 }
 
