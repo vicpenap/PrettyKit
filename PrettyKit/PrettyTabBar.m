@@ -124,10 +124,10 @@
         NSInteger index = [self.items indexOfObject:selectedItem];
         
         for (int i=0;i<[__prettyTabBarButtons count];i++) {
-            if (i != index) {
-                ((PrettyTabBarButton *)[__prettyTabBarButtons objectAtIndex:i]).selected = NO;
-            } else {
+            if (i == index) {
                 ((PrettyTabBarButton *)[__prettyTabBarButtons objectAtIndex:i]).selected = YES;
+            } else {
+                ((PrettyTabBarButton *)[__prettyTabBarButtons objectAtIndex:i]).selected = NO;
             }
         }
         
@@ -147,9 +147,12 @@
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"badgeValue"]) {
-        PrettyTabBarButton *button = (PrettyTabBarButton *)context;
-        button.badgeValue = [change objectForKey:NSKeyValueChangeNewKey];
+    
+    if (([keyPath isEqualToString:@"badgeValue"]) && (self.prettyTabBarButtons)) {
+        UITabBarItem *item = (UITabBarItem *)context;
+        NSUInteger index = [self.items indexOfObject:item];
+        
+        [[self._prettyTabBarButtons objectAtIndex:index] setBadgeValue:[change objectForKey:NSKeyValueChangeNewKey]];
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];    
     }
@@ -188,14 +191,13 @@
         CGFloat itemWidth = self.frame.size.width/[self.items count];
         
         for (int i=0;i<[self.items count];i++) {
-            item = [self.items objectAtIndex:i];        
-            [item removeObserver:self forKeyPath:@"badgeValue"];
-
+            item = [self.items objectAtIndex:i];
+            [item addObserver:self forKeyPath:@"badgeValue" options:NSKeyValueObservingOptionNew context:item];
+            
             button = [[PrettyTabBarButton alloc] initWithTitle:item.title image:item.image tag:i];
             button.frame = CGRectMake(i * itemWidth, 0, itemWidth, self.frame.size.height);
             button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
             button.badgeValue = item.badgeValue;
-            [item addObserver:self forKeyPath:@"badgeValue" options:NSKeyValueObservingOptionNew context:button];
             
             UITapGestureRecognizer *tappedButton = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_prettyTabButtonTapped:)];
             tappedButton.numberOfTapsRequired = 1;
