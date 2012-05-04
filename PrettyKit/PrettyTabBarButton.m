@@ -123,6 +123,10 @@
     
     [self setNeedsDisplay];
 }
+
+#define BADGE_HEIGHT 10.0
+#define BADGE_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14]
+
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
@@ -138,6 +142,7 @@
         }
     }
     
+    // draw text
     CGContextSaveGState(context);
 
     if (self.wantTextShadow) {
@@ -154,6 +159,37 @@
     [_title drawInRect:CGRectMake((self.frame.size.width - titleSize.width)/2, self.frame.size.height - titleSize.height, titleSize.width, titleSize.height) withFont:self.font];
 
     CGContextRestoreGState(context);
+    
+    // draw badge
+    if (self.badgeValue) {
+        CGSize badgeTextSize = [self.badgeValue sizeWithFont:BADGE_FONT constrainedToSize:CGSizeMake(self.frame.size.width, BADGE_HEIGHT)];
+        CGFloat width = badgeTextSize.width;
+        if ((BADGE_HEIGHT - width) < 0)
+            width += BADGE_HEIGHT * 0.8;
+        
+        if (width < (BADGE_HEIGHT * 2))
+            width += BADGE_HEIGHT * 2;
+        
+        
+        CGRect badgeFrame = CGRectMake(self.frame.size.width - width - 1, 1, width, BADGE_HEIGHT * 2);
+        CGContextSetStrokeColorWithColor(context, [[UIColor purpleColor] CGColor]);
+        CGContextStrokeRect(context, badgeFrame);
+        
+        CGMutablePathRef path = CGPathCreateMutable();
+        CGPathAddArc(path, NULL, self.frame.size.width - width + BADGE_HEIGHT, BADGE_HEIGHT, BADGE_HEIGHT, M_PI / 2, M_PI * 3 / 2, YES);
+        CGPathAddArc(path, NULL, self.frame.size.width - BADGE_HEIGHT, BADGE_HEIGHT, BADGE_HEIGHT, M_PI * 3 / 2, M_PI / 2, YES);
+        
+        CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
+        CGContextAddPath(context, path);
+        CGContextDrawPath(context, kCGPathFill);
+        
+        [[UIColor blueColor] setFill];
+        [self.badgeValue drawInRect:CGRectMake(badgeFrame.origin.x + (badgeFrame.size.width - badgeTextSize.width)/2, badgeFrame.origin.y + (badgeFrame.size.height - badgeTextSize.height)/2, badgeTextSize.width, badgeTextSize.height) withFont:BADGE_FONT];
+        
+        CGPathRelease(path);
+
+    }
+    
 }
 
 @end
