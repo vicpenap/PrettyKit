@@ -33,7 +33,7 @@
 #define default_text_shadow_opacity       0.5
 #define default_font                      [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
 #define default_text_color                [UIColor colorWithWhite:0.20 alpha:1.0]
-#define default_highlighted_text_color    [UIColor colorWithWhite:0.80 alpha:1.0]
+#define default_highlighted_text_color    [UIColor colorWithWhite:0.10 alpha:1.0]
 
 @implementation PrettyTabBarButton
 @synthesize title = _title, image = _image, badgeValue = _badgeValue;
@@ -115,11 +115,28 @@
     [self setNeedsDisplay];
 }
 
+-(void)setBadgeValue:(NSString *)badgeValue {
+    if (_badgeValue != badgeValue) {
+        [_badgeValue release];
+        _badgeValue = [badgeValue copy];
+    }
+    
+    [self setNeedsDisplay];
+}
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
+
+    // draw selection background
+    if (self.selected) {
+        if (self.highlightedImage) {
+            
+        } else {            
+            [PrettyDrawing drawGradient:rect fromColor:[UIColor colorWithWhite:0.9 alpha:1.0] toColor:[UIColor colorWithWhite:0.8 alpha:1.0]];
+        }
+    }
     
     CGContextSaveGState(context);
 
