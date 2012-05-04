@@ -35,11 +35,16 @@
 
 @property (nonatomic) BOOL selected;
 
+@property (nonatomic, retain) UIFont *font;
 @property (nonatomic, retain) UIColor *textColor;
 @property (nonatomic, retain) UIColor *highlightedTextColor;
 
+@property (readwrite) CGFloat textShadowOpacity;
+@property (readwrite) CGSize textShadowOffset;
+@property (readwrite) BOOL wantTextShadow;
+
 @property (nonatomic, retain) UIImage *highlightedImage;
 
--(id)initWithTitle:(NSString *)title image:(UIImage *)image;
+-(id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
 
 @end
