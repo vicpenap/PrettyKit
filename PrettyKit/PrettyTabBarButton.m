@@ -34,12 +34,18 @@
 #define default_font                      [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
 #define default_text_color                [UIColor colorWithWhite:0.20 alpha:1.0]
 #define default_highlighted_text_color    [UIColor colorWithWhite:0.10 alpha:1.0]
+#define default_badge_font                [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
+#define default_badge_color               [UIColor redColor]
+#define default_badge_border_color        [UIColor whiteColor]
+#define default_badge_shadow_opacity      0.5
+#define default_badge_shadow_offset       CGSizeMake(0,1)
 
 @implementation PrettyTabBarButton
 @synthesize title = _title, image = _image, badgeValue = _badgeValue;
 @synthesize selected = _selected;
 @synthesize textColor, font, highlightedTextColor, highlightedImage;
 @synthesize wantTextShadow, textShadowOpacity, textShadowOffset;
+@synthesize badgeBorderColor, badgeColor, badgeFont, badgeShadowOffset, badgeShadowOpacity;
 
 -(id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag {
     if ((self = [super init])) {
@@ -80,6 +86,14 @@
     [_image release], _image = nil;
     [_badgeValue release], _badgeValue = nil;
     
+    self.font = nil;
+    self.textColor = nil;
+    self.highlightedTextColor = nil;
+    self.highlightedImage = nil;
+    self.badgeBorderColor = nil;
+    self.badgeColor = nil;
+    self.badgeFont = nil;
+    
     [super dealloc];
 }
 
@@ -95,7 +109,12 @@
     self.wantTextShadow = default_want_text_shadow;
     self.textShadowOpacity = default_text_shadow_opacity;
     self.textShadowOffset = default_text_shadow_offset;
-
+    self.badgeBorderColor = default_badge_border_color;
+    self.badgeColor = default_badge_color;
+    self.badgeShadowOffset = default_badge_shadow_offset;
+    self.badgeShadowOpacity = default_badge_shadow_opacity;
+    self.badgeFont = default_badge_font;
+    
     // intialize values;
     self.tag = -1;
     
@@ -123,9 +142,6 @@
     
     [self setNeedsDisplay];
 }
-
-#define BADGE_HEIGHT 10.0
-#define BADGE_FONT [UIFont fontWithName:@"HelveticaNeue-Bold" size:14]
 
 - (void)drawRect:(CGRect)rect
 {
@@ -162,31 +178,45 @@
     
     // draw badge
     if (self.badgeValue) {
-        CGSize badgeTextSize = [self.badgeValue sizeWithFont:BADGE_FONT constrainedToSize:CGSizeMake(self.frame.size.width, BADGE_HEIGHT)];
-        CGFloat width = badgeTextSize.width;
-        if ((BADGE_HEIGHT - width) < 0)
-            width += BADGE_HEIGHT * 0.8;
+        CGSize badgeTextSize = [self.badgeValue sizeWithFont:self.badgeFont forWidth:(self.frame.size.width * 0.5) lineBreakMode:UILineBreakModeTailTruncation];
+        CGFloat badgeWidth = badgeTextSize.width;
+        CGFloat badgeHeight = badgeTextSize.height + 4;
         
-        if (width < (BADGE_HEIGHT * 2))
-            width += BADGE_HEIGHT * 2;
+        if ((badgeHeight - badgeWidth) < 0)
+            badgeWidth += badgeHeight * 0.8;
         
+        if (badgeWidth < (badgeHeight * 2))
+            badgeWidth = badgeHeight * 2;
         
-        CGRect badgeFrame = CGRectMake(self.frame.size.width - width - 1, 1, width, BADGE_HEIGHT * 2);
-        CGContextSetStrokeColorWithColor(context, [[UIColor purpleColor] CGColor]);
-        CGContextStrokeRect(context, badgeFrame);
-        
+        CGRect badgeFrame = CGRectMake(self.frame.size.width - badgeWidth - 2, 2, badgeWidth, badgeHeight);
+                
         CGMutablePathRef path = CGPathCreateMutable();
-        CGPathAddArc(path, NULL, self.frame.size.width - width + BADGE_HEIGHT, BADGE_HEIGHT, BADGE_HEIGHT, M_PI / 2, M_PI * 3 / 2, YES);
-        CGPathAddArc(path, NULL, self.frame.size.width - BADGE_HEIGHT, BADGE_HEIGHT, BADGE_HEIGHT, M_PI * 3 / 2, M_PI / 2, YES);
+        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeHeight, badgeFrame.origin.y + badgeHeight, badgeHeight, M_PI / 2, M_PI * 3 / 2, NO);
+        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeFrame.size.width - badgeHeight, badgeFrame.origin.y + badgeHeight, badgeHeight, M_PI * 3 / 2, M_PI / 2, NO);
         
+        CGContextSaveGState(context);
+        
+        CGContextSetShadow(context, self.badgeShadowOffset, self.badgeShadowOpacity);
+        CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
+        CGContextAddPath(context, path);
+        CGContextDrawPath(context, kCGPathFill);
+        CGPathRelease(path);
+        
+        CGContextRestoreGState(context);
+        
+        path = CGPathCreateMutable();
+        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeHeight, badgeFrame.origin.y + badgeHeight, badgeHeight - 2, M_PI / 2, M_PI * 3 / 2, NO);
+        CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeFrame.size.width - badgeHeight, badgeFrame.origin.y + badgeHeight, badgeHeight - 2, M_PI * 3 / 2, M_PI / 2, NO);
         CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
         CGContextAddPath(context, path);
         CGContextDrawPath(context, kCGPathFill);
-        
-        [[UIColor blueColor] setFill];
-        [self.badgeValue drawInRect:CGRectMake(badgeFrame.origin.x + (badgeFrame.size.width - badgeTextSize.width)/2, badgeFrame.origin.y + (badgeFrame.size.height - badgeTextSize.height)/2, badgeTextSize.width, badgeTextSize.height) withFont:BADGE_FONT];
-        
         CGPathRelease(path);
+
+        
+        [[UIColor whiteColor] setFill];
+        [self.badgeValue drawInRect:CGRectMake(badgeFrame.origin.x + (badgeFrame.size.width - badgeTextSize.width)/2, badgeFrame.origin.y + (badgeFrame.size.height - badgeTextSize.height)/2, badgeTextSize.width, badgeTextSize.height)
+                           withFont:self.badgeFont
+                      lineBreakMode:UILineBreakModeTailTruncation];
 
     }
     

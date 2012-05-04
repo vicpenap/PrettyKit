@@ -39,11 +39,17 @@
 @property (nonatomic, retain) UIColor *textColor;
 @property (nonatomic, retain) UIColor *highlightedTextColor;
 
-@property (readwrite) CGFloat textShadowOpacity;
-@property (readwrite) CGSize textShadowOffset;
-@property (readwrite) BOOL wantTextShadow;
+@property (nonatomic) CGFloat textShadowOpacity;
+@property (nonatomic) CGSize textShadowOffset;
+@property (nonatomic) BOOL wantTextShadow;
 
 @property (nonatomic, retain) UIImage *highlightedImage;
+
+@property (nonatomic, retain) UIColor *badgeBorderColor;
+@property (nonatomic, retain) UIColor *badgeColor;
+@property (nonatomic) CGFloat badgeShadowOpacity;
+@property (nonatomic) CGSize badgeShadowOffset;
+@property (nonatomic, retain) UIFont *badgeFont;
 
 -(id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
 
