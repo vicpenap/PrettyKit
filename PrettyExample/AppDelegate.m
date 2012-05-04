@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ExampleViewController.h"
+#import "PrettyTabBar.h"
 
 @implementation AppDelegate
 
@@ -29,7 +30,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
 
     self.window.rootViewController = self.tabBarController;
-
+    ((PrettyTabBar *)self.tabBarController.tabBar).prettyTabBarButtons = YES;
     
     [self.window makeKeyAndVisible];
     return YES;
