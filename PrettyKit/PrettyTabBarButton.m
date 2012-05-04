@@ -38,8 +38,8 @@
 #define default_badge_gradient_start_color  [UIColor redColor]
 #define default_badge_gradient_end_color    [UIColor redColor]
 #define default_badge_border_color          [UIColor whiteColor]
-#define default_badge_shadow_opacity        0.5
-#define default_badge_shadow_offset         CGSizeMake(0,1)
+#define default_badge_shadow_opacity        0.75
+#define default_badge_shadow_offset         CGSizeMake(0,1.5)
 
 @implementation PrettyTabBarButton
 @synthesize title = _title, image = _image, badgeValue = _badgeValue;
@@ -179,6 +179,8 @@
 
     CGContextRestoreGState(context);
     
+    // TODO: draw image
+    
     // draw badge
     if (self.badgeValue) {
         CGSize badgeTextSize = [self.badgeValue sizeWithFont:self.badgeFont forWidth:(self.frame.size.width * 0.45) lineBreakMode:UILineBreakModeTailTruncation];
@@ -207,6 +209,8 @@
         
         CGContextRestoreGState(context);
         
+        //TODO: Fill badge color with gradient and apply nice embossing effect
+        
         path = CGPathCreateMutable();
         CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeHeight/2, badgeFrame.origin.y + badgeHeight/2, badgeHeight/2 - 2, M_PI / 2, M_PI * 3 / 2, NO);
         CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeFrame.size.width - badgeHeight/2, badgeFrame.origin.y + badgeHeight/2, badgeHeight/2 - 2, M_PI * 3 / 2, M_PI / 2, NO);
@@ -214,7 +218,6 @@
         CGContextAddPath(context, path);
         CGContextDrawPath(context, kCGPathFill);
         CGPathRelease(path);
-
         
         [[UIColor whiteColor] setFill];
         [self.badgeValue drawInRect:CGRectMake(badgeFrame.origin.x + (badgeFrame.size.width - badgeTextSize.width)/2, badgeFrame.origin.y + (badgeFrame.size.height - badgeTextSize.height)/2, badgeTextSize.width, badgeTextSize.height)
