@@ -30,8 +30,10 @@
 @interface PrettyTabBarButton : UIView
 
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic, retain) UIImage *image;
 @property (nonatomic, copy) NSString *badgeValue;
+
+@property (nonatomic, retain) UIImage *image;
+@property (nonatomic, retain) UIImage *highlightedImage;
 
 @property (nonatomic) BOOL selected;
 
@@ -43,7 +45,9 @@
 @property (nonatomic) CGSize textShadowOffset;
 @property (nonatomic) BOOL wantTextShadow;
 
-@property (nonatomic, retain) UIImage *highlightedImage;
+@property (nonatomic, retain) UIColor *highlightGradientStartColor;
+@property (nonatomic, retain) UIColor *highlightGradientEndColor;
+@property (nonatomic, retain) UIImage *highlightImage;
 
 @property (nonatomic, retain) UIColor *badgeBorderColor;
 @property (nonatomic, retain) UIColor *badgeGradientStartColor;
