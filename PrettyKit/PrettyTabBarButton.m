@@ -29,24 +29,25 @@
 #import "PrettyDrawing.h"
 
 #define default_want_text_shadow            YES
-#define default_text_shadow_offset          CGSizeMake(0,1)
+#define default_text_shadow_offset          CGSizeMake(0,-1)
 #define default_text_shadow_opacity         0.5
 #define default_font                        [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
-#define default_text_color                  [UIColor colorWithWhite:0.40 alpha:1.0]
+#define default_text_color                  [UIColor colorWithWhite:0.2 alpha:1.0]
 #define default_highlighted_text_color      [UIColor colorWithWhite:0.90 alpha:1.0]
 #define default_badge_font                  [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
-#define default_badge_gradient_start_color  [UIColor redColor]
-#define default_badge_gradient_end_color    [UIColor redColor]
+#define default_badge_gradient_start_color  [UIColor colorWithRed:0.9 green:0.000 blue:0.000 alpha:1.000]
+#define default_badge_gradient_end_color    [UIColor colorWithRed:0.1 green:0.000 blue:0.000 alpha:1.000]
 #define default_badge_border_color          [UIColor whiteColor]
 #define default_badge_shadow_opacity        0.75
 #define default_badge_shadow_offset         CGSizeMake(0,1.5)
+#define default_badge_text_color            [UIColor whiteColor]
 
 @implementation PrettyTabBarButton
 @synthesize title = _title, image = _image, badgeValue = _badgeValue;
 @synthesize selected = _selected;
 @synthesize textColor, font, highlightedTextColor, highlightedImage;
 @synthesize wantTextShadow, textShadowOpacity, textShadowOffset;
-@synthesize badgeBorderColor, badgeGradientEndColor, badgeGradientStartColor, badgeFont, badgeShadowOffset, badgeShadowOpacity;
+@synthesize badgeBorderColor, badgeGradientEndColor, badgeGradientStartColor, badgeFont, badgeShadowOffset, badgeShadowOpacity, badgeTextColor;
 
 -(id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag {
     if ((self = [super init])) {
@@ -95,6 +96,7 @@
     self.badgeGradientStartColor = nil;
     self.badgeGradientEndColor = nil;
     self.badgeFont = nil;
+    self.badgeTextColor = nil;
     
     [super dealloc];
 }
@@ -117,6 +119,7 @@
     self.badgeShadowOffset = default_badge_shadow_offset;
     self.badgeShadowOpacity = default_badge_shadow_opacity;
     self.badgeFont = default_badge_font;
+    self.badgeTextColor = default_badge_text_color;
     
     // intialize values;
     self.tag = -1;
@@ -189,6 +192,9 @@
     CGContextRestoreGState(context);
     
     // TODO: draw image
+    if (self.image) {
+        
+    }    
     
     // draw badge
     if (self.badgeValue) {
@@ -202,8 +208,9 @@
         if (badgeWidth < (badgeHeight))
             badgeWidth = badgeHeight;
         
-        CGRect badgeFrame = CGRectMake(self.frame.size.width - badgeWidth - 2, 2, badgeWidth, badgeHeight);
+        CGRect badgeFrame = CGRectMake(self.frame.size.width - badgeWidth - 2, 3, badgeWidth, badgeHeight);
                 
+        // draw outter border
         CGMutablePathRef path = CGPathCreateMutable();
         CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeHeight/2, badgeFrame.origin.y + badgeHeight/2, badgeHeight/2, M_PI / 2, M_PI * 3 / 2, NO);
         CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeFrame.size.width - badgeHeight/2, badgeFrame.origin.y + badgeHeight/2, badgeHeight/2, M_PI * 3 / 2, M_PI / 2, NO);
@@ -217,18 +224,31 @@
         CGPathRelease(path);
         
         CGContextRestoreGState(context);
-        
-        //TODO: Fill badge color with gradient and apply nice embossing effect
+                
+        // draw inner badge color
+        CGContextSaveGState(context);
         
         path = CGPathCreateMutable();
         CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeHeight/2, badgeFrame.origin.y + badgeHeight/2, badgeHeight/2 - 2, M_PI / 2, M_PI * 3 / 2, NO);
         CGPathAddArc(path, NULL, badgeFrame.origin.x + badgeFrame.size.width - badgeHeight/2, badgeFrame.origin.y + badgeHeight/2, badgeHeight/2 - 2, M_PI * 3 / 2, M_PI / 2, NO);
-        CGContextSetFillColorWithColor(context, [self.badgeGradientStartColor CGColor]);
         CGContextAddPath(context, path);
-        CGContextDrawPath(context, kCGPathFill);
         CGPathRelease(path);
         
-        [[UIColor whiteColor] setFill];
+        CGContextClip(context);
+        
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        CGFloat locations[] = {0.0, 1.0};
+        NSArray *colors = [NSArray arrayWithObjects:(id)[self.badgeGradientStartColor CGColor], (id)[self.badgeGradientEndColor CGColor], nil];
+        
+        CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef) colors, locations);
+        CGContextDrawLinearGradient(context, gradient, CGPointMake(badgeFrame.origin.x + badgeFrame.size.width/2, badgeFrame.origin.y + 0), CGPointMake(badgeFrame.origin.x + badgeFrame.size.width/2, badgeFrame.origin.y + badgeFrame.size.height), 0);
+        CGGradientRelease(gradient);
+        CGColorSpaceRelease(colorSpace);
+        
+        CGContextRestoreGState(context);
+        
+        // draw badgeValue
+        [self.badgeTextColor setFill];
         [self.badgeValue drawInRect:CGRectMake(badgeFrame.origin.x + (badgeFrame.size.width - badgeTextSize.width)/2, badgeFrame.origin.y + (badgeFrame.size.height - badgeTextSize.height)/2, badgeTextSize.width, badgeTextSize.height)
                            withFont:self.badgeFont
                       lineBreakMode:UILineBreakModeTailTruncation];

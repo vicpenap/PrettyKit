@@ -51,6 +51,7 @@
 @property (nonatomic) CGFloat badgeShadowOpacity;
 @property (nonatomic) CGSize badgeShadowOffset;
 @property (nonatomic, retain) UIFont *badgeFont;
+@property (nonatomic, retain) UIColor *badgeTextColor;
 
 -(id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
 
