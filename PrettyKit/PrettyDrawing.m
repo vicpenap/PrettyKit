@@ -32,6 +32,73 @@
 
 @implementation PrettyDrawing
 
+CGMutablePathRef PrettyKitCreateMutablePathForRoundedRect(CGRect rect, CGFloat radius) {
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddArc(path, NULL, rect.origin.x + radius, rect.origin.y + radius, radius, (180) * M_PI/180, (-90) * M_PI/180, 0);
+    CGPathAddArc(path, NULL, rect.origin.x + rect.size.width - radius, rect.origin.y + radius, radius, (-90) * M_PI/180, (0) * M_PI/180, 0);
+    CGPathAddArc(path, NULL, rect.origin.x + rect.size.width - radius, rect.origin.y + rect.size.height - radius, radius, (0) * M_PI/180, (-270) * M_PI/180, 0);
+    CGPathAddArc(path, NULL, rect.origin.x + radius, rect.origin.y + rect.size.height - radius, radius, (-270) * M_PI/180, (-180) * M_PI/180, 0);
+
+    return path;
+}
+
++ (void)drawRoundedRect:(CGRect)rect cornerRadius:(CGFloat)radius color:(UIColor *)color {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    
+    CGMutablePathRef path = PrettyKitCreateMutablePathForRoundedRect(rect, radius);
+    CGContextAddPath(context, path);
+
+    [color setFill];
+    CGContextDrawPath(context, kCGPathFill);
+    
+    CGContextRestoreGState(context);
+    CGPathRelease(path);
+}
+
++ (void)drawGradientRoundedRect:(CGRect)rect cornerRadius:(CGFloat)radius fromColor:(UIColor *)from toColor:(UIColor *)to {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    
+    CGMutablePathRef path = PrettyKitCreateMutablePathForRoundedRect(rect, radius);
+    CGContextAddPath(context, path);    
+    CGContextClip(context);
+    
+    [PrettyDrawing drawGradientForContext:context 
+                               startPoint:CGPointMake(rect.origin.x + rect.size.width/2, rect.origin.y)
+                                 endPoint:CGPointMake(rect.origin.x + rect.size.width/2, rect.origin.y + rect.size.height)
+                                fromColor:from
+                                  toColor:to];
+    
+    CGContextRestoreGState(context);
+    CGPathRelease(path);
+
+}
+
++ (void)drawGradientForContext:(CGContextRef)context startPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint fromColor:(UIColor *)fromColor toColor:(UIColor *)toColor {
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    CGFloat locations[] = {0.0, 1.0};
+    
+    // iOS 4.3 safe way of drawing gradients. not as awesome as CGGradientCreateWithColors
+    CGFloat fromComponents[4];
+    [fromColor getRGBColorComponents:fromComponents];
+    
+    CGFloat toComponents[4];
+    [toColor getRGBColorComponents:toComponents];
+    
+    CGFloat colors[8] = {   fromComponents[0], fromComponents[1], fromComponents[2], fromComponents[3], 
+                            toComponents[0], toComponents[1], toComponents[2], toComponents[3]};
+    
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, colors, locations, 2);
+    
+    /////////////////////////////////////////////////////////////////////////
+    
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+    CGGradientRelease(gradient);
+    CGColorSpaceRelease(colorSpace);
+}
+
 + (void) drawGradient:(CGRect)rect fromColor:(UIColor *)from toColor:(UIColor *)to {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
@@ -39,23 +106,11 @@
     CGContextAddRect(ctx, rect);
     CGContextClip(ctx);
     
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGFloat locations[] = { 0.0, 1.0 };
-    
-    CGColorRef startColor = from.CGColor;
-    CGColorRef endColor = to.CGColor;    
-    NSArray *colors = [NSArray arrayWithObjects:(id)startColor, (id)endColor, nil];
-    
-    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, 
-                                                        (CFArrayRef) colors, locations);
-    
     CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
     CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
     
-    CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
-    CGGradientRelease(gradient);
-    CGColorSpaceRelease(colorSpace);
-    
+    [PrettyDrawing drawGradientForContext:ctx startPoint:startPoint endPoint:endPoint fromColor:from toColor:to];
+        
     CGContextRestoreGState(ctx);
 }
 
@@ -142,6 +197,39 @@
     return [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16))/255.0
                            green:((float)((hex & 0xFF00) >> 8))/255.0 
                             blue:((float)(hex & 0xFF))/255.0 alpha:1.0];
+}
+
+-(void)getRGBColorComponents:(CGFloat [4])components {
+    if (CGColorGetNumberOfComponents([self CGColor]) == 4) {
+        const CGFloat *actualComponents = CGColorGetComponents([self CGColor]);
+        
+        components[0] = actualComponents[0];
+        components[1] = actualComponents[1];
+        components[2] = actualComponents[2];
+        components[3] = actualComponents[3];
+
+        return;
+    }
+    
+    components[3] = CGColorGetAlpha([self CGColor]);
+    
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    unsigned char resultingPixel[4];
+    CGContextRef context = CGBitmapContextCreate(&resultingPixel,
+                                                 1,
+                                                 1,
+                                                 8,
+                                                 4,
+                                                 rgbColorSpace,
+                                                 kCGImageAlphaNoneSkipLast);
+    CGContextSetFillColorWithColor(context, [self CGColor]);
+    CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
+    CGContextRelease(context);
+    CGColorSpaceRelease(rgbColorSpace);
+    
+    for (int component = 0; component < 3; component++) {
+        components[component] = resultingPixel[component] / 255.0f;
+    }
 }
 
 

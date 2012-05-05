@@ -41,6 +41,26 @@ typedef enum {
 @interface PrettyDrawing : NSObject
 
 /** 
+ Returns a CGMutablePathRef that is for a Rounded Rectangle in rect with corner radii radius.
+ */
+CGMutablePathRef PrettyKitCreateMutablePathForRoundedRect(CGRect rect, CGFloat radius);
+
+/** 
+ Draws a rounded rectangle using the radius and fill color into a rect
+ */
++ (void)drawRoundedRect:(CGRect)rect cornerRadius:(CGFloat)radius color:(UIColor *)color;
+
+/** 
+ Draws a gradient into a context using a startPoint, endPOint and a from and to color
+ */
++ (void)drawGradientForContext:(CGContextRef)context startPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint fromColor:(UIColor *)fromColor toColor:(UIColor *)toColor;
+
+/** 
+ Draws a rounded rect with a gradient and a corner radius into a rect
+ */
++ (void)drawGradientRoundedRect:(CGRect)rect cornerRadius:(CGFloat)radius fromColor:(UIColor *)from toColor:(UIColor *)to;
+
+/** 
  Draws a gradient with the given colors into the given rect.
  */
 + (void) drawGradient:(CGRect)rect fromColor:(UIColor *)from toColor:(UIColor *)to;
@@ -97,5 +117,12 @@ typedef enum {
  
  @return A new autoreleased UIColor instance. */
 + (UIColor *) colorWithHex:(int)hex;
+
+/** Converts the color to an RGB colorspace and puts values of the components into the components parameter
+ 
+ @param Pointer to a CGFloat array of the most 4 elements
+ 
+ */
+-(void)getRGBColorComponents:(CGFloat [4])components;
 
 @end
