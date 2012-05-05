@@ -45,7 +45,7 @@
 
 @implementation PrettyTabBar
 @synthesize upwardsShadowOpacity, downwardsShadowOpacity, gradientStartColor, gradientEndColor, separatorLineColor;
-@synthesize prettyTabBarButtons = _prettyTabBarItems;
+@synthesize prettyTabBarButtons = _prettyTabBarButtons;
 
 @synthesize _prettyTabBarButtons = __prettyTabBarButtons, _originalTabBarButtons = __originalTabBarButtons;
 
@@ -105,18 +105,12 @@
 
 #pragma mark - Overrides to handle internal PrettyTabBarButton if mode is set
 
--(void)setPrettyTabBarItems:(BOOL)prettyTabBarItems {
-   
-    _prettyTabBarItems = prettyTabBarItems;
-    
-    for (UIView *view in __originalTabBarButtons) {
-        [self addSubview:view];
-    }
-    
-    [__originalTabBarButtons removeAllObjects];
+-(void)setPrettyTabBarButtons:(BOOL)prettyTabBarButtons {
+    _prettyTabBarButtons = prettyTabBarButtons;
     
     [self setNeedsLayout];
 }
+
 
 -(void)setSelectedItem:(UITabBarItem *)selectedItem {
     if (self.prettyTabBarButtons) {
@@ -204,11 +198,17 @@
             [button addGestureRecognizer:tappedButton];
             [tappedButton release];
             
+            if (item == self.selectedItem) {
+                button.selected = YES;
+            } else {
+                button.selected = NO;
+            }
+            
             [self addSubview:button];
             [__prettyTabBarButtons addObject:button];
             [button release];
         }
-    } 
+    }
     
 }
 
