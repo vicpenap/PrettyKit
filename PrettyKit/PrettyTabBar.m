@@ -40,7 +40,7 @@
 @interface PrettyTabBar (/* Private Methods */)
 @property (nonatomic, retain) NSMutableArray *_prettyTabBarButtons;
 @property (nonatomic, retain) NSMutableArray *_originalTabBarButtons;
--(void)_prettyTabButtonTapped:(UIGestureRecognizer *)gestureRecognizer;
+-(void)_resetSelectionStates;
 @end
 
 @implementation PrettyTabBar
@@ -103,41 +103,21 @@
     return self;
 }
 
-#pragma mark - Overrides to handle internal PrettyTabBarButton if mode is set
+#pragma mark - Overrides to handle internal PrettyTabBarButton
 
 -(void)setPrettyTabBarButtons:(BOOL)prettyTabBarButtons {
     _prettyTabBarButtons = prettyTabBarButtons;
     
-    [self setNeedsLayout];
+    if (self.superview)
+        [self setNeedsLayout];
 }
 
-
--(void)setSelectedItem:(UITabBarItem *)selectedItem {
+-(void)_resetSelectionStates {
     if (self.prettyTabBarButtons) {
-        // do stuff
-        NSInteger index = [self.items indexOfObject:selectedItem];
-        
-        for (int i=0;i<[__prettyTabBarButtons count];i++) {
-            if (i == index) {
-                ((PrettyTabBarButton *)[__prettyTabBarButtons objectAtIndex:i]).selected = YES;
-            } else {
-                ((PrettyTabBarButton *)[__prettyTabBarButtons objectAtIndex:i]).selected = NO;
-            }
+        for (PrettyTabBarButton *button in __prettyTabBarButtons) {
+            button.selected = NO;
         }
-        
-        if ([self.delegate respondsToSelector:@selector(tabBar:didSelectItem:)]) {
-            [self.delegate tabBar:self didSelectItem:[self.items objectAtIndex:index]];
-        }
-        
-    } else {
-        [super setSelectedItem:selectedItem];
     }
-    
-}
-
--(void)_prettyTabButtonTapped:(UIGestureRecognizer *)gestureRecognizer {
-    NSInteger index = gestureRecognizer.view.tag;
-    [self setSelectedItem:[self.items objectAtIndex:index]];        
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -155,6 +135,15 @@
 #pragma mark - Display
 
 -(void)layoutSubviews {
+    
+    if (!self.prettyTabBarButtons) {
+        for (UIView *view in __originalTabBarButtons) {
+            [self addSubview:view];
+        }
+        
+        [__originalTabBarButtons removeAllObjects];
+    }
+
     [super layoutSubviews];
 
     if ([self.items count] > 5)
@@ -173,8 +162,7 @@
             }
         }
     }
-    
-        
+            
     if (self.prettyTabBarButtons) {
         [__prettyTabBarButtons removeAllObjects];
 
@@ -192,11 +180,8 @@
             button.frame = CGRectMake(i * itemWidth, 0, itemWidth, self.frame.size.height);
             button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
             button.badgeValue = item.badgeValue;
-            
-            UITapGestureRecognizer *tappedButton = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_prettyTabButtonTapped:)];
-            tappedButton.numberOfTapsRequired = 1;
-            [button addGestureRecognizer:tappedButton];
-            [tappedButton release];
+            button.delegate = self;
+            button.tabBarItem = item;
             
             if (item == self.selectedItem) {
                 button.selected = YES;

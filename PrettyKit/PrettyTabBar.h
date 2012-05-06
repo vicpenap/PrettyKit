@@ -74,5 +74,4 @@
  By default is NO. */
 @property (nonatomic) BOOL prettyTabBarButtons;
 
-
 @end
