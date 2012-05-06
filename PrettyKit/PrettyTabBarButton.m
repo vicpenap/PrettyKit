@@ -28,7 +28,6 @@
 #import "PrettyTabBarButton.h"
 #import "PrettyDrawing.h"
 
-#define default_want_text_shadow                YES
 #define default_text_shadow_offset              CGSizeMake(0,-1)
 #define default_text_shadow_opacity             0.5
 #define default_font                            [UIFont fontWithName:@"HelveticaNeue-Bold" size:10]
@@ -53,7 +52,7 @@
 @synthesize selected = _selected, delegate, tabBarItem;
 @synthesize textColor, font, highlightedTextColor;
 @synthesize highlightImage, highlightGradientStartColor, highlightGradientEndColor;
-@synthesize wantTextShadow, textShadowOpacity, textShadowOffset;
+@synthesize textShadowOpacity, textShadowOffset;
 @synthesize badgeBorderColor, badgeGradientEndColor, badgeGradientStartColor, badgeFont, badgeShadowOffset, badgeShadowOpacity, badgeTextColor;
 
 -(id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag {
@@ -122,7 +121,6 @@
     self.textColor = default_text_color;
     self.highlightedTextColor = default_highlighted_text_color;
     self.highlightedImage = nil;
-    self.wantTextShadow = default_want_text_shadow;
     self.textShadowOpacity = default_text_shadow_opacity;
     self.textShadowOffset = default_text_shadow_offset;
     self.badgeBorderColor = default_badge_border_color;
@@ -225,9 +223,7 @@
     // draw text
     CGContextSaveGState(context);
 
-    if (self.wantTextShadow) {
-        CGContextSetShadow(context, self.textShadowOffset, self.textShadowOpacity);
-    }
+    CGContextSetShadow(context, self.textShadowOffset, self.textShadowOpacity);
     
     if (self.selected) {
         [self.highlightedTextColor setFill];
