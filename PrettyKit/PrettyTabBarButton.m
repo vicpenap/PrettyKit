@@ -49,7 +49,7 @@
 #define IMAGE_WIDTH 33.0
 
 @interface PrettyTabBarButton (/* Pirvate Method */)
-
+-(CGSize)_sizeForWidth:(CGFloat)width height:(CGFloat)height;
 @end
 
 @implementation PrettyTabBarButton
@@ -173,6 +173,19 @@
 
 #pragma mark - Drawing
 
+-(CGSize)_sizeForWidth:(CGFloat)width height:(CGFloat)height {
+    CGFloat returnWidth = IMAGE_WIDTH;
+    CGFloat returnHeight = IMAGE_HEIGHT;
+    
+    if (width < IMAGE_WIDTH)
+        returnWidth = self.image.size.width;
+    
+    if (height < IMAGE_HEIGHT)
+        returnHeight = self.image.size.height;
+    
+    return CGSizeMake(returnWidth, returnHeight);
+}
+
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
@@ -214,21 +227,17 @@
     
     // draw image
     if (self.image) {
-        CGFloat width = IMAGE_WIDTH;
-        CGFloat height = IMAGE_HEIGHT;
-        
-        if (self.image.size.width < IMAGE_WIDTH)
-            width = self.image.size.width;
-        
-        if (self.image.size.height < IMAGE_HEIGHT)
-            height = self.image.size.height;
 
-        CGRect imageRect = CGRectMake((self.frame.size.width - width)/2, (self.frame.size.height - titleSize.height - self.image.size.height)/2, width, height);
+        CGSize imageSize = [self _sizeForWidth:self.image.size.width height:self.image.size.height];
+        
+        CGRect imageRect = CGRectMake((self.frame.size.width - imageSize.width)/2, (self.frame.size.height - titleSize.height - imageSize.height)/2, imageSize.width, imageSize.height);
 
         if (self.selected) {
             // do the tint... or use the highlight image
             if (self.highlightedImage) {
-                [self.highlightedImage drawInRect:CGRectMake((self.frame.size.width - width)/2, (self.frame.size.height - titleSize.height - self.highlightedImage.size.height)/2, width, height)];
+                CGSize highlightedImageSize = [self _sizeForWidth:self.highlightedImage.size.width height:self.highlightedImage.size.height];
+                
+                [self.highlightedImage drawInRect:CGRectMake((self.frame.size.width - highlightedImageSize.width)/2, (self.frame.size.height - titleSize.height - highlightedImageSize.height)/2, highlightedImageSize.width, highlightedImageSize.height)];
                 
             } else {
                 
@@ -237,7 +246,7 @@
                 CGContextScaleCTM(context, 1.0, -1.0);
                 
                 CGRect flippedImageRect = imageRect;
-                flippedImageRect.origin.y = ((self.frame.size.height - titleSize.height)/2 - (self.image.size.height/2)) + titleSize.height;
+                flippedImageRect.origin.y = ((self.frame.size.height - titleSize.height)/2 - (imageSize.height/2)) + titleSize.height;
 
                 CGContextClipToMask(context, flippedImageRect, [self.image CGImage]);
 
