@@ -100,6 +100,8 @@
     [_badgeValue release], _badgeValue = nil;
 
     self.highlightedImage = nil;
+    self.highlightedImageGradientStartColor = nil;
+    self.highlightedImageGradientEndColor = nil;
 
     self.font = nil;
     self.textColor = nil;
