@@ -171,8 +171,6 @@
         NSUInteger index = [self.items indexOfObject:item];
         
         [[self._prettyTabBarButtons objectAtIndex:index] setBadgeValue:[change objectForKey:NSKeyValueChangeNewKey]];
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];    
     }
 }
 
@@ -227,20 +225,20 @@
             
             // set button properties
             button.font = self.prettyButtonTitleFont;
-            button.textColor =self.prettyButtonTitleTextColor;
-            button.highlightedTextColor =self.prettyButtonTitleHighlightedTextColor;
-            button.textShadowOpacity =self.prettyButtonTitleTextShadowOpacity;
-            button.textShadowOffset =self.prettyButtonTitleTextShadowOffset;
-            button.badgeBorderColor =self.prettyButtonBadgeBorderColor;
-            button.badgeGradientStartColor =self.prettyButtonBadgeGradientStartColor;
-            button.badgeGradientEndColor =self.prettyButtonBadgeGradientEndColor;
-            button.badgeShadowOffset =self.prettyButtonBadgeShadowOffset;
-            button.badgeShadowOpacity =self.prettyButtonBadgeShadowOpacity;
-            button.badgeFont =self.prettyButtonBadgeFont;
-            button.badgeTextColor =self.prettyButtonBadgeTextColor;
-            button.highlightImage =self.prettyButtonHighlightImage;
-            button.highlightGradientStartColor =self.prettyButtonHighlightGradientStartColor;
-            button.highlightGradientEndColor =self.prettyButtonHighlightGradientEndColor;
+            button.textColor = self.prettyButtonTitleTextColor;
+            button.highlightedTextColor = self.prettyButtonTitleHighlightedTextColor;
+            button.textShadowOpacity = self.prettyButtonTitleTextShadowOpacity;
+            button.textShadowOffset = self.prettyButtonTitleTextShadowOffset;
+            button.badgeBorderColor = self.prettyButtonBadgeBorderColor;
+            button.badgeGradientStartColor = self.prettyButtonBadgeGradientStartColor;
+            button.badgeGradientEndColor = self.prettyButtonBadgeGradientEndColor;
+            button.badgeShadowOffset = self.prettyButtonBadgeShadowOffset;
+            button.badgeShadowOpacity = self.prettyButtonBadgeShadowOpacity;
+            button.badgeFont = self.prettyButtonBadgeFont;
+            button.badgeTextColor = self.prettyButtonBadgeTextColor;
+            button.highlightImage = self.prettyButtonHighlightImage;
+            button.highlightGradientStartColor = self.prettyButtonHighlightGradientStartColor;
+            button.highlightGradientEndColor = self.prettyButtonHighlightGradientEndColor;
             
             if (item == self.selectedItem) {
                 button.selected = YES;
