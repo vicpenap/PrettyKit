@@ -60,6 +60,7 @@
 @property (nonatomic, retain) NSMutableArray *_originalTabBarButtons;
 -(void)_prettyTabBarButtonTapped:(id)sender;
 -(UIImage *)_imageForPrettyButtonImagesOfIndex:(NSInteger)index;
+-(void)_setupTabBarSubviews;
 @end
 
 @implementation PrettyTabBar
@@ -165,72 +166,90 @@
 
 #pragma mark - Overrides to handle internal PrettyTabBarButton
 
+-(void)setItems:(NSArray *)items {
+    [super setItems:items];
+    
+    [self _setupTabBarSubviews];
+}
+
+-(void)setItems:(NSArray *)items animated:(BOOL)animated {
+    [super setItems:items animated:animated];
+
+    [self _setupTabBarSubviews];
+}
+
+
+-(void)_setupTabBarSubviews {
+    if (_prettyTabBarButtons) {
+        // changing from original to pretty implementation       
+        
+        // remove views that are not prettytabbarbuttons
+        // they are usually the original buttons so add them to temp storage
+        for (UIView *view in self.subviews) {
+            if (![view isKindOfClass:[PrettyTabBarButton class]])
+                [__originalTabBarButtons addObject:view];
+            
+            [view removeFromSuperview];
+        }
+        
+        PrettyTabBarButton *button = nil;            
+        // iterate over the data objects (UITabBarItem) and create the
+        // pretty tabbar buttons that they represent and position them 
+        // in the view.
+        // we leave setting of properties to the laying out of subviews
+        // where its always supposed to be anyways
+        NSUInteger i = 0;
+        
+        for (UITabBarItem *item in self.items) {
+            [item addObserver:self forKeyPath:@"badgeValue" options:NSKeyValueObservingOptionNew context:item];
+            
+            button = [[PrettyTabBarButton alloc] initWithTitle:item.title image:item.image tag:i];
+            button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+            [button addTarget:self action:@selector(_prettyTabBarButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [self addSubview:button];
+            [__prettyTabBarButtons addObject:button];
+            [button release];
+            i++;
+        }                
+        
+        
+    } else {
+        // changing from pretty to original implementation
+        
+        // remove observation status and remove the object from super view
+        NSUInteger i = 0;
+        
+        for (UITabBarItem *item in self.items) {
+            [item removeObserver:self forKeyPath:@"badgeValue"];
+            if ([__prettyTabBarButtons count] > 0)
+                [[__prettyTabBarButtons objectAtIndex:i] removeFromSuperview];
+            
+            i++;
+        }                
+        
+        [__prettyTabBarButtons removeAllObjects];
+        
+        // lets add all the original buttons back into the view!
+        for (UIView *view in self._originalTabBarButtons) {
+            [self addSubview:view];
+        }
+        
+        [__originalTabBarButtons removeAllObjects];
+        
+    }
+}
+
 -(void)setPrettyTabBarButtons:(BOOL)prettyTabBarButtons {
     
     // we should only change the status if its different
     
     if (_prettyTabBarButtons != prettyTabBarButtons) {
         
-        if (prettyTabBarButtons) {
-            // changing from original to pretty implementation       
-            
-            // remove views that are not prettytabbarbuttons
-            // they are usually the original buttons so add them to temp storage
-            for (UIView *view in self.subviews) {
-                if (![view isKindOfClass:[PrettyTabBarButton class]])
-                    [__originalTabBarButtons addObject:view];
-
-                [view removeFromSuperview];
-            }
-            
-            UITabBarItem *item = nil;
-            PrettyTabBarButton *button = nil;
-            
-            // iterate over the data objects (UITabBarItem) and create the
-            // pretty tabbar buttons that they represent and position them 
-            // in the view.
-            // we leave setting of properties to the laying out of subviews
-            // where its always supposed to be anyways
-            if ([self.items count] > 0) {
-                for (int i=0;i<[self.items count];i++) {
-                    item = [self.items objectAtIndex:i];
-                    [item addObserver:self forKeyPath:@"badgeValue" options:NSKeyValueObservingOptionNew context:item];
-                    
-                    button = [[PrettyTabBarButton alloc] initWithTitle:item.title image:item.image tag:i];
-                    button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-                    [button addTarget:self action:@selector(_prettyTabBarButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-                    
-                    [self addSubview:button];
-                    [__prettyTabBarButtons addObject:button];
-                    [button release];
-                }                
-            }
-
-            
-        } else {
-            // changing from pretty to original implementation
-
-            // remove observation status and remove the object from super view
-            if ([self.items count] > 0) {
-                for (int i=0;i<[self.items count];i++) {
-                    [[self.items objectAtIndex:i] removeObserver:self forKeyPath:@"badgeValue"];
-                    [[__prettyTabBarButtons objectAtIndex:i] removeFromSuperview];
-                }                
-            }
-            
-            [__prettyTabBarButtons removeAllObjects];
-            
-            // lets add all the original buttons back into the view!
-            for (UIView *view in self._originalTabBarButtons) {
-                [self addSubview:view];
-            }
-            
-            [__originalTabBarButtons removeAllObjects];
-
-        }
-        
-        // finally set the status of our internal representation
+        // set the status of our internal representation
         _prettyTabBarButtons = prettyTabBarButtons;
+
+        [self _setupTabBarSubviews];
 
         // finally, layout if there is a superview, ie. our view has been
         // added as a view somewhere
@@ -262,13 +281,16 @@
         UITabBarItem *item = (UITabBarItem *)context;
         NSUInteger index = [self.items indexOfObject:item];
         
-        if (index != NSNotFound)
+        if ((index != NSNotFound) && ([self._prettyTabBarButtons count] > 0))
             [[self._prettyTabBarButtons objectAtIndex:index] setBadgeValue:[change objectForKey:NSKeyValueChangeNewKey]];
     }
 }
 
 #pragma mark - Display
 -(UIImage *)_imageForPrettyButtonImagesOfIndex:(NSInteger)index {
+    if ([self.prettyButtonHighlightedImages count] == 0)
+        return nil;
+    
     id image = [self.prettyButtonHighlightedImages objectAtIndex:index];
     
     if ([image isKindOfClass:[NSNull class]])
@@ -279,21 +301,24 @@
 
 -(void)layoutSubviews {
     
-    [super layoutSubviews];
-
     // make sure item count is not greater than 5. as we didn't
     // cater for customization of items.
     if ([self.items count] > 5)
         self.prettyTabBarButtons = NO;
     
+    [super layoutSubviews];
+    
     // so if we are the right mode and there are actual data objects
     // lets go ahead and layout the pretty buttons
-    if ((self.prettyTabBarButtons) && ([self.items count] > 0)) {
+    if (self.prettyTabBarButtons) {
         PrettyTabBarButton *button = nil;
-        UITabBarItem *item = nil;
+        NSUInteger i = 0;
         
         // set frame and set all properties!
-        for (int i=0;i<[self.items count];i++) {
+        for (UITabBarItem *item in self.items) {
+            if ([self._prettyTabBarButtons count] == 0)
+                break;
+            
             button = [self._prettyTabBarButtons objectAtIndex:i];
             button.frame = CGRectMake(i * (self.frame.size.width/[self.items count]), 0, (self.frame.size.width/[self.items count]), self.frame.size.height);
 
@@ -321,6 +346,8 @@
 
             if (item == self.selectedItem)
                 button.selected = YES;
+            
+            i++;
         }
         
     }
