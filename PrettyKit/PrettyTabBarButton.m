@@ -31,7 +31,7 @@
 #define default_want_text_shadow                YES
 #define default_text_shadow_offset              CGSizeMake(0,-1)
 #define default_text_shadow_opacity             0.5
-#define default_font                            [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
+#define default_font                            [UIFont fontWithName:@"HelveticaNeue-Bold" size:10]
 #define default_text_color                      [UIColor colorWithWhite:0.2 alpha:1.0]
 #define default_highlighted_text_color          [UIColor colorWithWhite:0.90 alpha:1.0]
 #define default_badge_font                      [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
@@ -44,10 +44,13 @@
 #define default_highlight_gradient_start_color  [UIColor colorWithWhite:0.4 alpha:1.0] 
 #define default_highlight_gradient_end_color    [UIColor colorWithWhite:0.1 alpha:1.0]
 
+@interface PrettyTabBarButton (/* Pirvate Method */)
+-(void)_prettyTabButtonTapped:(UIGestureRecognizer *)gestureRecognizer;
+@end
 
 @implementation PrettyTabBarButton
 @synthesize title = _title, image = _image, highlightedImage, badgeValue = _badgeValue;
-@synthesize selected = _selected;
+@synthesize selected = _selected, delegate, tabBarItem;
 @synthesize textColor, font, highlightedTextColor;
 @synthesize highlightImage, highlightGradientStartColor, highlightGradientEndColor;
 @synthesize wantTextShadow, textShadowOpacity, textShadowOffset;
@@ -145,6 +148,42 @@
     self.opaque = NO;
     self.backgroundColor = [UIColor clearColor];
 
+    // Since we're tight coupling PrettyTabBar and its associated PrettyTabBarButton
+    // its fine if we implement touch detection on the button itself
+    UITapGestureRecognizer *tappedButton = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_prettyTabButtonTapped:)];
+    tappedButton.numberOfTapsRequired = 1;
+    [self addGestureRecognizer:tappedButton];
+    [tappedButton release];
+}
+
+#pragma mark - Selection and Accessors
+
+-(void)_prettyTabButtonTapped:(UIGestureRecognizer *)gestureRecognizer {
+    
+    // Work around to allow PrettyTabBar with the pretty buttons enabled
+    // to work properly with UITabBarControllers.
+    // This is because UITabBars disallow direct manipulation of its properties
+    // if it is being managed by a UITabBarController.
+     
+    if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(_resetSelectionStates)])
+            [self.delegate performSelector:@selector(_resetSelectionStates)];
+        
+        if (self.tabBarItem) {
+            // if delegate is the TabBarController, we can only modify selection
+            // via its public interfaces
+            if ([self.delegate.delegate isKindOfClass:[UITabBarController class]]) {
+                [((UITabBarController *)self.delegate.delegate) setSelectedIndex:self.tag];
+                
+            } else {
+                [self.delegate setSelectedItem:self.tabBarItem];
+                
+            }
+        }
+
+    } 
+    
+    self.selected = YES;
 }
 
 -(void)setSelected:(BOOL)selected {
@@ -160,6 +199,8 @@
     
     [self setNeedsDisplay];
 }
+
+#pragma mark - Drawing
 
 - (void)drawRect:(CGRect)rect
 {

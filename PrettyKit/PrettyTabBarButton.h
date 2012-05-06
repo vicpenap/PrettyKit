@@ -26,6 +26,7 @@
 // SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import "PrettyTabBar.h"
 
 @interface PrettyTabBarButton : UIView
 
@@ -56,6 +57,9 @@
 @property (nonatomic) CGSize badgeShadowOffset;
 @property (nonatomic, retain) UIFont *badgeFont;
 @property (nonatomic, retain) UIColor *badgeTextColor;
+
+@property (nonatomic, assign) PrettyTabBar *delegate;
+@property (nonatomic, assign) UITabBarItem *tabBarItem;
 
 -(id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
 
