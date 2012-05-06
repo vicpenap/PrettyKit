@@ -166,10 +166,76 @@
 #pragma mark - Overrides to handle internal PrettyTabBarButton
 
 -(void)setPrettyTabBarButtons:(BOOL)prettyTabBarButtons {
-    _prettyTabBarButtons = prettyTabBarButtons;
     
-    if (self.superview)
-        [self setNeedsLayout];
+    // we should only change the status if its different
+    
+    if (_prettyTabBarButtons != prettyTabBarButtons) {
+        
+        if (prettyTabBarButtons) {
+            // changing from original to pretty implementation       
+            
+            // remove views that are not prettytabbarbuttons
+            // they are usually the original buttons so add them to temp storage
+            for (UIView *view in self.subviews) {
+                if (![view isKindOfClass:[PrettyTabBarButton class]])
+                    [__originalTabBarButtons addObject:view];
+
+                [view removeFromSuperview];
+            }
+            
+            UITabBarItem *item = nil;
+            PrettyTabBarButton *button = nil;
+            
+            // iterate over the data objects (UITabBarItem) and create the
+            // pretty tabbar buttons that they represent and position them 
+            // in the view.
+            // we leave setting of properties to the laying out of subviews
+            // where its always supposed to be anyways
+            if ([self.items count] > 0) {
+                for (int i=0;i<[self.items count];i++) {
+                    item = [self.items objectAtIndex:i];
+                    [item addObserver:self forKeyPath:@"badgeValue" options:NSKeyValueObservingOptionNew context:item];
+                    
+                    button = [[PrettyTabBarButton alloc] initWithTitle:item.title image:item.image tag:i];
+                    button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+                    [button addTarget:self action:@selector(_prettyTabBarButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                    
+                    [self addSubview:button];
+                    [__prettyTabBarButtons addObject:button];
+                    [button release];
+                }                
+            }
+
+            
+        } else {
+            // changing from pretty to original implementation
+
+            // remove observation status and remove the object from super view
+            for (int i=0;i<[self.items count];i++) {
+                [[self.items objectAtIndex:i] removeObserver:self forKeyPath:@"badgeValue"];
+                [[__prettyTabBarButtons objectAtIndex:i] removeFromSuperview];
+            }
+            
+            [__prettyTabBarButtons removeAllObjects];
+            
+            // lets add all the original buttons back into the view!
+            for (UIView *view in self._originalTabBarButtons) {
+                [self addSubview:view];
+            }
+            
+            [__originalTabBarButtons removeAllObjects];
+
+        }
+        
+        // finally set the status of our internal representation
+        _prettyTabBarButtons = prettyTabBarButtons;
+
+        // finally, layout if there is a superview, ie. our view has been
+        // added as a view somewhere
+        if (self.superview)
+            [self setNeedsLayout];
+    }    
+    
 }
 
 -(void)_prettyTabBarButtonTapped:(id)sender {
@@ -210,52 +276,24 @@
 
 -(void)layoutSubviews {
     
-    if (!self.prettyTabBarButtons) {
-        for (UIView *view in __originalTabBarButtons) {
-            [self addSubview:view];
-        }
-        
-        [__originalTabBarButtons removeAllObjects];
-    }
-
     [super layoutSubviews];
 
+    // make sure item count is not greater than 5. as we didn't
+    // cater for customization of items.
     if ([self.items count] > 5)
         self.prettyTabBarButtons = NO;
-
-    for (UIView *view in self.subviews) {
-
-        if (self.prettyTabBarButtons) {
-            if (![view isKindOfClass:[PrettyTabBarButton class]]) {
-                [__originalTabBarButtons addObject:view];
-            }            
-            [view removeFromSuperview];
-        } else {
-            if ([view isKindOfClass:[PrettyTabBarButton class]]) {
-                [view removeFromSuperview];
-            }
-        }
-    }
-            
-    if (self.prettyTabBarButtons) {
-        [__prettyTabBarButtons removeAllObjects];
-
-        // do stuff
+    
+    // so if we are the right mode and there are actual data objects
+    // lets go ahead and layout the pretty buttons
+    if ((self.prettyTabBarButtons) && ([self.items count] > 0)) {
         PrettyTabBarButton *button = nil;
         UITabBarItem *item = nil;
         
-        CGFloat itemWidth = self.frame.size.width/[self.items count];
-        
+        // set frame and set all properties!
         for (int i=0;i<[self.items count];i++) {
-            item = [self.items objectAtIndex:i];
-            [item addObserver:self forKeyPath:@"badgeValue" options:NSKeyValueObservingOptionNew context:item];
-            
-            button = [[PrettyTabBarButton alloc] initWithTitle:item.title image:item.image tag:i];
-            button.frame = CGRectMake(i * itemWidth, 0, itemWidth, self.frame.size.height);
-            button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-            button.badgeValue = item.badgeValue;
-            [button addTarget:self action:@selector(_prettyTabBarButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            
+            button = [self._prettyTabBarButtons objectAtIndex:i];
+            button.frame = CGRectMake(i * (self.frame.size.width/[self.items count]), 0, (self.frame.size.width/[self.items count]), self.frame.size.height);
+
             // set button properties
             button.font = self.prettyButtonTitleFont;
             button.textColor = self.prettyButtonTitleTextColor;
@@ -276,16 +314,12 @@
             button.highlightedImageGradientStartColor = self.prettyButtonHighlightedImageGradientStartColor;
             button.highlightedImageGradientEndColor = self.prettyButtonHighlightedImageGradientEndColor;
             
-            if (item == self.selectedItem) {
+            button.selected = NO;
+
+            if (item == self.selectedItem)
                 button.selected = YES;
-            } else {
-                button.selected = NO;
-            }
-            
-            [self addSubview:button];
-            [__prettyTabBarButtons addObject:button];
-            [button release];
         }
+        
     }
     
 }
