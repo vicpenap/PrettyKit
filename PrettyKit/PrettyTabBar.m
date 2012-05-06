@@ -31,37 +31,42 @@
 #import "PrettyDrawing.h"
 #import "PrettyTabBarButton.h"
 
-#define default_upwards_shadow_opacity          0.5
-#define default_downwards_shadow_opacity        0.5
-#define default_gradient_start_color            [UIColor colorWithHex:0x444444]
-#define default_gradient_end_color              [UIColor colorWithHex:0x060606]
-#define default_separator_line_color            [UIColor colorWithHex:0x666666]
+#define default_upwards_shadow_opacity                  0.5
+#define default_downwards_shadow_opacity                0.5
+#define default_gradient_start_color                    [UIColor colorWithHex:0x444444]
+#define default_gradient_end_color                      [UIColor colorWithHex:0x060606]
+#define default_separator_line_color                    [UIColor colorWithHex:0x666666]
 
-#define default_text_shadow_offset              CGSizeMake(0,-1)
-#define default_text_shadow_opacity             0.5
-#define default_font                            [UIFont fontWithName:@"HelveticaNeue-Bold" size:10]
-#define default_text_color                      [UIColor colorWithWhite:0.2 alpha:1.0]
-#define default_highlighted_text_color          [UIColor colorWithWhite:0.90 alpha:1.0]
-#define default_badge_font                      [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
-#define default_badge_gradient_start_color      [UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:1.000]
-#define default_badge_gradient_end_color        [UIColor colorWithRed:0.6 green:0.000 blue:0.000 alpha:1.000]
-#define default_badge_border_color              [UIColor whiteColor]
-#define default_badge_shadow_opacity            0.75
-#define default_badge_shadow_offset             CGSizeMake(0,2)
-#define default_badge_text_color                [UIColor whiteColor]
-#define default_highlight_gradient_start_color  [UIColor colorWithWhite:0.4 alpha:1.0] 
-#define default_highlight_gradient_end_color    [UIColor colorWithWhite:0.1 alpha:1.0]
+// pretty buttons
+#define default_text_shadow_offset                      CGSizeMake(0,-1)
+#define default_text_shadow_opacity                     0.5
+#define default_font                                    [UIFont fontWithName:@"HelveticaNeue-Bold" size:10]
+#define default_text_color                              [UIColor colorWithWhite:0.2 alpha:1.0]
+#define default_highlighted_text_color                  [UIColor colorWithWhite:0.90 alpha:1.0]
+#define default_badge_font                              [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
+#define default_badge_gradient_start_color              [UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:1.000]
+#define default_badge_gradient_end_color                [UIColor colorWithRed:0.6 green:0.000 blue:0.000 alpha:1.000]
+#define default_badge_border_color                      [UIColor whiteColor]
+#define default_badge_shadow_opacity                    0.75
+#define default_badge_shadow_offset                     CGSizeMake(0,2)
+#define default_badge_text_color                        [UIColor whiteColor]
+#define default_highlight_gradient_start_color          [UIColor colorWithWhite:0.4 alpha:1.0] 
+#define default_highlight_gradient_end_color            [UIColor colorWithWhite:0.1 alpha:1.0]
+#define default_highlighted_image_gradient_start_color  [UIColor colorWithRed:0.276 green:0.733 blue:1.000 alpha:1.000]
+#define default_highlighted_image_gradient_end_color    [UIColor colorWithRed:0.028 green:0.160 blue:0.332 alpha:1.000]
 
 @interface PrettyTabBar (/* Private Methods */)
 @property (nonatomic, retain) NSMutableArray *_prettyTabBarButtons;
 @property (nonatomic, retain) NSMutableArray *_originalTabBarButtons;
 -(void)_prettyTabBarButtonTapped:(id)sender;
+-(UIImage *)_imageForPrettyButtonImagesOfIndex:(NSInteger)index;
 @end
 
 @implementation PrettyTabBar
 @synthesize upwardsShadowOpacity, downwardsShadowOpacity, gradientStartColor, gradientEndColor, separatorLineColor;
 @synthesize prettyTabBarButtons = _prettyTabBarButtons;
 
+@synthesize prettyButtonHighlightedImageGradientStartColor, prettyButtonHighlightedImageGradientEndColor, prettyButtonHighlightedImages;
 @synthesize prettyButtonTitleFont, prettyButtonTitleTextColor, prettyButtonTitleHighlightedTextColor, prettyButtonTitleTextShadowOpacity, prettyButtonTitleTextShadowOffset;
 @synthesize prettyButtonHighlightGradientStartColor, prettyButtonHighlightGradientEndColor, prettyButtonHighlightImage;
 @synthesize prettyButtonBadgeBorderColor, prettyButtonBadgeGradientStartColor, prettyButtonBadgeGradientEndColor, prettyButtonBadgeShadowOpacity, prettyButtonBadgeShadowOffset, prettyButtonBadgeFont, prettyButtonBadgeTextColor;
@@ -77,6 +82,22 @@
     
     self._originalTabBarButtons = nil;
     self._prettyTabBarButtons = nil;
+    
+    self.prettyButtonHighlightedImages = nil;
+    
+    self.prettyButtonHighlightedImageGradientStartColor = nil;
+    self.prettyButtonHighlightedImageGradientEndColor = nil;
+    self.prettyButtonTitleFont = nil;
+    self.prettyButtonTitleTextColor = nil;
+    self.prettyButtonTitleHighlightedTextColor = nil;
+    self.prettyButtonBadgeBorderColor = nil;
+    self.prettyButtonBadgeGradientStartColor = nil;
+    self.prettyButtonBadgeGradientEndColor = nil;
+    self.prettyButtonBadgeFont = nil;
+    self.prettyButtonBadgeTextColor = nil;
+    self.prettyButtonHighlightImage = nil;
+    self.prettyButtonHighlightGradientStartColor = nil;
+    self.prettyButtonHighlightGradientEndColor = nil;
     
     [super dealloc];
 }
@@ -96,7 +117,10 @@
     // pretty button stuff
     __prettyTabBarButtons = [[NSMutableArray arrayWithCapacity:5] retain];
     __originalTabBarButtons = [[NSMutableArray arrayWithCapacity:0] retain];
+    self.prettyButtonHighlightedImages = nil;
     
+    self.prettyButtonHighlightedImageGradientStartColor = default_highlighted_image_gradient_start_color;
+    self.prettyButtonHighlightedImageGradientEndColor = default_highlighted_image_gradient_end_color;
     self.prettyButtonTitleFont = default_font;
     self.prettyButtonTitleTextColor = default_text_color;
     self.prettyButtonTitleHighlightedTextColor = default_highlighted_text_color;
@@ -175,6 +199,15 @@
 }
 
 #pragma mark - Display
+-(UIImage *)_imageForPrettyButtonImagesOfIndex:(NSInteger)index {
+    id image = [self.prettyButtonHighlightedImages objectAtIndex:index];
+    
+    if ([image isKindOfClass:[NSNull class]])
+        return nil;
+    
+    return image;
+}
+
 -(void)layoutSubviews {
     
     if (!self.prettyTabBarButtons) {
@@ -239,6 +272,9 @@
             button.highlightImage = self.prettyButtonHighlightImage;
             button.highlightGradientStartColor = self.prettyButtonHighlightGradientStartColor;
             button.highlightGradientEndColor = self.prettyButtonHighlightGradientEndColor;
+            button.highlightedImage = [self _imageForPrettyButtonImagesOfIndex:i];
+            button.highlightedImageGradientStartColor = self.prettyButtonHighlightedImageGradientStartColor;
+            button.highlightedImageGradientEndColor = self.prettyButtonHighlightedImageGradientEndColor;
             
             if (item == self.selectedItem) {
                 button.selected = YES;

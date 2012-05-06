@@ -77,6 +77,25 @@
  By default is NO. */
 @property (nonatomic) BOOL prettyTabBarButtons;
 
+/** Specifies that images to display when a button is selected.
+ Use [NSNull null] if that particular button should use the gradient tints specified.
+ Otherwise supply a UIImage of the appropriate size.
+ 
+ Images must be added at the same index that the relevant UITabBarItem's index
+ 
+ By default is `nil`. */
+@property (nonatomic, copy) NSArray *prettyButtonHighlightedImages;
+
+/** Specifies the start color for the gradient tint over the image when selected
+ 
+ By default is `[UIColor colorWithRed:0.276 green:0.733 blue:1.000 alpha:1.000]`. */
+@property (nonatomic, retain) UIColor *prettyButtonHighlightedImageGradientStartColor;
+
+/** Specifies the end color for the gradient tint over the image when selected
+ 
+ By default is `[UIColor colorWithRed:0.028 green:0.160 blue:0.332 alpha:1.000]`. */
+@property (nonatomic, retain) UIColor *prettyButtonHighlightedImageGradientEndColor;
+
 /** Specifies the font to use for the title of the button
  
  By default is `[UIFont fontWithName:@"HelveticaNeue-Bold" size:10]`. */
