@@ -40,7 +40,7 @@
 @interface PrettyTabBar (/* Private Methods */)
 @property (nonatomic, retain) NSMutableArray *_prettyTabBarButtons;
 @property (nonatomic, retain) NSMutableArray *_originalTabBarButtons;
--(void)_resetSelectionStates;
+-(void)_prettyTabBarButtonTapped:(id)sender;
 @end
 
 @implementation PrettyTabBar
@@ -112,10 +112,18 @@
         [self setNeedsLayout];
 }
 
--(void)_resetSelectionStates {
+-(void)_prettyTabBarButtonTapped:(id)sender {
     if (self.prettyTabBarButtons) {
         for (PrettyTabBarButton *button in __prettyTabBarButtons) {
             button.selected = NO;
+        }
+        
+        ((PrettyTabBarButton *)sender).selected = YES;
+        
+        if ([sender isKindOfClass:[PrettyTabBarButton class]]) {
+            if ([self.delegate isKindOfClass:[UITabBarController class]]) {
+                [((UITabBarController *)self.delegate) setSelectedIndex:((PrettyTabBarButton *)sender).tag];
+            }
         }
     }
 }
@@ -133,7 +141,6 @@
 }
 
 #pragma mark - Display
-
 -(void)layoutSubviews {
     
     if (!self.prettyTabBarButtons) {
@@ -180,8 +187,7 @@
             button.frame = CGRectMake(i * itemWidth, 0, itemWidth, self.frame.size.height);
             button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
             button.badgeValue = item.badgeValue;
-            button.delegate = self;
-            button.tabBarItem = item;
+            [button addTarget:self action:@selector(_prettyTabBarButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
             
             if (item == self.selectedItem) {
                 button.selected = YES;

@@ -26,9 +26,8 @@
 // SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "PrettyTabBar.h"
 
-@interface PrettyTabBarButton : UIView
+@interface PrettyTabBarButton : UIControl
 
 /** Specifies the image to use when the Button is selected. 
  If it is not specified, the button will use the normal image in another tint.
@@ -129,21 +128,6 @@
  
  By default is `nil`. */
 @property (nonatomic, retain) UIImage *image;
-
-/** Specifies if the button is selected or not
- 
- By default is `NO`. */
-@property (nonatomic) BOOL selected;
-
-/** Specifies the delegate of the button (PrettyTabBar)
- 
- By default is `nil`. */
-@property (nonatomic, assign) PrettyTabBar *delegate;
-
-/** Specifies the tabBarItem associated with this button
- 
- By default is `nil`. */
-@property (nonatomic, assign) UITabBarItem *tabBarItem;
 
 -(id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
 
