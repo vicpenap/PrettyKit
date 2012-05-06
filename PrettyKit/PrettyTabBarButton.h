@@ -29,11 +29,20 @@
 
 @interface PrettyTabBarButton : UIControl
 
-/** Specifies the image to use when the Button is selected. 
- If it is not specified, the button will use the normal image in another tint.
+/** Specifies the image to use when the Button is selected. If it is not specified, the button will use the normal image in a gradient tint that is specified.
  
  By default is `nil`. */
 @property (nonatomic, retain) UIImage *highlightedImage;
+
+/** Specifies the start color for the gradient tint over the image when selected
+ 
+ By default is `[UIColor colorWithRed:0.276 green:0.733 blue:1.000 alpha:1.000]`. */
+@property (nonatomic, retain) UIColor *highlightedImageGradientStartColor;
+
+/** Specifies the end color for the gradient tint over the image when selected
+ 
+ By default is `[UIColor colorWithRed:0.028 green:0.160 blue:0.332 alpha:1.000]`. */
+@property (nonatomic, retain) UIColor *highlightedImageGradientEndColor;
 
 /** Specifies the font to use for the title of the button
  

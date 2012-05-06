@@ -28,28 +28,33 @@
 #import "PrettyTabBarButton.h"
 #import "PrettyDrawing.h"
 
-#define default_text_shadow_offset              CGSizeMake(0,-1)
-#define default_text_shadow_opacity             0.5
-#define default_font                            [UIFont fontWithName:@"HelveticaNeue-Bold" size:10]
-#define default_text_color                      [UIColor colorWithWhite:0.2 alpha:1.0]
-#define default_highlighted_text_color          [UIColor colorWithWhite:0.90 alpha:1.0]
-#define default_badge_font                      [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
-#define default_badge_gradient_start_color      [UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:1.000]
-#define default_badge_gradient_end_color        [UIColor colorWithRed:0.6 green:0.000 blue:0.000 alpha:1.000]
-#define default_badge_border_color              [UIColor whiteColor]
-#define default_badge_shadow_opacity            0.75
-#define default_badge_shadow_offset             CGSizeMake(0,2)
-#define default_badge_text_color                [UIColor whiteColor]
-#define default_highlight_gradient_start_color  [UIColor colorWithWhite:0.4 alpha:1.0] 
-#define default_highlight_gradient_end_color    [UIColor colorWithWhite:0.1 alpha:1.0]
+#define default_text_shadow_offset                      CGSizeMake(0,-1)
+#define default_text_shadow_opacity                     0.5
+#define default_font                                    [UIFont fontWithName:@"HelveticaNeue-Bold" size:10]
+#define default_text_color                              [UIColor colorWithWhite:0.2 alpha:1.0]
+#define default_highlighted_text_color                  [UIColor colorWithWhite:0.90 alpha:1.0]
+#define default_badge_font                              [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
+#define default_badge_gradient_start_color              [UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:1.000]
+#define default_badge_gradient_end_color                [UIColor colorWithRed:0.6 green:0.000 blue:0.000 alpha:1.000]
+#define default_badge_border_color                      [UIColor whiteColor]
+#define default_badge_shadow_opacity                    0.75
+#define default_badge_shadow_offset                     CGSizeMake(0,2)
+#define default_badge_text_color                        [UIColor whiteColor]
+#define default_highlight_gradient_start_color          [UIColor colorWithWhite:0.4 alpha:1.0] 
+#define default_highlight_gradient_end_color            [UIColor colorWithWhite:0.1 alpha:1.0]
+#define default_highlighted_image_gradient_start_color  [UIColor colorWithRed:0.276 green:0.733 blue:1.000 alpha:1.000]
+#define default_highlighted_image_gradient_end_color    [UIColor colorWithRed:0.028 green:0.160 blue:0.332 alpha:1.000]
+
+#define IMAGE_HEIGHT 33.0
+#define IMAGE_WIDTH 33.0
 
 @interface PrettyTabBarButton (/* Pirvate Method */)
 
 @end
 
 @implementation PrettyTabBarButton
-@synthesize title = _title, image = _image, highlightedImage, badgeValue = _badgeValue;
-@synthesize selected = _selected;
+@synthesize title = _title, image = _image, badgeValue = _badgeValue;
+@synthesize highlightedImage, highlightedImageGradientStartColor, highlightedImageGradientEndColor;
 @synthesize textColor, font, highlightedTextColor;
 @synthesize highlightImage, highlightGradientStartColor, highlightGradientEndColor;
 @synthesize textShadowOpacity, textShadowOffset;
@@ -133,6 +138,8 @@
     self.highlightImage = nil;
     self.highlightGradientStartColor = default_highlight_gradient_start_color;
     self.highlightGradientEndColor = default_highlight_gradient_end_color;
+    self.highlightedImageGradientStartColor = default_highlighted_image_gradient_start_color;
+    self.highlightedImageGradientEndColor = default_highlighted_image_gradient_end_color;
     
     // intialize values;
     self.tag = -1;
@@ -151,7 +158,7 @@
 #pragma mark - Selection and Accessors
 
 -(void)setSelected:(BOOL)selected {
-    _selected = selected;
+    [super setSelected:selected];
     [self setNeedsDisplay];
 }
 
@@ -181,15 +188,16 @@
             
             [PrettyDrawing drawGradientRoundedRect:CGRectMake(2, 3, self.frame.size.width - 4, self.frame.size.height - 5) 
                                       cornerRadius:3.0 
-                                         fromColor:[UIColor colorWithWhite:0.4 alpha:1.0] 
-                                           toColor:[UIColor colorWithWhite:0.1 alpha:1.0]];
+                                         fromColor:self.highlightGradientStartColor
+                                           toColor:self.highlightGradientEndColor];
         }
     }
     
     // draw text
     CGContextSaveGState(context);
 
-    CGContextSetShadow(context, self.textShadowOffset, self.textShadowOpacity);
+    if (self.selected)
+        CGContextSetShadow(context, self.textShadowOffset, self.textShadowOpacity);
     
     if (self.selected) {
         [self.highlightedTextColor setFill];
@@ -201,15 +209,59 @@
     [_title drawInRect:CGRectMake((self.frame.size.width - titleSize.width)/2, self.frame.size.height - titleSize.height, titleSize.width, titleSize.height) withFont:self.font];
 
     CGContextRestoreGState(context);
+
+    CGContextSaveGState(context);
     
-    // TODO: draw image
+    // draw image
     if (self.image) {
+        CGFloat width = IMAGE_WIDTH;
+        CGFloat height = IMAGE_HEIGHT;
         
+        if (self.image.size.width < IMAGE_WIDTH)
+            width = self.image.size.width;
+        
+        if (self.image.size.height < IMAGE_HEIGHT)
+            height = self.image.size.height;
+
+        CGRect imageRect = CGRectMake((self.frame.size.width - width)/2, (self.frame.size.height - titleSize.height - self.image.size.height)/2, width, height);
+
+        if (self.selected) {
+            // do the tint... or use the highlight image
+            if (self.highlightedImage) {
+                [self.highlightedImage drawInRect:CGRectMake((self.frame.size.width - width)/2, (self.frame.size.height - titleSize.height - self.highlightedImage.size.height)/2, width, height)];
+                
+            } else {
+                
+                // draw tint using gradient
+                CGContextTranslateCTM(context, 0, self.frame.size.height);
+                CGContextScaleCTM(context, 1.0, -1.0);
+                
+                CGRect flippedImageRect = imageRect;
+                flippedImageRect.origin.y = ((self.frame.size.height - titleSize.height)/2 - (self.image.size.height/2)) + titleSize.height;
+
+                CGContextClipToMask(context, flippedImageRect, [self.image CGImage]);
+
+                // because the context has been flipped, the gradient start and end colors also has to be flipped;
+                [PrettyDrawing drawGradientForContext:context 
+                                           startPoint:CGPointMake(flippedImageRect.origin.x + flippedImageRect.size.width/2, 0) 
+                                             endPoint:CGPointMake(flippedImageRect.origin.x + flippedImageRect.size.width/2, flippedImageRect.origin.y + flippedImageRect.size.height)
+                                            fromColor:self.highlightedImageGradientEndColor
+                                              toColor:self.highlightedImageGradientStartColor];
+
+            }
+            
+        } else {
+            // draw the image as per normal                
+            [self.image drawInRect:imageRect];
+        }
     }    
+    
+    CGContextRestoreGState(context);
     
     // draw badge
     if (self.badgeValue) {
         CGSize badgeTextSize = [self.badgeValue sizeWithFont:self.badgeFont forWidth:(self.frame.size.width * 0.45) lineBreakMode:UILineBreakModeTailTruncation];
+        
         CGFloat badgeWidth = badgeTextSize.width;
         CGFloat badgeHeight = badgeTextSize.height + 4;
         
