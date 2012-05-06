@@ -211,9 +211,11 @@
             // changing from pretty to original implementation
 
             // remove observation status and remove the object from super view
-            for (int i=0;i<[self.items count];i++) {
-                [[self.items objectAtIndex:i] removeObserver:self forKeyPath:@"badgeValue"];
-                [[__prettyTabBarButtons objectAtIndex:i] removeFromSuperview];
+            if ([self.items count] > 0) {
+                for (int i=0;i<[self.items count];i++) {
+                    [[self.items objectAtIndex:i] removeObserver:self forKeyPath:@"badgeValue"];
+                    [[__prettyTabBarButtons objectAtIndex:i] removeFromSuperview];
+                }                
             }
             
             [__prettyTabBarButtons removeAllObjects];
@@ -260,7 +262,8 @@
         UITabBarItem *item = (UITabBarItem *)context;
         NSUInteger index = [self.items indexOfObject:item];
         
-        [[self._prettyTabBarButtons objectAtIndex:index] setBadgeValue:[change objectForKey:NSKeyValueChangeNewKey]];
+        if (index != NSNotFound)
+            [[self._prettyTabBarButtons objectAtIndex:index] setBadgeValue:[change objectForKey:NSKeyValueChangeNewKey]];
     }
 }
 
