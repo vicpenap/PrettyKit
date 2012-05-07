@@ -176,12 +176,16 @@
     [super setItems:items];
     
     [self _setupTabBarSubviews];
+    
+    [self setNeedsLayout];
 }
 
 -(void)setItems:(NSArray *)items animated:(BOOL)animated {
     [super setItems:items animated:animated];
 
     [self _setupTabBarSubviews];
+    
+    [self setNeedsLayout];
 }
 
 
@@ -227,9 +231,10 @@
         NSUInteger i = 0;
         
         for (UITabBarItem *item in self.items) {
-            [item removeObserver:self forKeyPath:@"badgeValue"];
-            if ([__prettyTabBarButtons count] > 0)
+            if ([__prettyTabBarButtons count] > 0) {
                 [[__prettyTabBarButtons objectAtIndex:i] removeFromSuperview];
+                [item removeObserver:self forKeyPath:@"badgeValue"];
+            }
             
             i++;
         }                
@@ -327,7 +332,8 @@
             
             button = [self._prettyTabBarButtons objectAtIndex:i];
             button.frame = CGRectMake(i * (self.frame.size.width/[self.items count]), 0, (self.frame.size.width/[self.items count]), self.frame.size.height);
-
+            [self addSubview:button];
+            
             // set button properties
             button.font = self.prettyButtonTitleFont;
             button.textColor = self.prettyButtonTitleTextColor;
