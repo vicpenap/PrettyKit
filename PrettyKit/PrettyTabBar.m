@@ -77,6 +77,12 @@
 #pragma mark - Object Life Cycle
 
 - (void) dealloc {
+    
+    if (self.prettyTabBarButtons) {
+        for (UITabBarItem *item in self.items)
+            [item removeObserver:self forKeyPath:@"badgeValue"];
+    }
+    
     self.gradientStartColor = nil;
     self.gradientEndColor = nil;
     self.separatorLineColor = nil;
