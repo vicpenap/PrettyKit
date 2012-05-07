@@ -20,6 +20,8 @@
 		57360BDD14FF84F600343B7B /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57360BDC14FF84F600343B7B /* MainWindow.xib */; };
 		57360BDF14FF889B00343B7B /* ExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57360BDE14FF889B00343B7B /* ExampleViewController.xib */; };
 		57360BE114FF911200343B7B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57360BE014FF911200343B7B /* QuartzCore.framework */; };
+		57810A2F1557C01E00974D07 /* listButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 57810A2D1557C01E00974D07 /* listButton.png */; };
+		57810A301557C01E00974D07 /* listButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57810A2E1557C01E00974D07 /* listButton@2x.png */; };
 		578998C41535E02000E06FCA /* PrettyCustomViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 578998B31535E02000E06FCA /* PrettyCustomViewTableViewCell.m */; };
 		578998C51535E02000E06FCA /* PrettyGridTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 578998B51535E02000E06FCA /* PrettyGridTableViewCell.m */; };
 		578998C61535E02000E06FCA /* PrettySegmentedControlTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 578998B71535E02000E06FCA /* PrettySegmentedControlTableViewCell.m */; };
@@ -56,6 +58,8 @@
 		57360BDC14FF84F600343B7B /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		57360BDE14FF889B00343B7B /* ExampleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExampleViewController.xib; sourceTree = "<group>"; };
 		57360BE014FF911200343B7B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		57810A2D1557C01E00974D07 /* listButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listButton.png; sourceTree = "<group>"; };
+		57810A2E1557C01E00974D07 /* listButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listButton@2x.png"; sourceTree = "<group>"; };
 		578998B21535E02000E06FCA /* PrettyCustomViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrettyCustomViewTableViewCell.h; sourceTree = "<group>"; };
 		578998B31535E02000E06FCA /* PrettyCustomViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrettyCustomViewTableViewCell.m; sourceTree = "<group>"; };
 		578998B41535E02000E06FCA /* PrettyGridTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrettyGridTableViewCell.h; sourceTree = "<group>"; };
@@ -156,6 +160,8 @@
 		5735F8C214FD2FFC00DD7370 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				57810A2D1557C01E00974D07 /* listButton.png */,
+				57810A2E1557C01E00974D07 /* listButton@2x.png */,
 				5735F8C314FD2FFC00DD7370 /* PrettyExample-Info.plist */,
 				5735F8C414FD2FFC00DD7370 /* InfoPlist.strings */,
 				5735F8C714FD2FFC00DD7370 /* main.m */,
@@ -257,6 +263,8 @@
 				572B2E6A153496880002228B /* background.png in Resources */,
 				572B2E6B153496880002228B /* background@2x.png in Resources */,
 				EDA7DCB71548ED3F002219BA /* ModalViewController.xib in Resources */,
+				57810A2F1557C01E00974D07 /* listButton.png in Resources */,
+				57810A301557C01E00974D07 /* listButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

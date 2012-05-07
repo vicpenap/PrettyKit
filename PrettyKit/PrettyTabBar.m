@@ -40,18 +40,18 @@
 // pretty buttons
 #define default_text_shadow_offset                      CGSizeMake(0,-1)
 #define default_text_shadow_opacity                     0.5
-#define default_font                                    [UIFont fontWithName:@"HelveticaNeue-Bold" size:10]
-#define default_text_color                              [UIColor colorWithWhite:0.2 alpha:1.0]
+#define default_font                                    [UIFont boldSystemFontOfSize:10]
+#define default_text_color                              [UIColor colorWithWhite:0.5 alpha:1.0]
 #define default_highlighted_text_color                  [UIColor colorWithWhite:0.90 alpha:1.0]
-#define default_badge_font                              [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
+#define default_badge_font                              [UIFont boldSystemFontOfSize:11]
 #define default_badge_gradient_start_color              [UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:1.000]
 #define default_badge_gradient_end_color                [UIColor colorWithRed:0.6 green:0.000 blue:0.000 alpha:1.000]
 #define default_badge_border_color                      [UIColor whiteColor]
 #define default_badge_shadow_opacity                    0.75
 #define default_badge_shadow_offset                     CGSizeMake(0,2)
 #define default_badge_text_color                        [UIColor whiteColor]
-#define default_highlight_gradient_start_color          [UIColor colorWithWhite:0.4 alpha:1.0] 
-#define default_highlight_gradient_end_color            [UIColor colorWithWhite:0.1 alpha:1.0]
+#define default_highlight_gradient_start_color          [UIColor colorWithWhite:0.35 alpha:1.0] 
+#define default_highlight_gradient_end_color            [UIColor colorWithWhite:0.2 alpha:1.0]
 #define default_highlighted_image_gradient_start_color  [UIColor colorWithRed:0.276 green:0.733 blue:1.000 alpha:1.000]
 #define default_highlighted_image_gradient_end_color    [UIColor colorWithRed:0.028 green:0.160 blue:0.332 alpha:1.000]
 
