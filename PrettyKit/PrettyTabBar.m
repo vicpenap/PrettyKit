@@ -294,6 +294,11 @@
         
         if ((index != NSNotFound) && ([self._prettyTabBarButtons count] > 0))
             [[self._prettyTabBarButtons objectAtIndex:index] setBadgeValue:[change objectForKey:NSKeyValueChangeNewKey]];
+    } else {
+        @try {
+            [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        }
+        @catch (NSException *exception) { }
     }
 }
 
@@ -355,6 +360,7 @@
             button.highlightedImageGradientEndColor = self.prettyButtonHighlightedImageGradientEndColor;
             
             button.selected = NO;
+            button.badgeValue = item.badgeValue;
 
             if (item == self.selectedItem)
                 button.selected = YES;
