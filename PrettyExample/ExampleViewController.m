@@ -103,7 +103,7 @@
         return 1;
     }
     if (section == 3) {
-        return 20;
+        return 5;
     }
     if (section == 4) {
         return 1;
@@ -119,13 +119,8 @@
     PrettySegmentedControlTableViewCell *segmentedCell;
     static NSString *GridCellIdentifier = @"GridCell";
     PrettyGridTableViewCell *gridCell;
+    static NSString *DrawnCellIdentifier = @"DrawnCell";
 
-    
-    PrettyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[PrettyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.tableViewBackgroundColor = tableView.backgroundColor;        
-    }
     
     switch (indexPath.section) {
         case 1:
@@ -181,6 +176,31 @@
             break;
     }
     
+    if (indexPath.section == 3 && indexPath.row < 5) {
+        PrettyDrawnCell *drawnCell = [tableView dequeueReusableCellWithIdentifier:DrawnCellIdentifier];
+        
+        if (drawnCell == nil) {
+            drawnCell = [[[PrettyDrawnCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DrawnCellIdentifier] autorelease];
+            drawnCell.tableViewBackgroundColor = tableView.backgroundColor;
+        }
+        [drawnCell prepareForTableView:tableView indexPath:indexPath];
+        drawnCell.textLabel.backgroundColor = [UIColor redColor];
+        drawnCell.prettyTextLabel.text = [NSString stringWithFormat:@"This is cell %d",indexPath.row];
+        drawnCell.prettyDetailTextLabel.text = [NSString stringWithFormat:@"%d out of 5",indexPath.row];
+        drawnCell.prettyImage = [UIImage imageNamed:@"background"];
+        drawnCell.imageRadius = 8;
+        drawnCell.imageShadow = YES;
+        
+        return drawnCell;
+    }
+    
+    
+    PrettyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[PrettyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell.tableViewBackgroundColor = tableView.backgroundColor;        
+    }
+
     // Configure the cell...
     [cell prepareForTableView:tableView indexPath:indexPath];
     cell.textLabel.text = @"Text";
@@ -236,7 +256,15 @@
 #pragma mark - Table view delegate
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return tableView.rowHeight + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath];
+    float height = tableView.rowHeight;
+    
+    if (indexPath.section == 3) {
+        UIFont *font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
+        UIFont *detailFont = [UIFont systemFontOfSize:15];
+        height = [PrettyDrawnCell neededHeightForWidth:tableView.frame.size.width imageWidth:48 text:@"This is cell d" textFont:font detailText:@"0 out of 5" detailTextFont:detailFont];
+    }
+    
+    return height + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

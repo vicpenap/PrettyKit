@@ -36,3 +36,4 @@
 #import "PrettyShadowPlainTableview.h"
 #import "PrettyDrawing.h"
 #import "PrettyToolbar.h"
+#import "PrettyDrawnCell.h"
