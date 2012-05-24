@@ -112,43 +112,92 @@
     return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (PrettyDrawnCell *)drawnCell:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
+{
+    static NSString *DrawnCellIdentifier = @"DrawnCell";
+
+    PrettyDrawnCell *drawnCell = [tableView dequeueReusableCellWithIdentifier:DrawnCellIdentifier];
+    
+    if (drawnCell == nil) {
+        drawnCell = [[[PrettyDrawnCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DrawnCellIdentifier] autorelease];
+        drawnCell.tableViewBackgroundColor = tableView.backgroundColor;
+    }
+    [drawnCell prepareForTableView:tableView indexPath:indexPath];
+    drawnCell.textLabel.backgroundColor = [UIColor redColor];
+    drawnCell.prettyTextLabel.text = [NSString stringWithFormat:@"This is cell %d",indexPath.row];
+    drawnCell.prettyDetailTextLabel.text = [NSString stringWithFormat:@"%d out of 5",indexPath.row];
+    drawnCell.prettyImage = [UIImage imageNamed:@"background"];
+    drawnCell.imageRadius = 8;
+    drawnCell.imageShadow = YES;
+    
+    return drawnCell;
+}
+
+- (PrettyGridTableViewCell *)gridCell:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
+{
+    static NSString *GridCellIdentifier = @"GridCell";
+
+    
+    PrettyGridTableViewCell *gridCell;
+    gridCell = [tableView dequeueReusableCellWithIdentifier:GridCellIdentifier];
+    if (gridCell == nil) {
+        gridCell = [[[PrettyGridTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:GridCellIdentifier] autorelease];
+        gridCell.tableViewBackgroundColor = tableView.backgroundColor;
+        gridCell.actionBlock = ^(NSIndexPath *indexPath, int selectedIndex) {
+            [gridCell deselectAnimated:YES];
+        };                
+    }
+    [gridCell prepareForTableView:tableView indexPath:indexPath];
+    return gridCell;
+}
+
+- (PrettySegmentedControlTableViewCell *)segmentedCell:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
+{
+    static NSString *SegmentedCellIdentifier = @"SegmentedCell";
+
+    PrettySegmentedControlTableViewCell *segmentedCell;
+    segmentedCell = [tableView dequeueReusableCellWithIdentifier:SegmentedCellIdentifier];
+    if (segmentedCell == nil) {
+        segmentedCell = [[[PrettySegmentedControlTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SegmentedCellIdentifier] autorelease];
+    }
+    [segmentedCell prepareForTableView:tableView indexPath:indexPath];
+    segmentedCell.titles = [NSArray arrayWithObjects:@"1", @"2", @"3", @"4", nil];
+    segmentedCell.tableViewBackgroundColor = tableView.backgroundColor;
+    return segmentedCell;
+}
+
+- (PrettyTableViewCell *)cell:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    static NSString *SegmentedCellIdentifier = @"SegmentedCell";
-    PrettySegmentedControlTableViewCell *segmentedCell;
-    static NSString *GridCellIdentifier = @"GridCell";
+
+    PrettyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[PrettyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell.tableViewBackgroundColor = tableView.backgroundColor;        
+    }
+    
+    // Configure the cell...
+    [cell prepareForTableView:tableView indexPath:indexPath];
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     PrettyGridTableViewCell *gridCell;
-    static NSString *DrawnCellIdentifier = @"DrawnCell";
 
     
     switch (indexPath.section) {
         case 1:
             switch (indexPath.row) {
                 case 0:
-                    segmentedCell = [tableView dequeueReusableCellWithIdentifier:SegmentedCellIdentifier];
-                    if (segmentedCell == nil) {
-                        segmentedCell = [[[PrettySegmentedControlTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SegmentedCellIdentifier] autorelease];
-                    }
-                    [segmentedCell prepareForTableView:tableView indexPath:indexPath];
-                    segmentedCell.titles = [NSArray arrayWithObjects:@"1", @"2", @"3", @"4", nil];
-                    segmentedCell.tableViewBackgroundColor = tableView.backgroundColor;
-                    return segmentedCell;
+                    return [self segmentedCell:tableView indexPath:indexPath];
                 default:
                     break;
             }
 
             break;
         case 2:
-            gridCell = [tableView dequeueReusableCellWithIdentifier:GridCellIdentifier];
-            if (gridCell == nil) {
-                gridCell = [[[PrettyGridTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:GridCellIdentifier] autorelease];
-                gridCell.tableViewBackgroundColor = tableView.backgroundColor;
-                gridCell.actionBlock = ^(NSIndexPath *indexPath, int selectedIndex) {
-                    [gridCell deselectAnimated:YES];
-                };                
-            }
-            [gridCell prepareForTableView:tableView indexPath:indexPath];            
+            gridCell = [self gridCell:tableView indexPath:indexPath];            
             gridCell.numberOfElements = 3;
             [gridCell setText:@"One" atIndex:0];
             [gridCell setDetailText:@"Detail Text" atIndex:0];
@@ -158,15 +207,7 @@
             [gridCell setDetailText:@"Detail Text" atIndex:2];            
             return gridCell;
         case 4:
-            gridCell = [tableView dequeueReusableCellWithIdentifier:GridCellIdentifier];
-            if (gridCell == nil) {
-                gridCell = [[[PrettyGridTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:GridCellIdentifier] autorelease];
-                gridCell.tableViewBackgroundColor = tableView.backgroundColor;
-                gridCell.actionBlock = ^(NSIndexPath *indexPath, int selectedIndex) {
-                    [gridCell deselectAnimated:YES];
-                };                
-            }
-            [gridCell prepareForTableView:tableView indexPath:indexPath];            
+            gridCell = [self gridCell:tableView indexPath:indexPath];            
             gridCell.numberOfElements = 2;
             [gridCell setText:@"Four" atIndex:0];
             [gridCell setText:@"Five" atIndex:1];            
@@ -177,34 +218,14 @@
     }
     
     if (indexPath.section == 3 && indexPath.row < 5) {
-        PrettyDrawnCell *drawnCell = [tableView dequeueReusableCellWithIdentifier:DrawnCellIdentifier];
-        
-        if (drawnCell == nil) {
-            drawnCell = [[[PrettyDrawnCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DrawnCellIdentifier] autorelease];
-            drawnCell.tableViewBackgroundColor = tableView.backgroundColor;
-        }
-        [drawnCell prepareForTableView:tableView indexPath:indexPath];
-        drawnCell.textLabel.backgroundColor = [UIColor redColor];
-        drawnCell.prettyTextLabel.text = [NSString stringWithFormat:@"This is cell %d",indexPath.row];
-        drawnCell.prettyDetailTextLabel.text = [NSString stringWithFormat:@"%d out of 5",indexPath.row];
-        drawnCell.prettyImage = [UIImage imageNamed:@"background"];
-        drawnCell.imageRadius = 8;
-        drawnCell.imageShadow = YES;
-        
-        return drawnCell;
+        return [self drawnCell:tableView indexPath:indexPath];        
     }
     
     
-    PrettyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[PrettyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.tableViewBackgroundColor = tableView.backgroundColor;        
-    }
-
-    // Configure the cell...
-    [cell prepareForTableView:tableView indexPath:indexPath];
+    PrettyTableViewCell *cell = [self cell:tableView indexPath:indexPath];
     cell.textLabel.text = @"Text";
-    if (indexPath.section == 0) {
+    if (indexPath.section == 0) 
+    {
         cell.cornerRadius = 20;
     }
     else {
