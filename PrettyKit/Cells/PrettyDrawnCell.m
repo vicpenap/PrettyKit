@@ -49,7 +49,7 @@
     float width = rect.size.width;
     if (self.cell.prettyImage)
     {
-        width -= self.cell.prettyImage.size.width - image_margin * 4;
+        width -= self.cell.prettyImage.size.width + image_margin * 2;
     }
     CGSize constrainedSize = CGSizeMake(width, self.frame.size.height);
     CGSize neededSize = [label.text sizeWithFont:label.font constrainedToSize:constrainedSize lineBreakMode:mode];
@@ -314,9 +314,9 @@
                       detailText:(NSString *)detailText
                   detailTextFont:(UIFont *)detailTextFont
 {
-    float minHeight = image_margin * 2 + shadow_width*2;
+    float minHeight = image_margin*2 + shadow_width*2;
     float height = minHeight;
-    float realWidth = width - imageWidth - (imageWidth ? image_margin * 2 : 0);
+    float realWidth = width - imageWidth - (imageWidth ? image_margin*3 + shadow_width*2 : 0);
     
     CGSize maxSize = CGSizeMake(realWidth, MAXFLOAT);
     
