@@ -598,5 +598,10 @@ typedef enum {
     return gradient;
 }
 
+- (UITableViewStyle) tableViewStyle
+{
+    return _tableViewStyle;
+}
+
 
 @end

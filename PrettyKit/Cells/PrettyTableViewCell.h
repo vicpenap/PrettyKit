@@ -192,6 +192,9 @@ typedef enum {
  `tableView:cellForRowAtIndexPath:`. */
 - (void) prepareForTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 
+/** Indicates the style of the table view that contains the cell. */
+@property (nonatomic, readonly) UITableViewStyle tableViewStyle;
+
 
 /** Returns the needed height for a cell placed in the given indexPath.
  

@@ -117,36 +117,42 @@
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-    return tableView.rowHeight + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+    float height = tableView.rowHeight;
     
-    if (indexPath.row == 1) {
-        static NSString *GridCellIdentifier = @"GridCell";
-        
-        PrettyGridTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GridCellIdentifier];
-        if (cell == nil) {
-            cell = [[[PrettyGridTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GridCellIdentifier] autorelease];
-            cell.tableViewBackgroundColor = tableView.backgroundColor;
-            cell.gradientStartColor = start_color;
-            cell.gradientEndColor = end_color;  
-        }
-        cell.numberOfElements = 2;
-        [cell setActionBlock:^(NSIndexPath *indexPath, int selectedIndex) {
-            [cell deselectAnimated:YES];
-        }];
-        [cell prepareForTableView:tableView indexPath:indexPath];
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:18];
-        [cell setText:@"Text 1" atIndex:0];
-        [cell setText:@"Text 2" atIndex:1];
-        [cell setDetailText:@"Subtitle" atIndex:0];
-        [cell setDetailText:@"Subtitle" atIndex:1];
-        
-        return cell;
+    if (indexPath.row > 1 && indexPath.row < 6)
+    {
+        height = [PrettyDrawnCell neededHeightForWidth:self.tableView.frame.size.width 
+                                            imageWidth:0
+                                                  text:@"This is a long text, maybe too long to fit on a single line" 
+                                              textFont:[UIFont boldSystemFontOfSize:[UIFont labelFontSize]]
+                                            detailText:@"And this is a long detail text, maybe too long to fit on a single line too" 
+                                        detailTextFont:[UIFont systemFontOfSize:15]];
     }
     
+    return height + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath];
+}
+
+- (PrettyDrawnCell *) drawnCellForTableView:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"DrawnCell";
+    
+    PrettyDrawnCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[PrettyDrawnCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell.tableViewBackgroundColor = tableView.backgroundColor;        
+        cell.gradientStartColor = start_color;
+        cell.gradientEndColor = end_color;  
+    }
+    [cell prepareForTableView:tableView indexPath:indexPath];
+    
+    cell.prettyTextLabel.text = @"This is a long text, maybe too long to fit on a single line";
+    cell.prettyDetailTextLabel.text = @"And this is a long detail text, maybe too long to fit on a single line too";
+
+    return cell;
+}
+
+- (PrettyTableViewCell *) cellForTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *CellIdentifier = @"Cell";
     
     PrettyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -157,9 +163,60 @@
         cell.gradientEndColor = end_color;  
     }
     [cell prepareForTableView:tableView indexPath:indexPath];
+
     cell.textLabel.text = @"Text";
     cell.textLabel.backgroundColor = [UIColor clearColor];
+
     
+    return cell;
+}
+
+- (PrettyGridTableViewCell *) gridCellForTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *GridCellIdentifier = @"GridCell";
+
+    PrettyGridTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GridCellIdentifier];
+    if (cell == nil) {
+        cell = [[[PrettyGridTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GridCellIdentifier] autorelease];
+        cell.tableViewBackgroundColor = tableView.backgroundColor;
+        cell.gradientStartColor = start_color;
+        cell.gradientEndColor = end_color;  
+    }
+    [cell prepareForTableView:tableView indexPath:indexPath];
+    
+    cell.numberOfElements = 2;
+    [cell setActionBlock:^(NSIndexPath *indexPath, int selectedIndex) {
+        [cell deselectAnimated:YES];
+    }];
+    
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:18];
+    [cell setText:@"Text 1" atIndex:0];
+    [cell setText:@"Text 2" atIndex:1];
+    [cell setDetailText:@"Subtitle" atIndex:0];
+    [cell setDetailText:@"Subtitle" atIndex:1];
+
+    return cell;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell;
+    if (indexPath.row == 1) 
+    {
+        cell = [self gridCellForTableView:tableView forRowAtIndexPath:indexPath];
+    }
+    
+    else if (indexPath.row > 1 && indexPath.row < 6)
+    {
+        cell = [self drawnCellForTableView:tableView forIndexPath:indexPath];
+    }
+    
+    else
+    {
+        cell = [self cellForTableView:tableView forRowAtIndexPath:indexPath];        
+    }
+
     
     return cell;
 

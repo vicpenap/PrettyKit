@@ -14,8 +14,8 @@
 @property (nonatomic, assign) float imageRadius;
 @property (nonatomic, assign) BOOL imageShadow;
 
-@property (nonatomic, retain) UILabel *prettyTextLabel;
-@property (nonatomic, retain) UILabel *prettyDetailTextLabel;
+@property (nonatomic, readonly) UILabel *prettyTextLabel;
+@property (nonatomic, readonly) UILabel *prettyDetailTextLabel;
 @property (nonatomic, retain) UIImage *prettyImage;
 
 + (CGFloat) neededHeightForWidth:(float)width 

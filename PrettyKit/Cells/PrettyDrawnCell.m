@@ -8,6 +8,7 @@
 
 #import "PrettyDrawnCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "PrettyDrawing.h"
 
 #define VIEW_TAG 1234
 
@@ -128,8 +129,22 @@
     }
 }
 
+- (void) drawBackground:(CGRect)rect
+{
+    if (self.cell.gradientStartColor && self.cell.gradientEndColor
+        && !self.cell.selected && !self.cell.highlighted) 
+    {
+        CGGradientRef gradient = [self.cell createNormalGradient];
+        [PrettyDrawing drawGradient:gradient rect:rect];
+    }
+}
+
+
+
 - (void) drawRect:(CGRect)rect
 {
+    [self drawBackground:rect];
+    
     float height = 0;
     height = [self drawTextLabel:rect height:height];
     [self drawDetailTextLabel:rect height:height];    
@@ -163,8 +178,14 @@
 - (void)dealloc 
 {
     self.prettyImage = nil;
-    self.prettyTextLabel = nil;
-    self.prettyDetailTextLabel = nil;
+    if (prettyDetailTextLabel != nil) {
+        [prettyDetailTextLabel release];
+        prettyDetailTextLabel = nil;
+    }
+    if (prettyTextLabel != nil) {
+        [prettyTextLabel release];
+        prettyTextLabel = nil;
+    }
     [self.contentView removeObserver:self forKeyPath:@"frame"];
     
     [super dealloc];
@@ -198,10 +219,10 @@
 
 - (void) setLabels
 {
-    self.prettyTextLabel = [[[UILabel alloc] init] autorelease];
+    prettyTextLabel = [[UILabel alloc] init];
     self.prettyTextLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
     self.prettyTextLabel.textColor = [UIColor darkTextColor];
-    self.prettyDetailTextLabel = [[[UILabel alloc] init] autorelease];
+    prettyDetailTextLabel = [[UILabel alloc] init];
     self.prettyDetailTextLabel.font = [UIFont systemFontOfSize:15];
     self.prettyDetailTextLabel.textColor = [UIColor grayColor];
 }
@@ -230,13 +251,15 @@
     {
         CGRect frame = self.innerFrame;
         // leave room for the corners
-        frame.size.width -= self.cornerRadius*2;
+        float widthDiff = (self.cornerRadius < 8 ? 8 : self.cornerRadius)*2;
+        frame.size.width -= widthDiff;
+        if (self.tableViewStyle == UITableViewStylePlain)
+        {
+            frame.origin.x += widthDiff/2; 
+        }
         
         // leave room for top and/or bottom lines
-        if (self.position != PrettyTableViewCellPositionMiddle) 
-        {
-            frame.size.height--;
-        }
+        frame.size.height--;
         
         [[self.contentView viewWithTag:VIEW_TAG] setFrame:frame];
         return;
