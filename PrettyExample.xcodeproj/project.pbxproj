@@ -80,9 +80,9 @@
 		57DB7E04156ED0B5009FF710 /* PrettyDrawnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrettyDrawnCell.m; sourceTree = "<group>"; };
 		EDA7DCAF1548EBD1002219BA /* PrettyToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrettyToolbar.h; sourceTree = "<group>"; };
 		EDA7DCB01548EBD1002219BA /* PrettyToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrettyToolbar.m; sourceTree = "<group>"; };
-		EDA7DCB31548ED3E002219BA /* ModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModalViewController.h; path = ../PrettyKit/ModalViewController.h; sourceTree = "<group>"; };
-		EDA7DCB41548ED3E002219BA /* ModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModalViewController.m; path = ../PrettyKit/ModalViewController.m; sourceTree = "<group>"; };
-		EDA7DCB51548ED3E002219BA /* ModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ModalViewController.xib; path = ../PrettyKit/ModalViewController.xib; sourceTree = "<group>"; };
+		EDA7DCB31548ED3E002219BA /* ModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalViewController.h; sourceTree = "<group>"; };
+		EDA7DCB41548ED3E002219BA /* ModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalViewController.m; sourceTree = "<group>"; };
+		EDA7DCB51548ED3E002219BA /* ModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModalViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
