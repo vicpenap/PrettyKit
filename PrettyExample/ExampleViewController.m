@@ -127,8 +127,8 @@
     drawnCell.prettyTextLabel.text = [NSString stringWithFormat:@"This is cell %d",indexPath.row];
     drawnCell.prettyDetailTextLabel.text = [NSString stringWithFormat:@"%d out of 5",indexPath.row];
     drawnCell.prettyImage = [UIImage imageNamed:@"background"];
-    drawnCell.imageRadius = 8;
-    drawnCell.imageShadow = YES;
+    drawnCell.prettyImageRadius = 8;
+    drawnCell.prettyImageShadow = YES;
     
     return drawnCell;
 }
@@ -282,7 +282,7 @@
     if (indexPath.section == 3) {
         UIFont *font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
         UIFont *detailFont = [UIFont systemFontOfSize:15];
-        height = [PrettyDrawnCell neededHeightForWidth:tableView.frame.size.width imageWidth:48 text:@"This is cell d" textFont:font detailText:@"0 out of 5" detailTextFont:detailFont];
+        height = [PrettyDrawnCell neededHeightForWidth:tableView.frame.size.width imageSize:CGSizeMake(48,48) text:@"This is cell d" textFont:font detailText:@"0 out of 5" detailTextFont:detailFont];
     }
     
     return height + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath];

@@ -121,13 +121,13 @@
     
     if (indexPath.row > 1 && indexPath.row < 6)
     {
-        float imageWidth = 0;
+        CGSize imageSize = CGSizeZero;
         if (indexPath.row == 2)
         {
-            imageWidth = 48;
+            imageSize = CGSizeMake(48, 48);
         }
         height = [PrettyDrawnCell neededHeightForWidth:self.tableView.frame.size.width 
-                                            imageWidth:imageWidth
+                                             imageSize:imageSize
                                                   text:@"This is a long text, maybe too long to fit on a single line" 
                                               textFont:[UIFont boldSystemFontOfSize:[UIFont labelFontSize]]
                                             detailText:@"And this is a long detail text, maybe too long to fit on a single line too" 
@@ -217,9 +217,10 @@
         PrettyDrawnCell *drawn = [self drawnCellForTableView:tableView forIndexPath:indexPath];
         if (indexPath.row == 2) 
         {
-            drawn.prettyImage = [UIImage imageNamed:@"background"];
-            drawn.imageRadius = 8;
-            drawn.imageShadow = YES;
+            drawn.prettyThumbnail.shown = YES;
+            drawn.prettyThumbnail.size = CGSizeMake(48, 48);
+            drawn.prettyImageRadius = 8;
+            drawn.prettyImageShadow = YES;
         }
         else
         {
