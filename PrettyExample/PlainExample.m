@@ -129,9 +129,9 @@
         height = [PrettyDrawnCell neededHeightForWidth:self.tableView.frame.size.width 
                                              imageSize:imageSize
                                                   text:@"This is a long text, maybe too long to fit on a single line" 
-                                              textFont:[UIFont boldSystemFontOfSize:[UIFont labelFontSize]]
+                                              textFont:nil
                                             detailText:@"And this is a long detail text, maybe too long to fit on a single line too" 
-                                        detailTextFont:[UIFont systemFontOfSize:15]];
+                                        detailTextFont:nil];
     }
     
     return height + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath];
@@ -151,7 +151,9 @@
     [cell prepareForTableView:tableView indexPath:indexPath];
     
     cell.prettyTextLabel.text = @"This is a long text, maybe too long to fit on a single line";
+    cell.prettyTextLabel.numberOfLines = 0; // multiple lines are supported!
     cell.prettyDetailTextLabel.text = @"And this is a long detail text, maybe too long to fit on a single line too";
+    cell.prettyDetailTextLabel.numberOfLines = 0; // multiple lines are supported!
 
     return cell;
 }

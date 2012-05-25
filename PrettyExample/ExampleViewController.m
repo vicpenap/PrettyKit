@@ -280,9 +280,7 @@
     float height = tableView.rowHeight;
     
     if (indexPath.section == 3) {
-        UIFont *font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
-        UIFont *detailFont = [UIFont systemFontOfSize:15];
-        height = [PrettyDrawnCell neededHeightForWidth:tableView.frame.size.width imageSize:CGSizeMake(48,48) text:@"This is cell d" textFont:font detailText:@"0 out of 5" detailTextFont:detailFont];
+        height = [PrettyDrawnCell neededHeightForWidth:tableView.frame.size.width imageSize:CGSizeMake(48,48) text:@"This is cell d" textFont:nil detailText:@"0 out of 5" detailTextFont:nil];
     }
     
     return height + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath];

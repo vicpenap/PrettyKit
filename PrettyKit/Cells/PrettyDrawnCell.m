@@ -18,14 +18,7 @@
 #define shadow_width 2
 
 @implementation PrettyDrawnCellThumbnail
-@synthesize shown, size, drawBlock;
-
-- (void) dealloc
-{
-    self.drawBlock = nil;
-    
-    [super dealloc];
-}
+@synthesize shown, size;
 
 @end
 
@@ -35,6 +28,9 @@
 
 - (BOOL) showsImage;
 - (CGSize) imageSize;
+
++ (UILabel *) defaultTextLabel;
++ (UILabel *) defaultDetailTextLabel;
 
 @end
 
@@ -57,7 +53,6 @@
 - (float) drawLabel:(UILabel *)label
                rect:(CGRect)rect
              height:(float)height
-      lineBreakMode:(UILineBreakMode)mode
 {
     if (self.cell.selected || self.cell.highlighted) 
     {
@@ -73,29 +68,35 @@
         width -= [self.cell imageSize].width + image_margin * 2;
     }
     CGSize constrainedSize = CGSizeMake(width, self.frame.size.height);
-    CGSize neededSize = [label.text sizeWithFont:label.font constrainedToSize:constrainedSize lineBreakMode:mode];
+    CGSize neededSize = [label.text sizeWithFont:label.font constrainedToSize:constrainedSize lineBreakMode:label.lineBreakMode];
     CGRect textRect = CGRectMake([self.cell showsImage] ? [self.cell imageSize].width + image_margin + shadow_width*2 : 0,
                                  image_margin + height,
                                  neededSize.width, neededSize.height);
+
+    float labelHeight = label.numberOfLines * label.font.lineHeight;
+    if (label.numberOfLines != 0) 
+    {
+        textRect.size.height = labelHeight;
+    }
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
     CGContextSetShadowWithColor(ctx, label.shadowOffset, 1, label.shadowColor.CGColor);
-    [label.text drawInRect:textRect withFont:label.font lineBreakMode:mode alignment:UITextAlignmentLeft];
+    [label.text drawInRect:textRect withFont:label.font lineBreakMode:label.lineBreakMode alignment:label.textAlignment];
     CGContextRestoreGState(ctx);
 
-    return neededSize.height + height;
+    return height + textRect.size.height;
 }
 
 
 - (CGFloat) drawTextLabel:(CGRect)rect height:(CGFloat)height
 {
-    return [self drawLabel:self.cell.prettyTextLabel rect:rect height:height lineBreakMode:UILineBreakModeClip];
+    return [self drawLabel:self.cell.prettyTextLabel rect:rect height:height];
 }
 
 - (CGFloat) drawDetailTextLabel:(CGRect)rect height:(CGFloat)height
 {
-    return [self drawLabel:self.cell.prettyDetailTextLabel rect:rect height:height lineBreakMode:UILineBreakModeClip];
+    return [self drawLabel:self.cell.prettyDetailTextLabel rect:rect height:height];
 }
 
 
@@ -206,6 +207,9 @@
 @synthesize prettyImage;
 @synthesize prettyThumbnail;
 
+static UILabel *defaultTextLabel = nil;
+static UILabel *defaultDetailTextLabel = nil;
+
 - (BOOL) showsImage
 {
     return self.prettyImage || self.prettyThumbnail.shown;
@@ -272,14 +276,48 @@
     [[self.contentView viewWithTag:VIEW_TAG] setBackgroundColor:backgroundColor];
 }
 
++ (UILabel *) newTextLabel
+{
+    UILabel *textLabel = [[UILabel alloc] init];
+    textLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
+    textLabel.textColor = [UIColor darkTextColor];
+
+    return textLabel;
+}
+
++ (UILabel *) newDetailTextLabel
+{
+    UILabel *textLabel = [[UILabel alloc] init];
+    textLabel.font = [UIFont systemFontOfSize:15];
+    textLabel.textColor = [UIColor grayColor];
+
+    return textLabel;
+}
+
++ (UILabel *) defaultTextLabel
+{
+    if (!defaultTextLabel) 
+    {
+        defaultTextLabel = [self newTextLabel];
+    }
+    
+    return defaultTextLabel;
+}
+
++ (UILabel *) defaultDetailTextLabel
+{
+    if (!defaultDetailTextLabel)
+    {
+        defaultDetailTextLabel = [self newDetailTextLabel];
+    }
+    
+    return defaultDetailTextLabel;
+}
+
 - (void) setLabels
 {
-    prettyTextLabel = [[UILabel alloc] init];
-    self.prettyTextLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
-    self.prettyTextLabel.textColor = [UIColor darkTextColor];
-    prettyDetailTextLabel = [[UILabel alloc] init];
-    self.prettyDetailTextLabel.font = [UIFont systemFontOfSize:15];
-    self.prettyDetailTextLabel.textColor = [UIColor grayColor];
+    prettyTextLabel = [PrettyDrawnCell newTextLabel];
+    prettyDetailTextLabel = [PrettyDrawnCell newDetailTextLabel];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -366,15 +404,18 @@
 + (CGFloat) neededHeightForWidth:(float)width 
                        imageSize:(CGSize)imageSize 
                             text:(NSString *)text
-                        textFont:(UIFont *)textFont
+                        textFont:(UIFont *)textFontOrNil
                       detailText:(NSString *)detailText
-                  detailTextFont:(UIFont *)detailTextFont
+                  detailTextFont:(UIFont *)detailTextFontOrNil
 {
     float minHeight = image_margin*2 + shadow_width*2;
     float height = minHeight;
     float realWidth = width - imageSize.width - (imageSize.width ? image_margin*3 + shadow_width*2 : 0);
     
     CGSize maxSize = CGSizeMake(realWidth, MAXFLOAT);
+    
+    UIFont *textFont = textFontOrNil ? textFontOrNil : [self defaultTextLabel].font;
+    UIFont *detailTextFont = detailTextFontOrNil ? detailTextFontOrNil : [self defaultDetailTextLabel].font;
     
     CGSize neededSize = [text sizeWithFont:textFont
                          constrainedToSize:maxSize
@@ -386,7 +427,7 @@
                             lineBreakMode:UILineBreakModeClip];
     height += neededSize.height;
     
-    float minImageHeight = imageSize.height + minHeight; // image is expected to be squared
+    float minImageHeight = imageSize.height + minHeight;
     
     return height < minImageHeight ? minImageHeight : height;
 }
