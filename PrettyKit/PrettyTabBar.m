@@ -143,6 +143,7 @@
     self.prettyButtonHighlightImage = nil;
     self.prettyButtonHighlightGradientStartColor = default_highlight_gradient_start_color;
     self.prettyButtonHighlightGradientEndColor = default_highlight_gradient_end_color;
+    
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -216,6 +217,12 @@
             button = [[PrettyTabBarButton alloc] initWithTitle:item.title image:item.image tag:i];
             button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
             [button addTarget:self action:@selector(_prettyTabBarButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            
+            if (item == self.selectedItem) {
+                button.selected = YES;
+            } else {
+                button.selected = NO;
+            }
             
             [self addSubview:button];
             [__prettyTabBarButtons addObject:button];
@@ -294,6 +301,7 @@
         
         if ((index != NSNotFound) && ([self._prettyTabBarButtons count] > 0))
             [[self._prettyTabBarButtons objectAtIndex:index] setBadgeValue:[change objectForKey:NSKeyValueChangeNewKey]];
+        
     } else {
         @try {
             [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -361,6 +369,8 @@
             
             button.selected = NO;
             button.badgeValue = item.badgeValue;
+            button.title = item.title;
+            button.image = item.image;
 
             if (item == self.selectedItem)
                 button.selected = YES;
