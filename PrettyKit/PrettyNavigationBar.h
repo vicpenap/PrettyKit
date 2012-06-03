@@ -31,7 +31,7 @@
 
 
 /** `PrettyNavigationBar` is a subclass of `UINavigationBar` that removes the
- glossy effect and lets you customize its colors.
+ glossy effect and lets you customize its colors and corners.
  
  ![](../docs/Screenshots/blue_navbar.png)
  
@@ -42,6 +42,7 @@
  - gradient end color
  - top line volor
  - bottom line color
+ - corner radius
 
  */
 @interface PrettyNavigationBar : UINavigationBar
@@ -79,7 +80,7 @@
 
 /** Specifies the radius for the rounded corners.
  
- By default it is 0.0 which means there is no rounded corners */
+ By default it is 0.0 which means there is no rounded corners. */
 @property (readwrite) CGFloat roundedCornerRadius;
 
 @end

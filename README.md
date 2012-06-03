@@ -124,6 +124,7 @@ me a pull request.
 
 ## Changelog
 
+- 2012/05/25: Fixed a bug with cell shadow and border.
 - 2012/04/30: Added PrettyNavigationBar round corners.
 - 2012/04/26: New widget PrettyToolbar
 - 2012/04/12 (v0.1.0): Initial release

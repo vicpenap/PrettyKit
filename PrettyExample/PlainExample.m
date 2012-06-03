@@ -59,7 +59,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    self.navigationItem.title = @"PrettyKit";
+    self.navigationItem.title = @"Rounded PrettyKit NavBar";
     self.tableView.rowHeight = 60;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
