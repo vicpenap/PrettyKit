@@ -68,10 +68,11 @@
         width -= [self.cell imageSize].width + image_margin * 2;
     }
     CGSize constrainedSize = CGSizeMake(width, self.frame.size.height);
+    
     CGSize neededSize = [label.text sizeWithFont:label.font constrainedToSize:constrainedSize lineBreakMode:label.lineBreakMode];
     CGRect textRect = CGRectMake([self.cell showsImage] ? [self.cell imageSize].width + image_margin + shadow_width*2 : 0,
-                                 image_margin + height,
-                                 neededSize.width, neededSize.height);
+                                 !self.cell.prettyDetailTextLabel.text ?  (rect.size.height-neededSize.height)/2  : (image_margin + height),
+                                 width, neededSize.height);
 
     float labelHeight = label.numberOfLines * label.font.lineHeight;
     if (label.numberOfLines != 0) 
@@ -274,6 +275,26 @@ static UILabel *defaultDetailTextLabel = nil;
     [super setBackgroundColor:backgroundColor];
     
     [[self.contentView viewWithTag:VIEW_TAG] setBackgroundColor:backgroundColor];
+}
+
+- (void) setGradientEndColor:(UIColor *)gradientEndColor
+{
+    [super setGradientEndColor:gradientEndColor];
+    
+    if (self.gradientStartColor && self.gradientEndColor)
+    {
+        [[self.contentView viewWithTag:VIEW_TAG] setBackgroundColor:[UIColor whiteColor]];
+    }
+}
+
+- (void) setGradientStartColor:(UIColor *)gradientStartColor
+{
+    [super setGradientStartColor:gradientStartColor];
+    
+    if (self.gradientStartColor && self.gradientEndColor)
+    {
+        [[self.contentView viewWithTag:VIEW_TAG] setBackgroundColor:[UIColor whiteColor]];
+    }
 }
 
 + (UILabel *) newTextLabel

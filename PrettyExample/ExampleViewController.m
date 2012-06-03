@@ -124,8 +124,8 @@
     }
     [drawnCell prepareForTableView:tableView indexPath:indexPath];
     drawnCell.textLabel.backgroundColor = [UIColor redColor];
-    drawnCell.prettyTextLabel.text = [NSString stringWithFormat:@"This is cell %d",indexPath.row];
-    drawnCell.prettyDetailTextLabel.text = [NSString stringWithFormat:@"%d out of 5",indexPath.row];
+    drawnCell.prettyTextLabel.text = [NSString stringWithFormat:@"This is cell %d",indexPath.row+1];
+    drawnCell.prettyDetailTextLabel.text = [NSString stringWithFormat:@"%d out of 5",indexPath.row+1];
     drawnCell.prettyImage = [UIImage imageNamed:@"background"];
     drawnCell.prettyImageRadius = 8;
     drawnCell.prettyImageShadow = YES;
@@ -280,7 +280,7 @@
     float height = tableView.rowHeight;
     
     if (indexPath.section == 3) {
-        height = [PrettyDrawnCell neededHeightForWidth:tableView.frame.size.width imageSize:CGSizeMake(48,48) text:@"This is cell d" textFont:nil detailText:@"0 out of 5" detailTextFont:nil];
+        height = [PrettyDrawnCell neededHeightForWidth:tableView.frame.size.width imageSize:CGSizeMake(48,48) text:@"This is cell d" textFont:nil detailText:@"1 out of 5" detailTextFont:nil];
     }
     
     return height + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath];

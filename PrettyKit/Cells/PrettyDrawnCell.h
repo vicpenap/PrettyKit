@@ -66,7 +66,9 @@
  
  This method takes into account all the information given and based on it,
  returns the needed height for a cell with that info. The number of lines
- configured in the text or detailText labels will not be taken into account.
+ configured in the text or detailText labels will not be taken into account, 
+ which means that the returned height will be the minium to fit all the necessary
+ lines.
  
  @param width expected cell width.
  @param imageSize expected image size.

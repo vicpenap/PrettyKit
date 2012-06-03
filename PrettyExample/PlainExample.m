@@ -117,22 +117,29 @@
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-    float height = tableView.rowHeight;
+    float height;
+    CGSize imageSize = CGSizeZero;
     
-    if (indexPath.row > 1 && indexPath.row < 6)
+    switch (indexPath.row) 
     {
-        CGSize imageSize = CGSizeZero;
-        if (indexPath.row == 2)
-        {
+        case 5:
             imageSize = CGSizeMake(48, 48);
-        }
-        height = [PrettyDrawnCell neededHeightForWidth:self.tableView.frame.size.width 
-                                             imageSize:imageSize
-                                                  text:@"This is a long text, maybe too long to fit on a single line" 
-                                              textFont:nil
-                                            detailText:@"And this is a long detail text, maybe too long to fit on a single line too" 
-                                        detailTextFont:nil];
+        case 4:
+        case 6:
+        case 7:
+            height = [PrettyDrawnCell neededHeightForWidth:self.tableView.frame.size.width 
+                                                 imageSize:imageSize
+                                                      text:@"This is a long text, maybe too long to fit on a single line" 
+                                                  textFont:nil
+                                                detailText:@"This is possible thanks to the new Drawn Cell, lorem ipsum something else" 
+                                            detailTextFont:nil];
+
+            break;
+        default:
+            height = tableView.rowHeight;
+            break;
     }
+ 
     
     return height + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath];
 }
@@ -152,7 +159,7 @@
     
     cell.prettyTextLabel.text = @"This is a long text, maybe too long to fit on a single line";
     cell.prettyTextLabel.numberOfLines = 0; // multiple lines are supported!
-    cell.prettyDetailTextLabel.text = @"And this is a long detail text, maybe too long to fit on a single line too";
+    cell.prettyDetailTextLabel.text = @"This is possible thanks to the new Drawn Cell, lorem ipsum something else";
     cell.prettyDetailTextLabel.numberOfLines = 0; // multiple lines are supported!
 
     return cell;
@@ -171,7 +178,7 @@
     }
     [cell prepareForTableView:tableView indexPath:indexPath];
 
-    cell.textLabel.text = @"Text";
+    cell.textLabel.text = @"Standard Cell Text";
     cell.textLabel.backgroundColor = [UIColor clearColor];
 
     
@@ -197,8 +204,8 @@
     }];
     
     cell.textLabel.font = [UIFont boldSystemFontOfSize:18];
-    [cell setText:@"Text 1" atIndex:0];
-    [cell setText:@"Text 2" atIndex:1];
+    [cell setText:@"Grid Cell Text 1" atIndex:0];
+    [cell setText:@"Grid Cell Text 2" atIndex:1];
     [cell setDetailText:@"Subtitle" atIndex:0];
     [cell setDetailText:@"Subtitle" atIndex:1];
 
@@ -208,36 +215,42 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell;
-    if (indexPath.row == 1) 
-    {
-        cell = [self gridCellForTableView:tableView forRowAtIndexPath:indexPath];
-    }
+    PrettyDrawnCell *drawn;
     
-    else if (indexPath.row > 1 && indexPath.row < 6)
+    switch (indexPath.row) 
     {
-        PrettyDrawnCell *drawn = [self drawnCellForTableView:tableView forIndexPath:indexPath];
-        if (indexPath.row == 2) 
-        {
-            drawn.prettyThumbnail.shown = YES;
-            drawn.prettyThumbnail.size = CGSizeMake(48, 48);
-            drawn.prettyImageRadius = 8;
-            drawn.prettyImageShadow = YES;
-        }
-        else
-        {
-            drawn.prettyImage = nil;
-        }
-        return drawn;
-    }
-    
-    else
-    {
-        cell = [self cellForTableView:tableView forRowAtIndexPath:indexPath];        
-    }
+        case 0:
+            return [self cellForTableView:tableView forRowAtIndexPath:indexPath];
+        case 1:
+            return [self gridCellForTableView:tableView forRowAtIndexPath:indexPath];
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+            drawn = [self drawnCellForTableView:tableView forIndexPath:indexPath];
+            if (indexPath.row == 5) 
+            {
+                drawn.prettyThumbnail.shown = YES;
+                drawn.prettyThumbnail.size = CGSizeMake(48, 48);
+                drawn.prettyImageRadius = 8;
+                drawn.prettyImageShadow = YES;
+            }
+            else
+            {
+                drawn.prettyThumbnail.shown = NO;
+                drawn.prettyImage = nil;
+            }
+            return drawn;
 
-    
-    return cell;
+        default:
+            drawn = [self drawnCellForTableView:tableView forIndexPath:indexPath];
+            drawn.prettyTextLabel.text = @"New Drawn Cell Text";
+            drawn.prettyDetailTextLabel.text = nil;
+            drawn.prettyImage = nil;
+            drawn.prettyThumbnail.shown = NO;
+            
+            return drawn;
+    }
 
 }
 
