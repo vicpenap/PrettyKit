@@ -66,3 +66,18 @@ typedef enum {
 + (float) height;
 
 @end
+
+
+/** This category adds a shortcut to drop shadows in both header and footer of
+ a `UITableView`. */
+@interface UITableView (PrettyKitTableViewShadows)
+
+/** Configures automatically the receiver tableView by dropping a shadow in both
+ header and footer. It will also change the tableView's `contentInset` according
+ to the shadows' height. 
+ 
+ Shadows will be included __only__ if the tableView's style is plain.
+ */
+- (void) dropShadows;
+
+@end

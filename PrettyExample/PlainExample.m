@@ -32,9 +32,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void) setUpShadows {
-    [PrettyShadowPlainTableview setUpTableView:self.tableView];
-}
 
 - (void) customizeNavBar {
     PrettyNavigationBar *navBar = (PrettyNavigationBar *)self.navigationController.navigationBar;
@@ -66,7 +63,7 @@
 
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:nil action:nil] autorelease];
 
-    [self setUpShadows];
+    [self.tableView dropShadows];
     [self customizeNavBar];
 }
 
