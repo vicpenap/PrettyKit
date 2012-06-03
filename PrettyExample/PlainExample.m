@@ -32,9 +32,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void) setUpShadows {
-    [PrettyShadowPlainTableview setUpTableView:self.tableView];
-}
 
 - (void) customizeNavBar {
     PrettyNavigationBar *navBar = (PrettyNavigationBar *)self.navigationController.navigationBar;
@@ -59,14 +56,14 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    self.navigationItem.title = @"PrettyKit";
+    self.navigationItem.title = @"Rounded PrettyKit NavBar";
     self.tableView.rowHeight = 60;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
 
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:nil action:nil] autorelease];
 
-    [self setUpShadows];
+    [self.tableView dropShadows];
     [self customizeNavBar];
 }
 

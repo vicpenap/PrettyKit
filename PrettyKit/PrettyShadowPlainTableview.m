@@ -88,3 +88,16 @@
 }
 
 @end
+
+
+@implementation UITableView (PrettyKitTableViewShadows)
+
+- (void) dropShadows
+{
+    if (self.style == UITableViewStylePlain)
+    {
+        [PrettyShadowPlainTableview setUpTableView:self];
+    }
+}
+
+@end
