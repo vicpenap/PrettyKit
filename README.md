@@ -124,7 +124,9 @@ me a pull request.
 
 ## Changelog
 
-- 2012/05/25: Fixed a bug with cell shadow and border.
+- 2012/06/03: Created a UITableView category to add a shortcut to dropping 
+the top and bottom shadows.
+- 2012/05/25: Fixed a bug with cell shadow and borders.
 - 2012/04/30: Added PrettyNavigationBar round corners.
 - 2012/04/26: New widget PrettyToolbar
 - 2012/04/12 (v0.1.0): Initial release
