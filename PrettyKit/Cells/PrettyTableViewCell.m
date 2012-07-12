@@ -96,6 +96,10 @@ typedef enum {
 
 - (CGPathRef) createRoundedPath:(CGRect)rect 
 {
+	if (!self.cell.cornerRadius) {
+		return [UIBezierPath bezierPathWithRect:rect].CGPath;
+	}
+	
     UIRectCorner corners;
 
     switch (self.cell.position) {
