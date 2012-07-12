@@ -198,9 +198,9 @@
         y = y / 2;
         textRect = CGRectMake(x, y, width, textSize.height);
 
-        textSize = [self drawText:text
-                     basedOnLabel:self.cell.textLabel
-                           inRect:textRect showAsSelected:selected];
+        [self drawText:text
+          basedOnLabel:self.cell.textLabel
+                inRect:textRect showAsSelected:selected];
     }
     
     if (detailText) 
@@ -214,8 +214,11 @@
 
 - (void) drawBackground:(CGRect)rect
 {
-    if (self.cell.gradientStartColor && self.cell.gradientEndColor) {
-        [PrettyDrawing drawGradient:[(PrettyTableViewCell *)self.cell createNormalGradient] rect:rect];
+    if (self.cell.gradientStartColor && self.cell.gradientEndColor) 
+    {
+        CGGradientRef gradient = [(PrettyTableViewCell *)self.cell newNormalGradient];
+        [PrettyDrawing drawGradient:gradient rect:rect];
+        CGGradientRelease(gradient);
         return;
     }
     

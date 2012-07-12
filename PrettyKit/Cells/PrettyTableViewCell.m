@@ -120,14 +120,14 @@ typedef enum {
 }
 
 
-- (CGGradientRef) createGradientFromType:(CellBackgroundGradient)type
+- (CGGradientRef) newGradientFromType:(CellBackgroundGradient)type
 {
     switch (type) 
     {
         case CellBackgroundGradientSelected:
-            return [self.cell createSelectionGradient];
+            return [self.cell newSelectionGradient];
         default:
-            return [self.cell createNormalGradient];
+            return [self.cell newNormalGradient];
     }
 }
 
@@ -141,7 +141,7 @@ typedef enum {
     
     CGContextAddPath(ctx, path);
         
-    CGGradientRef gradient = [self createGradientFromType:type];
+    CGGradientRef gradient = [self newGradientFromType:type];
     
     CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
     CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
@@ -585,6 +585,11 @@ typedef enum {
 
 - (CGGradientRef) createSelectionGradient
 {
+    return [self newSelectionGradient];
+}
+
+- (CGGradientRef) newSelectionGradient
+{
     CGFloat locations[] = { 0, 1 };    
     
     NSArray *colors = [NSArray arrayWithObjects:(id)self.selectionGradientStartColor.CGColor, (id)self.selectionGradientEndColor.CGColor, nil];
@@ -597,6 +602,11 @@ typedef enum {
 }
 
 - (CGGradientRef) createNormalGradient
+{
+    return [self newNormalGradient];
+}
+
+- (CGGradientRef) newNormalGradient
 {
     CGFloat locations[] = { 0, 1 };    
     

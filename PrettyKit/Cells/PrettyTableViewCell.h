@@ -227,16 +227,28 @@ typedef enum {
 /** Returns a mask with the rounded corners. */
 @property (nonatomic, readonly) CAShapeLayer *mask;
 
-/** Returns a new gradient with the configured selection gradient colors. 
- 
- You don't have to release it after using it.
- */
-- (CGGradientRef) createSelectionGradient;
+/** Returns a new gradient with the configured selection gradient colors. */
+- (CGGradientRef) newSelectionGradient;
 
-/** Returns a new gradient with the configured normal gradient colors. 
+/** Returns a new gradient with the configured normal gradient colors. */
+- (CGGradientRef) newNormalGradient;
+
+
+
+/** **Deprecated** Returns a new gradient with the configured selection gradient colors. 
  
- You don't have to release it after using it.
+ You have to release it after using it.
+ 
+ @bug **Deprecated** Use newSelectionGradient: instead.
  */
-- (CGGradientRef) createNormalGradient;
+- (CGGradientRef) createSelectionGradient __attribute__ ((deprecated,cf_returns_retained));
+
+/** **Deprecated** Returns a new gradient with the configured normal gradient colors. 
+ 
+ You have to release it after using it.
+ 
+ @bug **Deprecated** Use newNormalGradient: instead.
+ */
+- (CGGradientRef) createNormalGradient __attribute__ ((deprecated,cf_returns_retained));
 
 @end
