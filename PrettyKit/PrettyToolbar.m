@@ -95,7 +95,7 @@
 - (void) drawRect:(CGRect)rect {
     [super drawRect:rect];
     
-//    [self dropShadowWithOpacity:self.shadowOpacity];
+    [self dropShadowWithOpacity:self.shadowOpacity];
     [PrettyDrawing drawGradient:rect fromColor:self.gradientStartColor toColor:self.gradientEndColor];
     [self drawTopLine:rect];        
     [self drawBottomLine:rect];
