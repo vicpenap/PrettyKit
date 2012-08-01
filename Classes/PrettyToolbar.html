@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
-		<title>PrettyNavigationBar Class Reference</title>
+		<title>PrettyToolbar Class Reference</title>
 		<meta id="xcode-display" name="xcode-display" content="render"/>
 		<meta name="viewport" content="width=550" />
 		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
@@ -17,7 +17,7 @@
 			</div>
 			
 			<div id="title" role="banner">
-				<h1 class="hideInXcode">PrettyNavigationBar Class Reference</h1>
+				<h1 class="hideInXcode">PrettyToolbar Class Reference</h1>
 			</div>
 			<ul id="headerButtons" role="toolbar">
 				<li id="toc_button">
@@ -45,10 +45,6 @@
 	<option value="//api/name/gradientEndColor">&nbsp;&nbsp;&nbsp;&nbsp;gradientEndColor</option>
 	
 	<option value="//api/name/gradientStartColor">&nbsp;&nbsp;&nbsp;&nbsp;gradientStartColor</option>
-	
-	<option value="//api/name/roundedCornerColor">&nbsp;&nbsp;&nbsp;&nbsp;roundedCornerColor</option>
-	
-	<option value="//api/name/roundedCornerRadius">&nbsp;&nbsp;&nbsp;&nbsp;roundedCornerRadius</option>
 	
 	<option value="//api/name/shadowOpacity">&nbsp;&nbsp;&nbsp;&nbsp;shadowOpacity</option>
 	
@@ -88,10 +84,6 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/gradientStartColor">gradientStartColor</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/roundedCornerColor">roundedCornerColor</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/roundedCornerRadius">roundedCornerRadius</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shadowOpacity">shadowOpacity</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/topLineColor">topLineColor</a></span></li>
@@ -107,7 +99,7 @@
 		</nav>
 		<article>
 			<div id="contents" class="isShowingTOC" role="main">
-				<a title="PrettyNavigationBar Class Reference" name="top"></a>
+				<a title="PrettyToolbar Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
 	<li><a href="../index.html">Index</a></li>
@@ -116,7 +108,7 @@
 				</div>
 				<div id="header">
 					<div class="section-header">
-						<h1 class="title title-header">PrettyNavigationBar Class Reference</h1>
+						<h1 class="title title-header">PrettyToolbar Class Reference</h1>
 					</div>		
 				</div>
 				<div id="container">	
@@ -124,10 +116,10 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<td class="specification-title">Inherits from</td>
-	<td class="specification-value">UINavigationBar</td>
+	<td class="specification-value">UIToolbar</td>
 </tr><tr>
 	<td class="specification-title">Declared in</td>
-	<td class="specification-value">PrettyNavigationBar.h</td>
+	<td class="specification-value">PrettyToolbar.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -137,12 +129,10 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p><a href="PrettyNavigationBar.html"><code>PrettyNavigationBar</code></a> is a subclass of <code>UINavigationBar</code> that removes the
-glossy effect and lets you customize its colors and corners.</p>
+						<p><a href="PrettyToolbar.html"><code>PrettyToolbar</code></a> is a subclass of <code>UIToolbar</code> that removes the
+glossy effect and lets you customize its colors.</p>
 
-<p><img src="../docs/Screenshots/blue_navbar.png" alt="" /></p>
-
-<p>You can change the navigation bar appearance as follows:</p>
+<p>You can change the toolbar appearance as follows:</p>
 
 <ul>
 <li>shadow opacity</li>
@@ -150,7 +140,6 @@ glossy effect and lets you customize its colors and corners.</p>
 <li>gradient end color</li>
 <li>top line volor</li>
 <li>bottom line color</li>
-<li>corner radius</li>
 </ul>
 
 					</div>
@@ -171,7 +160,7 @@ glossy effect and lets you customize its colors and corners.</p>
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/shadowOpacity">&nbsp;&nbsp;shadowOpacity</a></code>
-		<span class="tooltip"><p>Specifies the navigation bar shadow&rsquo;s opacity.</p></span>
+		<span class="tooltip"><p>Specifies the toolbar shadow&rsquo;s opacity.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -200,20 +189,6 @@ glossy effect and lets you customize its colors and corners.</p>
 	<span class="tooltip">
 		<code><a href="#//api/name/bottomLineColor">&nbsp;&nbsp;bottomLineColor</a></code>
 		<span class="tooltip"><p>Specifies the gradient&rsquo;s bottom line color.</p></span>
-	</span>
-	<span class="task-item-suffix">property</span>
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/roundedCornerColor">&nbsp;&nbsp;roundedCornerColor</a></code>
-		<span class="tooltip"><p>Specifies the background color for the rounded corners.</p></span>
-	</span>
-	<span class="task-item-suffix">property</span>
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/roundedCornerRadius">&nbsp;&nbsp;roundedCornerRadius</a></code>
-		<span class="tooltip"><p>Specifies the radius for the rounded corners.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -263,7 +238,7 @@ glossy effect and lets you customize its colors and corners.</p>
 	
 	<div class="method-subsection declared-in-section">
 		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">PrettyNavigationBar.h</code><br />
+		<code class="declared-in-ref">PrettyToolbar.h</code><br />
 	</div>				
 	
 	
@@ -302,7 +277,7 @@ glossy effect and lets you customize its colors and corners.</p>
 	
 	<div class="method-subsection declared-in-section">
 		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">PrettyNavigationBar.h</code><br />
+		<code class="declared-in-ref">PrettyToolbar.h</code><br />
 	</div>				
 	
 	
@@ -341,85 +316,7 @@ glossy effect and lets you customize its colors and corners.</p>
 	
 	<div class="method-subsection declared-in-section">
 		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">PrettyNavigationBar.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/roundedCornerColor" title="roundedCornerColor"></a>
-	<h3 class="subsubtitle method-title">roundedCornerColor</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Specifies the background color for the rounded corners.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) UIColor *roundedCornerColor</code></div>
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>By default is a black tone.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">PrettyNavigationBar.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/roundedCornerRadius" title="roundedCornerRadius"></a>
-	<h3 class="subsubtitle method-title">roundedCornerRadius</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Specifies the radius for the rounded corners.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>@property (readwrite) CGFloat roundedCornerRadius</code></div>
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>By default it is 0.0 which means there is no rounded corners.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">PrettyNavigationBar.h</code><br />
+		<code class="declared-in-ref">PrettyToolbar.h</code><br />
 	</div>				
 	
 	
@@ -432,7 +329,7 @@ glossy effect and lets you customize its colors and corners.</p>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Specifies the navigation bar shadow&rsquo;s opacity.</p>
+		<p>Specifies the toolbar shadow&rsquo;s opacity.</p>
 	</div>		
 	
 	
@@ -458,7 +355,7 @@ glossy effect and lets you customize its colors and corners.</p>
 	
 	<div class="method-subsection declared-in-section">
 		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">PrettyNavigationBar.h</code><br />
+		<code class="declared-in-ref">PrettyToolbar.h</code><br />
 	</div>				
 	
 	
@@ -497,7 +394,7 @@ glossy effect and lets you customize its colors and corners.</p>
 	
 	<div class="method-subsection declared-in-section">
 		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">PrettyNavigationBar.h</code><br />
+		<code class="declared-in-ref">PrettyToolbar.h</code><br />
 	</div>				
 	
 	

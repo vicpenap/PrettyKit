@@ -12,7 +12,7 @@
 	<body>
 		<header id="top_header">
 			<div id="library" class="hideInXcode">
-				<h1><a id="libraryTitle" href="../index.html">PrettyKit </a></h1>
+				<h1><a id="libraryTitle" href="../index.html">PrettyKit 0.2.0 </a></h1>
 				<a id="developerHome" href="../index.html">Víctor Pena Placer</a>
 			</div>
 			
@@ -85,6 +85,10 @@
 	<option value="//api/name/createNormalGradient">&nbsp;&nbsp;&nbsp;&nbsp;- createNormalGradient</option>
 	
 	<option value="//api/name/createSelectionGradient">&nbsp;&nbsp;&nbsp;&nbsp;- createSelectionGradient</option>
+	
+	<option value="//api/name/newNormalGradient">&nbsp;&nbsp;&nbsp;&nbsp;- newNormalGradient</option>
+	
+	<option value="//api/name/newSelectionGradient">&nbsp;&nbsp;&nbsp;&nbsp;- newSelectionGradient</option>
 	
 	<option value="//api/name/prepareForTableView:indexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- prepareForTableView:indexPath:</option>
 	
@@ -166,6 +170,10 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createSelectionGradient">createSelectionGradient</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/newNormalGradient">newNormalGradient</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/newSelectionGradient">newSelectionGradient</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/prepareForTableView:indexPath:">prepareForTableView:indexPath:</a></span></li>
 	
 </ul></li>
@@ -195,7 +203,7 @@
 	<td class="specification-value">UITableViewCell</td>
 </tr><tr>
 	<td class="specification-title">Declared in</td>
-	<td class="specification-value">PrettyTableViewCell.h<br />PrettyTableViewCell.m</td>
+	<td class="specification-value">PrettyTableViewCell.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -216,13 +224,28 @@ performance.</p>
 
 <h3>Using it</h3>
 
-<p>In your <code>dataSource</code> <code>tableView:cellForRowAtIndexPath:</code> body, change all
+<ol>
+<li><p>In your <code>dataSource</code> <code>tableView:cellForRowAtIndexPath:</code> body, change all
 references to <code>UITableViewCell</code> to <a href="PrettyTableViewCell.html"><code>PrettyTableViewCell</code></a>, and add this call:</p>
 
-<pre><code>[cell prepareForTableView:tableView indexPath:indexPath];
-</code></pre>
+<p>  [cell prepareForTableView:tableView indexPath:indexPath];</p></li>
+<li><p>Implement <code>tableView:heightForRowAtIndexPath:</code>, from
+<code>UITableView</code> delegate protocol, and add the result of calling
+<a href="#//api/name/tableView:neededHeightForIndexPath:">tableView:neededHeightForIndexPath:</a> to your desired height.</p>
 
-<p>Just by doing that you&rsquo;ll have a nice cell, like the cells below:</p>
+<p>  For example:</p>
+
+<pre><code>  -(CGFloat) tableView:(UITableView *)tableView 
+  heightForRowAtIndexPath:(NSIndexPath *)indexPath 
+  {
+      return tableView.rowHeight + [PrettyTableViewCell 
+          tableView:tableView neededHeightForIndexPath:indexPath];
+  }
+</code></pre></li>
+</ol>
+
+
+<p>Doing that you&rsquo;ll have nice cells, like these:</p>
 
 <p><img src="../docs/Screenshots/cells.png" alt="" /></p>
 
@@ -424,15 +447,29 @@ and draw the contents by yourself.</p>
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/createSelectionGradient">&ndash;&nbsp;createSelectionGradient</a></code>
+		<code><a href="#//api/name/newSelectionGradient">&ndash;&nbsp;newSelectionGradient</a></code>
 		<span class="tooltip"><p>Returns a new gradient with the configured selection gradient colors.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/createNormalGradient">&ndash;&nbsp;createNormalGradient</a></code>
+		<code><a href="#//api/name/newNormalGradient">&ndash;&nbsp;newNormalGradient</a></code>
 		<span class="tooltip"><p>Returns a new gradient with the configured normal gradient colors.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createSelectionGradient">&ndash;&nbsp;createSelectionGradient</a></code>
+		<span class="tooltip"><p><strong>Deprecated</strong> Returns a new gradient with the configured selection gradient colors.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createNormalGradient">&ndash;&nbsp;createNormalGradient</a></code>
+		<span class="tooltip"><p><strong>Deprecated</strong> Returns a new gradient with the configured normal gradient colors.</p></span>
 	</span>
 	
 	
@@ -551,7 +588,7 @@ has a gray color by default.</p>
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>By default is set to <code>nil</code>, so the background color will be the UITableViewCell&rsquo;s
-<a href="../Classes/PrettyTableViewCell.html#//api/name/backgroundColor"><code>backgroundColor</code></a> property.</p>
+<code>backgroundColor</code> property.</p>
 
 <p>Change this property to override the background color in plain table views.</p>
 	</div>
@@ -1099,7 +1136,7 @@ property to NO.</p>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Returns a new gradient with the configured normal gradient colors.</p>
+		<p><strong>Deprecated</strong> Returns a new gradient with the configured normal gradient colors.</p>
 	</div>		
 	
 	
@@ -1114,7 +1151,7 @@ property to NO.</p>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>You don&rsquo;t have to release it after using it.</p>
+		<p>You have to release it after using it.</p><div class="bug"><p><strong>Deprecated</strong> Use newNormalGradient: instead.</p></div>
 	</div>
 	
 	
@@ -1138,7 +1175,7 @@ property to NO.</p>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Returns a new gradient with the configured selection gradient colors.</p>
+		<p><strong>Deprecated</strong> Returns a new gradient with the configured selection gradient colors.</p>
 	</div>		
 	
 	
@@ -1153,8 +1190,76 @@ property to NO.</p>
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>You don&rsquo;t have to release it after using it.</p>
+		<p>You have to release it after using it.</p><div class="bug"><p><strong>Deprecated</strong> Use newSelectionGradient: instead.</p></div>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/newNormalGradient" title="newNormalGradient"></a>
+	<h3 class="subsubtitle method-title">newNormalGradient</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a new gradient with the configured normal gradient colors.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (CGGradientRef)newNormalGradient</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PrettyTableViewCell.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/newSelectionGradient" title="newSelectionGradient"></a>
+	<h3 class="subsubtitle method-title">newSelectionGradient</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a new gradient with the configured selection gradient colors.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (CGGradientRef)newSelectionGradient</code></div>
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -1223,7 +1328,7 @@ property to NO.</p>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2012 Víctor Pena Placer. All rights reserved. (Last updated: 2012-04-14)</span><br />
+						<p><span class="copyright">&copy; 2012 Víctor Pena Placer. All rights reserved. (Last updated: 2012-08-01)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 752)</a>.</span></p>
 						

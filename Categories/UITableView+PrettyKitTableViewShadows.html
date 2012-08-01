@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
-		<title>UIColor(PrettyKit) Category Reference</title>
+		<title>UITableView(PrettyKitTableViewShadows) Category Reference</title>
 		<meta id="xcode-display" name="xcode-display" content="render"/>
 		<meta name="viewport" content="width=550" />
 		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
@@ -17,7 +17,7 @@
 			</div>
 			
 			<div id="title" role="banner">
-				<h1 class="hideInXcode">UIColor(PrettyKit) Category Reference</h1>
+				<h1 class="hideInXcode">UITableView(PrettyKitTableViewShadows) Category Reference</h1>
 			</div>
 			<ul id="headerButtons" role="toolbar">
 				<li id="toc_button">
@@ -40,11 +40,11 @@
 	
 	
 	
-	<option value="class_methods">Class Methods</option>
-	
-	<option value="//api/name/colorWithHex:">&nbsp;&nbsp;&nbsp;&nbsp;+ colorWithHex:</option>
 	
 	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/dropShadows">&nbsp;&nbsp;&nbsp;&nbsp;- dropShadows</option>
 	
 	
 	
@@ -70,20 +70,20 @@
 
 
 
-<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/colorWithHex:">colorWithHex:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/dropShadows">dropShadows</a></span></li>
 	
 </ul></li>
-
-
 
 
 			</ul>
 		</nav>
 		<article>
 			<div id="contents" class="isShowingTOC" role="main">
-				<a title="UIColor(PrettyKit) Category Reference" name="top"></a>
+				<a title="UITableView(PrettyKitTableViewShadows) Category Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
 	<li><a href="../index.html">Index</a></li>
@@ -92,7 +92,7 @@
 				</div>
 				<div id="header">
 					<div class="section-header">
-						<h1 class="title title-header">UIColor(PrettyKit) Category Reference</h1>
+						<h1 class="title title-header">UITableView(PrettyKitTableViewShadows) Category Reference</h1>
 					</div>		
 				</div>
 				<div id="container">	
@@ -100,7 +100,7 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<td class="specification-title">Declared in</td>
-	<td class="specification-value">PrettyDrawing.h</td>
+	<td class="specification-value">PrettyShadowPlainTableview.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -110,7 +110,8 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>This category adds a set of methods to UIColor class.</p>
+						<p>This category adds a shortcut to drop shadows in both header and footer of
+a <code>UITableView</code>.</p>
 					</div>
 					
 					
@@ -128,8 +129,10 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/colorWithHex:">+&nbsp;colorWithHex:</a></code>
-		<span class="tooltip"><p>Returns an autoreleased UIColor instance with the hexadecimal color.</p></span>
+		<code><a href="#//api/name/dropShadows">&ndash;&nbsp;dropShadows</a></code>
+		<span class="tooltip"><p>Configures automatically the receiver tableView by dropping a shadow in both
+header and footer. It will also change the tableView&rsquo;s <code>contentInset</code> according
+to the shadows' height.</p></span>
 	</span>
 	
 	
@@ -144,44 +147,38 @@
 					
 					
 					
+					
+					
 					<div class="section section-methods">
-						<a title="Class Methods" name="class_methods"></a>
-						<h2 class="subtitle subtitle-methods">Class Methods</h2>
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/colorWithHex:" title="colorWithHex:"></a>
-	<h3 class="subsubtitle method-title">colorWithHex:</h3>
+	<a name="//api/name/dropShadows" title="dropShadows"></a>
+	<h3 class="subsubtitle method-title">dropShadows</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Returns an autoreleased UIColor instance with the hexadecimal color.</p>
+		<p>Configures automatically the receiver tableView by dropping a shadow in both
+header and footer. It will also change the tableView&rsquo;s <code>contentInset</code> according
+to the shadows' height.</p>
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>+ (UIColor *)colorWithHex:(int)<em>hex</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)dropShadows</code></div>
 	
 	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>hex</em></dt>
-			<dd><p>A color in hexadecimal notation: <code>0xCCCCCC</code>, <code>0xF7F7F7</code>, etc.</p></dd>
-		</dl>
-		
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Shadows will be included <strong>only</strong> if the tableView&rsquo;s style is plain.</p>
 	</div>
-	
-	
-	
-	<div class="method-subsection return">
-		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>A new autoreleased UIColor instance.</p>
-	</div>
-	
-	
-	
-	
 	
 	
 	
@@ -191,15 +188,13 @@
 	
 	<div class="method-subsection declared-in-section">
 		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">PrettyDrawing.h</code><br />
+		<code class="declared-in-ref">PrettyShadowPlainTableview.h</code><br />
 	</div>				
 	
 	
 </div>
 						
 					</div>
-					
-					
 					
 					
 				</div>
