@@ -12,7 +12,8 @@
 
 #define VIEW_TAG 1234
 
-#define image_margin 10
+#define image_horz_margin 10
+#define image_vert_margin 5
 #define deselection_delay 0
 #define deselection_animation 0.5
 #define shadow_width 2
@@ -65,13 +66,13 @@
     float width = rect.size.width;
     if ([self.cell showsImage])
     {
-        width -= [self.cell imageSize].width + image_margin * 2;
+        width -= [self.cell imageSize].width + image_horz_margin * 2;
     }
     CGSize constrainedSize = CGSizeMake(width, self.frame.size.height);
     
     CGSize neededSize = [label.text sizeWithFont:label.font constrainedToSize:constrainedSize lineBreakMode:label.lineBreakMode];
-    CGRect textRect = CGRectMake([self.cell showsImage] ? [self.cell imageSize].width + image_margin + shadow_width*2 : 0,
-                                 !self.cell.prettyDetailTextLabel.text ?  (rect.size.height-neededSize.height)/2  : (image_margin + height),
+    CGRect textRect = CGRectMake([self.cell showsImage] ? [self.cell imageSize].width + image_horz_margin + shadow_width*2 : 0,
+                                 !self.cell.prettyDetailTextLabel.text ?  (rect.size.height-neededSize.height)/2  : (image_vert_margin + height),
                                  width, neededSize.height);
 
     float labelHeight = label.numberOfLines * label.font.lineHeight;
@@ -124,7 +125,15 @@
 
 - (void) drawImage
 {
-    CGRect rect = CGRectMake(shadow_width, image_margin + shadow_width, [self.cell imageSize].width, [self.cell imageSize].height);
+    float freeVerticalSpace = self.cell.innerFrame.size.height;
+    freeVerticalSpace -= [self.cell imageSize].height;
+    freeVerticalSpace /= 2;
+    
+    
+    CGRect rect = CGRectMake(shadow_width,
+                             freeVerticalSpace,
+                             [self.cell imageSize].width,
+                             [self.cell imageSize].height);
 
     if (!self.cell.prettyImage || self.cell.prettyImageShadow)
     {
@@ -167,8 +176,9 @@
     if (self.cell.gradientStartColor && self.cell.gradientEndColor
         && !self.cell.selected && !self.cell.highlighted) 
     {
-        CGGradientRef gradient = [self.cell createNormalGradient];
+        CGGradientRef gradient = [self.cell newNormalGradient];
         [PrettyDrawing drawGradient:gradient rect:rect];
+        CGGradientRelease(gradient);
     }
 }
 
@@ -225,7 +235,14 @@ static UILabel *defaultDetailTextLabel = nil;
     
     if (self.prettyImage)
     {
-        return self.prettyImage.size;
+        CGSize imageSize = self.prettyImage.size;
+        
+        float maxHeight = self.innerFrame.size.height;
+        if (imageSize.height > maxHeight)
+        {
+            return CGSizeMake(imageSize.width * maxHeight / imageSize.height, maxHeight);
+        }
+        return imageSize;
     }
     
     return self.prettyThumbnail.size;
@@ -429,9 +446,9 @@ static UILabel *defaultDetailTextLabel = nil;
                       detailText:(NSString *)detailText
                   detailTextFont:(UIFont *)detailTextFontOrNil
 {
-    float minHeight = image_margin*2 + shadow_width*2;
+    float minHeight = image_vert_margin*2 + shadow_width*2;
     float height = minHeight;
-    float realWidth = width - imageSize.width - (imageSize.width ? image_margin*3 + shadow_width*2 : 0);
+    float realWidth = width - imageSize.width - (imageSize.width ? image_horz_margin*3 + shadow_width*2 : 0);
     
     CGSize maxSize = CGSizeMake(realWidth, MAXFLOAT);
     
