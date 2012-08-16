@@ -393,6 +393,16 @@ static UILabel *defaultDetailTextLabel = nil;
         // leave room for top and/or bottom lines
         frame.size.height--;
         
+        if (self.accessoryView)
+        {
+            frame.size.width -= self.accessoryView.frame.size.width;
+        }
+        
+        else if (self.accessoryType != UITableViewCellAccessoryNone)
+        {
+            frame.size.width -= 20;
+        }
+        
         [[self.contentView viewWithTag:VIEW_TAG] setFrame:frame];
         return;
     }
