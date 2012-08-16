@@ -50,12 +50,26 @@ typedef enum {
  
  ### Using it
  
- In your `dataSource` `tableView:cellForRowAtIndexPath:` body, change all
+ 1. In your `dataSource` `tableView:cellForRowAtIndexPath:` body, change all
  references to `UITableViewCell` to `PrettyTableViewCell`, and add this call:
  
     [cell prepareForTableView:tableView indexPath:indexPath];
  
- Just by doing that you'll have a nice cell, like the cells below:
+ 2. Implement `tableView:heightForRowAtIndexPath:`, from
+ `UITableView` delegate protocol, and add the result of calling 
+ tableView:neededHeightForIndexPath: to your desired height.
+ 
+    For example:
+ 
+        -(CGFloat) tableView:(UITableView *)tableView 
+        heightForRowAtIndexPath:(NSIndexPath *)indexPath 
+        {
+            return tableView.rowHeight + [PrettyTableViewCell 
+                tableView:tableView neededHeightForIndexPath:indexPath];
+        }
+ 
+ 
+ Doing that you'll have nice cells, like these:
  
  ![](../docs/Screenshots/cells.png)
  
@@ -230,16 +244,28 @@ typedef enum {
 /** Returns a mask with the rounded corners. */
 @property (nonatomic, readonly) CAShapeLayer *mask;
 
-/** Returns a new gradient with the configured selection gradient colors. 
- 
- You don't have to release it after using it.
- */
-- (CGGradientRef) createSelectionGradient;
+/** Returns a new gradient with the configured selection gradient colors. */
+- (CGGradientRef) newSelectionGradient;
 
-/** Returns a new gradient with the configured normal gradient colors. 
+/** Returns a new gradient with the configured normal gradient colors. */
+- (CGGradientRef) newNormalGradient;
+
+
+
+/** **Deprecated** Returns a new gradient with the configured selection gradient colors. 
  
- You don't have to release it after using it.
+ You have to release it after using it.
+ 
+ @bug **Deprecated** Use newSelectionGradient: instead.
  */
-- (CGGradientRef) createNormalGradient;
+- (CGGradientRef) createSelectionGradient __attribute__ ((deprecated,cf_returns_retained));
+
+/** **Deprecated** Returns a new gradient with the configured normal gradient colors. 
+ 
+ You have to release it after using it.
+ 
+ @bug **Deprecated** Use newNormalGradient: instead.
+ */
+- (CGGradientRef) createNormalGradient __attribute__ ((deprecated,cf_returns_retained));
 
 @end

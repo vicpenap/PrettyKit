@@ -1,12 +1,8 @@
-# PrettyKit
+# PrettyKit 0.2.0
 
-`PrettyKit` is a small set of new widgets and UIKit subclasses that 
-gives you a deeper UIKit customization. You will be able to change 
-their background color, add gradients, shadows, etc.
+`PrettyKit` is a small set of new widgets and UIKit subclasses that gives you a deeper UIKit customization. You will be able to change their background color, add gradients, shadows, etc.
 
-At the time of writing these docs, there are subclasses for 
-`UITableViewCell`, `UINavigationBar` and `UITabBar`, and several custom
-cells.
+At the time of writing these docs, there are subclasses for `UITableViewCell`, `UINavigationBar` and `UITabBar`, and several custom cells.
 
 Here are some examples of what you can achieve:
 
@@ -20,22 +16,18 @@ Full documentation can be found here: http://vicpenap.github.com/PrettyKit
 
 ## Using it
 
-Using this framework is really easy.
-
 First:
 
 - Copy all files under the `PrettyKit` folder. 
 - `#import "PrettyKit.h"` where you need it.
 
-Then, just change all your references to UI classes to Pretty classes, 
-and you're done.
+Then, just change all your references to UI classes to Pretty classes, and you're done.
 
-You'll find further information on how to use the classes in the docs.
+You'll find further information on how to use the classes in the docs: http://vicpenap.github.com/PrettyKit
 
 ## Customization
 
-All Pretty objects' properties have default values, but you can freely
-change them.
+All Pretty objects' properties have default values, but you can freely change them.
 
 #### Pretty Cell
 
@@ -67,6 +59,7 @@ You can change the cell's appearance as follows:
  - gradient end color
  - top line volor
  - bottom line color
+ - corner radius
 
 
 #### Pretty Tab Bar
@@ -79,22 +72,19 @@ You can change the cell's appearance as follows:
 
 ## Performance
 
-Everything is drawn using Core Graphics, so you can expect a nice 
-performance. Particular attention has been paid to non opaque areas,
-trying to reduce them as much as possible.
+Everything is drawn using Core Graphics, so you can expect a nice performance. Particular attention has been paid to non opaque areas, trying to reduce them as much as possible.
 
 ![](https://github.com/vicpenap/PrettyKit/raw/master/Screenshots/blended_layers.png)
 
 ## Current status
 
-This framework is currently under active development. It is compatible 
-with iOS 4.0 or higher.
+This framework is currently under active development. It is compatible with iOS 4.0 or higher.
 
 ## F.A.Q.
 
-**Q. I'm stuck with this error: [UINavigationBar setTopLineColor:]: unrecognized selector sent to instance 0x6c5dd50**
+**Q. How can I use PrettyNavigationBar?**
 
-A. Make sure the navigation bar is an instance of PrettyNavigationBar. There are two possibilities:
+A. There are two possibilities:
 
 - Interface Builder
 
@@ -110,6 +100,10 @@ Take into account that this approach is a bit hackish, so it might be a reason f
 
 Also take a look at [this stack overflow thread](http://stackoverflow.com/questions/1869331/set-programmatically-a-custom-subclass-of-uinavigationbar-in-uinavigationcontrol), where other approaches are shown.
 
+**Q. I'm stuck with this error: [UINavigationBar setTopLineColor:]: unrecognized selector sent to instance 0x6c5dd50**
+
+A. Make sure the navigation bar is an instance of PrettyNavigationBar. Take a look at the question above.
+
 **Q. Is there a way to use the same PrettyNavigationBar customization in the entire app?**
 
 A. There is, indeed. You can either create a subclass or a category on PrettyNavigationBar, and override the properties you want to change. 
@@ -119,14 +113,13 @@ For example, if you want to have a red navigationBar, you can create a `RedNavig
 
 ## Contribution
 
-Please, please contribute with this project! Fork it, improve it and make 
-me a pull request.
+Please, please contribute with this project! Fork it, improve it and make me a pull request.
 
 ## Changelog
 
-- 2012/06/03: Created a UITableView category to add a shortcut to dropping 
-the top and bottom shadows.
-- 2012/05/25: Fixed a bug with cell shadow and borders.
-- 2012/04/30: Added PrettyNavigationBar round corners.
-- 2012/04/26: New widget PrettyToolbar
-- 2012/04/12 (v0.1.0): Initial release
+- 2012/08/01: v0.2.0
+    - Bug fixing (memory issues, cell drawing, naming colision with new Xcode (DP3))
+    - New UITableView category to add a shortcut to drop the top and bottom shadow in plain tables 
+    - PrettyNavigationBar can now have rounded corners
+    - New widget PrettyToolbar (replacing UIToolbar)
+- 2012/04/12: Initial release (v0.1.0)
