@@ -314,12 +314,20 @@ typedef enum {
     
     [self drawBackground:rect];
     
-    if (self.cell.position == PrettyTableViewCellPositionTop
-        || self.cell.position == PrettyTableViewCellPositionMiddle)
+    switch (self.cell.position)
     {
-        [self drawLineSeparator:CGRectMake(rect.origin.x, rect.origin.y,
-                                           rect.size.width, rect.size.height)];
-    } 
+        case PrettyTableViewCellPositionAlone:
+        case PrettyTableViewCellPositionBottom:
+            if (self.cell.tableViewIsGrouped) 
+            {
+                break;
+            }
+        default:
+            [self drawLineSeparator:CGRectMake(rect.origin.x, rect.origin.y,
+                                               rect.size.width, rect.size.height)];
+            break;
+            
+    }
 }
 
 
