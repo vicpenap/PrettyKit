@@ -187,25 +187,39 @@ typedef enum {
     CGContextRestoreGState(ctx);
 }
 
+- (void) drawSingleLineSeparator:(CGRect)rect 
+{
+    [PrettyDrawing drawLineAtHeight:CGRectGetMaxY(rect)
+                               rect:rect
+                              color:self.cell.customSeparatorColor
+                              width:1];
+}
+
+- (void) drawEtchedSeparator:(CGRect)rect
+{
+    [PrettyDrawing drawLineAtHeight:CGRectGetMaxY(rect)-1
+                               rect:rect
+                              color:self.cell.customSeparatorColor
+                              width:0.5];
+    [PrettyDrawing drawLineAtHeight:CGRectGetMaxY(rect)-0.5
+                               rect:rect
+                              color:[UIColor whiteColor] 
+                              width:1];
+
+}
+
 - (void) drawLineSeparator:(CGRect)rect 
 {
-    if (!self.cell.showsCustomSeparator) {
-        return;
+    switch (self.cell.customSeparatorStyle) 
+    {
+        case UITableViewCellSeparatorStyleSingleLine:
+            [self drawSingleLineSeparator:rect];
+            break;
+        case UITableViewCellSeparatorStyleSingleLineEtched:
+            [self drawEtchedSeparator:rect];
+        default:
+            break;
     }
-    
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(ctx);
-
-    // draws body
-
-    CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect));
-    CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMaxY(rect));
- 
-    CGContextSetStrokeColorWithColor(ctx, self.cell.customSeparatorColor.CGColor);
-    CGContextSetLineWidth(ctx, 1);
-    CGContextStrokePath(ctx);
-    
-    CGContextRestoreGState(ctx);
 }
 
 - (void) fixShadow:(CGContextRef)ctx rect:(CGRect)rect
@@ -341,9 +355,9 @@ typedef enum {
 @implementation PrettyTableViewCell
 @synthesize position, dropsShadow, borderColor, tableViewBackgroundColor;
 @synthesize customSeparatorColor, selectionGradientStartColor, selectionGradientEndColor;
-@synthesize cornerRadius, showsCustomSeparator;
+@synthesize cornerRadius;
 @synthesize customBackgroundColor, gradientStartColor, gradientEndColor;
-@synthesize shadowOpacity;
+@synthesize shadowOpacity, customSeparatorStyle;
 
 
 - (void) dealloc
@@ -369,11 +383,11 @@ typedef enum {
     self.borderColor = default_border_color;
     self.tableViewBackgroundColor = [UIColor clearColor];
     self.customSeparatorColor = default_separator_color;
-    self.showsCustomSeparator = YES;
     self.selectionGradientStartColor = default_selection_gradient_start_color;
     self.selectionGradientEndColor = default_selection_gradient_end_color;
     self.cornerRadius = default_radius;
     self.shadowOpacity = default_shadow_opacity;
+    self.customSeparatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -623,6 +637,26 @@ typedef enum {
     return gradient;
 }
 
+#pragma mark - Deprecated stuff
 
+- (BOOL) showsCustomSeparator
+{
+    return self.customSeparatorStyle != UITableViewCellSeparatorStyleNone;
+}
+
+- (void) setShowsCustomSeparator:(BOOL)showsCustomSeparator
+{
+    switch (showsCustomSeparator)
+    {
+        case YES:
+            self.customSeparatorStyle = UITableViewCellSeparatorStyleSingleLine;
+            break;
+        case NO:
+            self.customSeparatorStyle = UITableViewCellSeparatorStyleNone;
+            break;            
+    }
+    
+    
+}
 
 @end

@@ -169,8 +169,16 @@ typedef enum {
 
 /** Specifies if a custom separator should be drawn. 
  
- By default it's set to `YES`.*/
-@property (nonatomic, assign) BOOL showsCustomSeparator;
+ By default it's set to `YES`.
+ 
+ @bug **Deprecated** Use customSeparatorStyle instead.
+ */
+@property (nonatomic, assign) BOOL showsCustomSeparator __attribute__ ((deprecated));
+
+/** Specifies the style of the separator. 
+ 
+ By default it's set to `UITableViewCellSeparatorStyleSingleLine`.*/
+@property (nonatomic, assign) UITableViewCellSeparatorStyle customSeparatorStyle;
 
 
 /** Specifies the color used for the cell's separator line.
