@@ -106,7 +106,7 @@
 {
     UIImage *newImage;
     
-    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 1.0);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
     
     // Add a clip before drawing anything, in the shape of an rounded rect
     [[UIBezierPath bezierPathWithRoundedRect:rect 
