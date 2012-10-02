@@ -62,19 +62,28 @@
         self.shadowOnlyOnSelected = YES;
         
         [self updateButtonActions];
+        [self setActionBlock:nil]; // forces tracking the selected index        
     }
     return self;
 }
 
-
-- (void) _setSelectedIndex:(NSInteger)sselectedIndex {
+- (void) _setSelectedIndex:(NSInteger)sselectedIndex notifySuper:(BOOL)notify
+{
     selectedIndex = sselectedIndex;
     
-    [super selectIndex:selectedIndex];
+    if (notify)
+    {
+        [super selectIndex:selectedIndex];
+    }
 }
 
 - (void) restartSelectedIndex {
-    [self _setSelectedIndex:0];
+    [self _setSelectedIndex:0 notifySuper:YES];
+}
+
+
+- (void) setSelectedIndex:(NSInteger)sselectedIndex {
+    [self _setSelectedIndex:sselectedIndex notifySuper:YES];
 }
 
 
@@ -91,14 +100,14 @@
 }
 
 
-- (void) setSelectedIndex:(NSInteger)sselectedIndex {
-    [self _setSelectedIndex:sselectedIndex];
-}
-
 - (void) setActionBlock:(void (^)(NSIndexPath *indexPath, int sselectedIndex))actionBlock {
     [super setActionBlock:^(NSIndexPath *indexPath, int sselectedIndex) {
-        selectedIndex = sselectedIndex;
-        actionBlock(indexPath, sselectedIndex);
+        [self _setSelectedIndex:sselectedIndex notifySuper:NO];
+        
+        if (actionBlock)
+        {
+            actionBlock(indexPath, sselectedIndex);
+        }
     }];
 }
 
